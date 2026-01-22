@@ -1,5 +1,6 @@
 import type { PortableTextBlock } from "@portabletext/types";
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import type { ImageMetadata } from "astro";
 
 // =============================================================================
 // IMAGE TYPES
@@ -9,6 +10,13 @@ export interface SanityImage {
   asset: SanityImageSource;
   alt?: string;
 }
+
+/**
+ * Image URL can be:
+ * - A string URL (for Sanity CDN URLs)
+ * - An ImageMetadata object (for Astro's local images from Content Collections)
+ */
+export type ImageUrl = string | ImageMetadata;
 
 // =============================================================================
 // POST TYPES
@@ -39,7 +47,7 @@ export interface Post {
     pubDate: Date;
     tags: string[];
     image: {
-      url: string;
+      url: ImageUrl;
       alt: string;
     };
   };
@@ -74,7 +82,7 @@ export interface TeamMember {
     role?: string;
     bio?: string;
     image: {
-      url: string;
+      url: ImageUrl;
       alt: string;
     };
     socials?: Array<{
@@ -135,7 +143,7 @@ export interface Service {
     description: string;
     excerpt?: string;
     image: {
-      url: string;
+      url: ImageUrl;
       alt: string;
     };
     highlights?: string[];
@@ -182,11 +190,11 @@ export interface Project {
     category?: string;
     services?: string[];
     cover?: {
-      url: string;
+      url: ImageUrl;
       alt: string;
     };
     gallery?: Array<{
-      url: string;
+      url: ImageUrl;
       alt: string;
     }>;
     metrics?: Array<{

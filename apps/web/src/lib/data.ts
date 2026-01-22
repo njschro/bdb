@@ -61,10 +61,7 @@ export async function getAllPosts(): Promise<Post[]> {
       pubDate: new Date(post.data.pubDate),
       tags: post.data.tags || [],
       image: {
-        url:
-          typeof post.data.image.url === "string"
-            ? post.data.image.url
-            : post.data.image.url.src,
+        url: post.data.image.url,
         alt: post.data.image.alt || "",
       },
     },
@@ -113,10 +110,7 @@ export async function getPostBySlug(slug: string): Promise<{
         pubDate: new Date(entry.data.pubDate),
         tags: entry.data.tags || [],
         image: {
-          url:
-            typeof entry.data.image.url === "string"
-              ? entry.data.image.url
-              : entry.data.image.url.src,
+          url: entry.data.image.url,
           alt: entry.data.image.alt || "",
         },
       },
@@ -154,10 +148,7 @@ export async function getPostsByTag(tag: string): Promise<Post[]> {
       pubDate: new Date(post.data.pubDate),
       tags: post.data.tags || [],
       image: {
-        url:
-          typeof post.data.image.url === "string"
-            ? post.data.image.url
-            : post.data.image.url.src,
+        url: post.data.image.url,
         alt: post.data.image.alt || "",
       },
     },
@@ -207,10 +198,7 @@ export async function getAllTeamMembers(): Promise<TeamMember[]> {
       role: member.data.role,
       bio: member.data.bio,
       image: {
-        url:
-          typeof member.data.image.url === "string"
-            ? member.data.image.url
-            : member.data.image.url.src,
+        url: member.data.image.url,
         alt: member.data.image.alt || "",
       },
       socials: member.data.socials,
@@ -258,10 +246,7 @@ export async function getTeamMemberBySlug(slug: string): Promise<{
         role: entry.data.role,
         bio: entry.data.bio,
         image: {
-          url:
-            typeof entry.data.image.url === "string"
-              ? entry.data.image.url
-              : entry.data.image.url.src,
+          url: entry.data.image.url,
           alt: entry.data.image.alt || "",
         },
         socials: entry.data.socials,
@@ -372,10 +357,7 @@ export async function getAllServices(): Promise<Service[]> {
       description: service.data.description,
       excerpt: service.data.excerpt,
       image: {
-        url:
-          typeof service.data.image.url === "string"
-            ? service.data.image.url
-            : service.data.image.url.src,
+        url: service.data.image.url,
         alt: service.data.image.alt || "",
       },
       highlights: service.data.highlights,
@@ -425,10 +407,7 @@ export async function getServiceBySlug(slug: string): Promise<{
         description: entry.data.description,
         excerpt: entry.data.excerpt,
         image: {
-          url:
-            typeof entry.data.image.url === "string"
-              ? entry.data.image.url
-              : entry.data.image.url.src,
+          url: entry.data.image.url,
           alt: entry.data.image.alt || "",
         },
         highlights: entry.data.highlights,
@@ -477,15 +456,12 @@ export async function getAllProjects(): Promise<Project[]> {
       services: project.data.services,
       cover: project.data.cover
         ? {
-            url:
-              typeof project.data.cover.url === "string"
-                ? project.data.cover.url
-                : project.data.cover.url.src,
+            url: project.data.cover.url,
             alt: project.data.cover.alt || "",
           }
         : undefined,
       gallery: project.data.gallery?.map((img) => ({
-        url: typeof img.url === "string" ? img.url : img.url.src,
+        url: img.url,
         alt: img.alt || "",
       })),
       metrics: project.data.metrics,
@@ -540,15 +516,12 @@ export async function getProjectBySlug(slug: string): Promise<{
         services: entry.data.services,
         cover: entry.data.cover
           ? {
-              url:
-                typeof entry.data.cover.url === "string"
-                  ? entry.data.cover.url
-                  : entry.data.cover.url.src,
+              url: entry.data.cover.url,
               alt: entry.data.cover.alt || "",
             }
           : undefined,
         gallery: entry.data.gallery?.map((img) => ({
-          url: typeof img.url === "string" ? img.url : img.url.src,
+          url: img.url,
           alt: img.alt || "",
         })),
         metrics: entry.data.metrics,
