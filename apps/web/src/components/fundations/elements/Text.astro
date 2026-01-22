@@ -24,7 +24,6 @@ export interface Props {
   class?: string; // Optional prop for additional custom classes
   ariaLabel?: string; // Optional aria-label attribute for anchor tags
 }
-
 // Define text styles for each variant
 const textStyles: Record<string, string> = {
   display6XL: "text-4xl  sm:text-7xl md:text-9xl lg:text-[12rem]",
@@ -35,7 +34,7 @@ const textStyles: Record<string, string> = {
   displayXL: "text-4xl  sm:text-4xl md:text-5xl lg:text-6xl",
   displayLG: "text-3xl  sm:text-3xl md:text-4xl lg:text-5xl",
   displayMD: "text-2xl  sm:text-2xl md:text-3xl lg:text-4xl",
-  displaySM: "text-lg  sm:text-xl md:text-2xl lg:text-3xl",
+  displaySM: "text-2xl  sm:text-3xl md:text-3xl lg:text-3xl",
   displayXS: "text-base  sm:text-lg md:text-xl lg:text-2xl",
   textXL: "text-lg sm:text-xl md:text-2xl",
   textLG: "text-base sm:text-lg md:text-xl ",
@@ -43,7 +42,6 @@ const textStyles: Record<string, string> = {
   textSM: "text-sm ",
   textXS: "text-xs ",
 };
-
 // Destructure props with default values
 const {
   tag: Tag = "p", // Defaults to paragraph tag
@@ -51,10 +49,8 @@ const {
   variant = "textBase", // Defaults to textBase style variant
   ...rest // Collect remaining props
 } = Astro.props;
-
 // Get the base classes for the specified variant
-const baseClasses = textStyles[variant] || textStyles.textBase; // Fallback to textMD if variant not found
-
+const baseClasses = textStyles[variant] || textStyles.textBase; // Fallback to textBase if variant not found
 // Combine base classes with any additional custom classes
 const combinedClasses = `${baseClasses} ${className}`.trim();
 ---

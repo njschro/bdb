@@ -19,4 +19,7 @@ export {
   transformPost,
   transformTeamMember,
   transformLegalPage,
+  transformService,
+  transformProject,
+  transformCareer,
 } from "./transforms";

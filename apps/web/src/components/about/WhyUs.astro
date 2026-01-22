@@ -1,0 +1,24 @@
+---
+// Fundations
+import Text from "@/components/fundations/elements/Text.astro";
+import Kicker from "@/components/fundations/elements/Kicker.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+---
+
+<section>
+  <Wrapper variant="standard" class="py-24 lg:pt-48">
+    <div class="max-w-xl mx-auto text-center text-balance">
+      <Kicker class="text-base-600">why us</Kicker>
+      <Text
+        tag="h2"
+        variant="displayMD"
+        class="font-medium tracking-tight mt-12"
+      >
+        title
+      </Text>
+      <Text tag="p" variant="textLG" class="text-base-600 mt-4">
+        description
+      </Text>
+    </div>
+  </Wrapper>
+</section>

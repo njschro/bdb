@@ -1,0 +1,57 @@
+---
+// Fundations
+import Text from "@/components/fundations/elements/Text.astro";
+// Icons
+import ArrowUpRight from "@/components/fundations/icons/ArrowUpRight.astro";
+// Content
+const { title, description, url, department } = {
+  url: "/careers/" + Astro.props.career.slug,
+  title: Astro.props.career.data.title,
+  description: Astro.props.career.data.description,
+  department: Astro.props.career.data.department,
+};
+---
+
+<details class="pb-8 border-b border-base-200 group relative">
+  <summary class="cursor-pointer list-none">
+    <a
+      href={url}
+      title={`View role: ${title}`}
+      aria-label={`View role: ${title}`}
+      class="absolute inset-0 z-10"></a>
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 lg:gap-x-8 items-start">
+      <Text
+        tag="p"
+        variant="textXS"
+        class="uppercase text-base-600 font-medium"
+      >
+        {department}
+      </Text>
+      <div class="lg:col-span-2">
+        <Text tag="h3" variant="textXL" class="font-medium text-accent-900">
+          {title}
+        </Text>
+        <Text
+          tag="p"
+          variant="textBase"
+          class="text-base-600 mt-1 line-clamp-2"
+        >
+          {description}
+        </Text>
+      </div>
+      <a
+        href={url}
+        title={`View role: ${title}`}
+        aria-label={`View role: ${title}`}
+        class="lg:ml-auto text-accent-900 hover:text-accent-500 font-medium text-lg flex items-center gap-2 group"
+      >
+        <span>View position</span>
+        <ArrowUpRight
+          slot="icon"
+          size="sm"
+          class="group-hover:rotate-45 duration-300 transition"
+        />
+      </a>
+    </div>
+  </summary>
+</details>

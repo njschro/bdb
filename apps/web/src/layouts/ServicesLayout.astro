@@ -1,0 +1,107 @@
+---
+// Assets
+import { Image } from "astro:assets";
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Kicker from "@/components/fundations/elements/Kicker.astro";
+import Button from "@/components/fundations/elements/Button.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Components
+import ServiceCard from "@/components/services/ServiceCard.astro";
+// Content
+import { getAllServices } from "@/lib/data";
+const { frontmatter } = Astro.props;
+const allServices = await getAllServices();
+const latestServices = allServices
+  .filter((service) => service.data.title !== frontmatter.title)
+  .slice(0, 2);
+---
+
+<BaseLayout navTransparent={true}>
+  <section class="bg-accent-800">
+    <Wrapper
+      variant="standard"
+      class="py-12 pt-48 lg:border-x lg:border-white/10"
+    >
+      <div class="max-w-xl text-balance lg:col-span-2">
+        <Kicker class="text-base-300">{frontmatter.title}</Kicker>
+        <Text
+          tag="h1"
+          variant="displayMD"
+          class="text-white font-medium tracking-tight mt-12"
+        >
+          {frontmatter.excerpt}
+        </Text>
+        <Text tag="p" variant="textbas" class="text-base-300 max-w-xl mt-4">
+          {frontmatter.description}
+        </Text>
+      </div>
+
+      <ul role="list" class="space-y-1 list-none mt-12">
+        {
+          frontmatter.highlights?.map((highlight, index) => (
+            <li>
+              <Text tag="p" variant="textSM" class="text-base-300">
+                {index + 1}. {highlight}
+              </Text>
+            </li>
+          ))
+        }
+      </ul>
+    </Wrapper>
+  </section>
+
+  <section>
+    <Wrapper variant="paddingless">
+      <Image
+        width={1400}
+        height={1400}
+        loading="lazy"
+        decoding="async"
+        src={frontmatter.image.url}
+        alt={frontmatter.image.alt || frontmatter.title}
+        class="object-cover object-center w-full max-h-120"
+      />
+    </Wrapper>
+  </section>
+  <Wrapper variant="standard" class="py-12">
+    <Wrapper variant="narrow" class="mx-auto">
+      <Wrapper variant="prose">
+        <slot />
+      </Wrapper>
+    </Wrapper>
+  </Wrapper>
+  {
+    latestServices.length > 0 && (
+      <section>
+        <Wrapper variant="standard" class="py-24">
+          <div class="flex flex-col md:flex-row gap-4 md:items-center justify-between">
+            <Text
+              tag="h2"
+              variant="displaySM"
+              class="font-medium  tracking-tight   text-accent-900"
+            >
+              Latest services
+            </Text>
+            <Button
+              isLink
+              size="xs"
+              variant="muted"
+              href="/services"
+              class="w-fit"
+            >
+              See all projects
+            </Button>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 mt-12 lg:mt-24 gap-x-8 gap-y-24">
+            {latestServices.map((service) => (
+              <ServiceCard service={service} />
+            ))}
+          </div>
+        </Wrapper>
+      </section>
+    )
+  }
+</BaseLayout>

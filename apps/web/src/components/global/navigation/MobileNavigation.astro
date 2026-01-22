@@ -1,0 +1,40 @@
+---
+// Fundations
+import Button from "@/components/fundations/elements/Button.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+interface NavLink {
+  label: string;
+  href: string;
+}
+interface Props {
+  navLinks: NavLink[];
+}
+const { navLinks } = Astro.props;
+---
+
+<div
+  id="mobile-menu"
+  class="lg:hidden absolute inset-x-0 top-full overflow-hidden transition-all duration-300 ease-out max-h-0 opacity-0 -translate-y-2 pointer-events-none"
+>
+  <Wrapper variant="standard" class="pt-2">
+    <div class="bg-accent-400 p-8 ring-inset rounded">
+      <!-- Navigation Links -->
+      <nav class="space-y-3 text-center">
+        {
+          navLinks.map((link) => (
+            <a
+              href={link.href}
+              class="block text-accent-900 text-xl font-medium  focus:text-white  transition"
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
+      <div class="space-y-2 mt-12">
+        <Button size="sm" variant="default" class="w-full">Buy Bastion</Button>
+        <Button size="sm" variant="muted" class="w-full">Contact us</Button>
+      </div>
+    </div>
+  </Wrapper>
+</div>

@@ -1,14 +1,16 @@
-# Theme Name
+# Bastion — Construction & Engineering Theme
 
 ![Theme preview](https://lexingtonthemes.com/OpenGraph/theme-name/twitter.png)
 
+A professional Astro theme for construction, engineering, and project management companies. Features dual data source support — use simple markdown files or connect to Sanity CMS for a visual editing experience.
 
 ## Links
-- **Theme specs:** https://lexingtonthemes.com/templates/theme-name  
-- **Documentation:** https://lexingtonthemes.com/documentation  
-- **Changelog:** https://lexingtonthemes.com/changelog/theme-name  
-- **Support:** https://lexingtonthemes.com/legal/support/  
-- **Get the bundle:** https://lexingtonthemes.com  
+
+- **Theme specs:** https://lexingtonthemes.com/templates/theme-name
+- **Documentation:** https://lexingtonthemes.com/documentation
+- **Changelog:** https://lexingtonthemes.com/changelog/theme-name
+- **Support:** https://lexingtonthemes.com/legal/support/
+- **Get the bundle:** https://lexingtonthemes.com
 
 ---
 
@@ -52,11 +54,12 @@ Open http://localhost:4321 — your site is ready with sample content!
 
 Edit content in `apps/web/src/content/`:
 
-- `posts/` — Blog posts
-- `authors/` — Author profiles
-- `podcast/` — Podcast episodes
-- `jobs/` — Job listings
-- `helpCenter/` — Help articles
+- `posts/` — Blog articles
+- `team/` — Team member profiles
+- `services/` — Service offerings
+- `projects/` — Project case studies
+- `careers/` — Job listings
+- `legal/` — Legal pages (Privacy, Terms, Cookies)
 
 ---
 
@@ -156,7 +159,7 @@ This starts:
 ### Step 7: Add Content in Studio
 
 1. Go to http://localhost:3333
-2. Create or edit content (posts, team members, etc.)
+2. Create or edit content (posts, team members, projects, etc.)
 3. Click **Publish** so updates show up on http://localhost:4321
 
 ---
@@ -182,20 +185,21 @@ Both options use the same components and layouts — just different data sources
 ```
 /
 ├── apps/
-│   ├── web/              # Your Astro website
+│   ├── web/                 # Astro website
 │   │   ├── src/
-│   │   │   ├── components/
-│   │   │   ├── layouts/
-│   │   │   ├── lib/sanity/  # Sanity integration
-│   │   │   ├── pages/
-│   │   │   └── styles/
+│   │   │   ├── components/  # UI components
+│   │   │   ├── content/     # Markdown content (Content Collections)
+│   │   │   ├── layouts/     # Page layouts
+│   │   │   ├── lib/         # Data utilities & Sanity integration
+│   │   │   ├── pages/       # Route pages
+│   │   │   └── styles/      # Global styles
 │   │   └── .env.example
 │   │
-│   └── studio/           # Sanity CMS
-│       ├── schemas/      # Content models
+│   └── studio/              # Sanity CMS
+│       ├── schemas/         # Content models
 │       └── .env.example
 │
-├── scripts/              # Utility scripts (migrations, cleanup)
+├── scripts/                 # Utility scripts (migrations, cleanup)
 ├── pnpm-workspace.yaml
 └── package.json
 ```
@@ -204,78 +208,101 @@ Both options use the same components and layouts — just different data sources
 
 ## Content Types
 
-### Blog Posts
+### Blog Posts (`posts/`)
 
-- Title, slug, description
-- Cover image with alt text
-- Publish date and author
-- Tags for categorization
-- Rich text body content
-- Flags: Breaking, Featured, Top Story, Brief, Locked
+| Field         | Type     | Description                   |
+| ------------- | -------- | ----------------------------- |
+| `title`       | string   | Post title                    |
+| `description` | string   | Short summary for cards & SEO |
+| `pubDate`     | date     | Publication date              |
+| `image`       | object   | Cover image (`url`, `alt`)    |
+| `tags`        | string[] | Categorization tags           |
 
-### Authors
+### Team Members (`team/`)
 
-- Name, role, bio
-- Profile image
-- Social media links (Twitter, LinkedIn, Website, Email)
+| Field     | Type   | Description                    |
+| --------- | ------ | ------------------------------ |
+| `name`    | string | Full name                      |
+| `role`    | string | Job title                      |
+| `bio`     | text   | Biography                      |
+| `image`   | object | Profile photo (`url`, `alt`)   |
+| `socials` | array  | Social links (`label`, `href`) |
 
-### Podcasts
+### Services (`services/`)
 
-- Title, description
-- Episode number and duration
-- Cover image
-- Audio file source
-- Tags and author
-- Flags: Featured, Guest, Series, Locked
+| Field         | Type     | Description                  |
+| ------------- | -------- | ---------------------------- |
+| `title`       | string   | Service name                 |
+| `description` | text     | Full description             |
+| `excerpt`     | string   | Short summary for cards      |
+| `image`       | object   | Cover image (`url`, `alt`)   |
+| `highlights`  | string[] | Key features / bullet points |
+| `featured`    | boolean  | Show prominently             |
 
-### Jobs
+### Projects (`projects/`)
 
-- Title, company, location
-- Job type, level, experience
-- Salary range
-- Requirements, responsibilities, benefits
+| Field         | Type     | Description                    |
+| ------------- | -------- | ------------------------------ |
+| `title`       | string   | Project name                   |
+| `description` | text     | Project overview               |
+| `client`      | string   | Client name                    |
+| `location`    | string   | Project location               |
+| `year`        | string   | Completion year                |
+| `category`    | string   | Project category               |
+| `services`    | string[] | Services provided              |
+| `cover`       | object   | Cover image (`url`, `alt`)     |
+| `gallery`     | array    | Gallery images (`url`, `alt`)  |
+| `metrics`     | array    | Key metrics (`label`, `value`) |
+| `featured`    | boolean  | Show prominently               |
 
-### Help Center
+### Careers (`careers/`)
 
-- Title and description
-- Rich text content
+| Field              | Type     | Description                 |
+| ------------------ | -------- | --------------------------- |
+| `title`            | string   | Job title                   |
+| `description`      | text     | Job overview                |
+| `location`         | string   | Work location               |
+| `type`             | string   | Employment type (Full-time) |
+| `department`       | string   | Department name             |
+| `experience`       | string   | Experience level            |
+| `salary`           | string   | Salary range                |
+| `applyUrl`         | url      | External application link   |
+| `email`            | string   | Contact email               |
+| `responsibilities` | string[] | Job responsibilities        |
+| `requirements`     | string[] | Job requirements            |
+| `benefits`         | string[] | Benefits offered            |
+| `active`           | boolean  | Position open?              |
 
-### Legal Pages
+### Legal Pages (`legal/`)
 
-- Page title (Privacy, Terms, etc.)
-- Last updated date
-- Rich text content
-
-### Site Settings
-
-- Site title and description
-- Navigation links
-- Footer content
-- Social media links
+| Field     | Type   | Description                          |
+| --------- | ------ | ------------------------------------ |
+| `page`    | string | Page title (Privacy, Terms, Cookies) |
+| `pubDate` | date   | Last updated date                    |
 
 ---
 
 ## Website Routes
 
-| URL                   | Page            |
-| --------------------- | --------------- |
-| `/`                   | Homepage        |
-| `/blog`               | Blog listing    |
-| `/blog/posts/[slug]`  | Blog post       |
-| `/blog/tags`          | All tags        |
-| `/blog/tags/[tag]`    | Posts by tag    |
-| `/authors`            | Authors listing |
-| `/authors/[slug]`     | Author profile  |
-| `/podcast`            | Podcast listing |
-| `/podcast/[slug]`     | Podcast episode |
-| `/podcast/tags`       | Podcast tags    |
-| `/podcast/tags/[tag]` | Episodes by tag |
-| `/jobs`               | Job listings    |
-| `/jobs/[slug]`        | Job details     |
-| `/helpcenter`         | Help center     |
-| `/helpcenter/[slug]`  | Help article    |
-| `/legal/[slug]`       | Legal pages     |
-| `/rss.xml`            | RSS feed        |
+| URL                  | Page                  |
+| -------------------- | --------------------- |
+| `/`                  | Homepage              |
+| `/about`             | About page            |
+| `/contact`           | Contact page          |
+| `/blog`              | Blog listing          |
+| `/blog/posts/[slug]` | Blog post detail      |
+| `/blog/tags`         | All blog tags         |
+| `/blog/tags/[tag]`   | Posts filtered by tag |
+| `/team`              | Team listing          |
+| `/team/[slug]`       | Team member profile   |
+| `/services`          | Services listing      |
+| `/services/[slug]`   | Service detail        |
+| `/projects`          | Projects listing      |
+| `/projects/[slug]`   | Project case study    |
+| `/careers`           | Careers listing       |
+| `/careers/[slug]`    | Job posting detail    |
+| `/legal/[slug]`      | Legal pages           |
+| `/rss.xml`           | RSS feed              |
 
 ---
 
@@ -371,6 +398,7 @@ Run `pnpm install` in the project root to reinstall dependencies.
 | `pnpm dev:web`    | Start website only                             |
 | `pnpm dev:studio` | Start CMS only                                 |
 | `pnpm build`      | Build both for production                      |
+| `pnpm migrate`    | Migrate Content Collections to Sanity          |
 | `pnpm clean`      | Remove node_modules/.env/dist before packaging |
 
 ---

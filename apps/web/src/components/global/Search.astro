@@ -1,71 +1,155 @@
 ---
-import { getCollection } from "astro:content";
-const posts = await Promise.all(
-  (await getCollection("posts")).map(async (post) => ({
-    title: post.data.title,
-    pubDate: post.data.pubDate,
-    description: post.data.description,
-    slug: post.slug,
-  }))
-);
+// Fundations
+import Button from "@/components/fundations/elements/Button.astro";
+// Icons
+import Close from "@/components/fundations/icons/Close.astro";
+import SearchIcon from "@/components/fundations/icons/Search.astro";
+import {
+  getAllPosts,
+  getAllServices,
+  getAllProjects,
+  getAllTeamMembers,
+  getAllCareers,
+  getAllLegalPages,
+} from "@/lib/data";
+
+const [posts, services, projects, team, careers, legal] = await Promise.all([
+  getAllPosts(),
+  getAllServices(),
+  getAllProjects(),
+  getAllTeamMembers(),
+  getAllCareers(),
+  getAllLegalPages(),
+]);
+
+const searchItems = [
+  ...posts.map((item) => ({
+    type: "Post",
+    title: item.data.title,
+    description: item.data.description,
+    date: item.data.pubDate,
+    meta: item.data.tags?.join(", "),
+    url: `/blog/posts/${item.slug}`,
+  })),
+  ...services.map((item) => ({
+    type: "Service",
+    title: item.data.title,
+    description: item.data.excerpt ?? item.data.description,
+    meta: item.data.highlights?.join(", "),
+    url: `/services/${item.slug}`,
+  })),
+  ...projects.map((item) => ({
+    type: "Project",
+    title: item.data.title,
+    description: item.data.description,
+    meta: [
+      item.data.client,
+      item.data.location,
+      item.data.category,
+      item.data.year?.toString(),
+    ]
+      .filter(Boolean)
+      .join(" • "),
+    url: `/projects/${item.slug}`,
+  })),
+  ...team.map((item) => ({
+    type: "Team",
+    title: item.data.name,
+    description: item.data.bio,
+    meta: item.data.role,
+    url: `/team/${item.slug}`,
+  })),
+  ...careers.map((item) => ({
+    type: "Career",
+    title: item.data.title,
+    description: item.data.description,
+    meta: [item.data.location, item.data.type, item.data.department]
+      .filter(Boolean)
+      .join(" • "),
+    url: `/careers/${item.slug}`,
+  })),
+  ...legal.map((item) => ({
+    type: "Legal",
+    title: item.data.page,
+    description:
+      item.data.pubDate?.toISOString?.().split("T")[0] || "Legal notice",
+    date: item.data.pubDate,
+    url: `/legal/${item.slug}`,
+  })),
+];
 ---
 
 <div class="relative">
-  <button
+  <Button
+    size="xs"
+    variant="muted"
+    iconOnly={true}
     type="button"
     id="searchButton"
-    aria-label="Search posts"
-    class="flex items-center h-auto text-base-900"
+    aria-label="Search site"
   >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="size-4"
-      fill="currentColor"
-      viewBox="0 0 256 256"
-    >
-      <path
-        d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
-      ></path>
-    </svg>
-  </button>
+    <SearchIcon slot="icon" size="base" />
+  </Button>
 
   <div
     id="searchModal"
-    class="fixed inset-0 z-50 hidden overflow-y-auto bg-black/10 backdrop-blur-sm"
+    class="fixed inset-0 z-50 hidden overflow-y-auto bg-black/30 backdrop-blur-sm"
     role="dialog"
     aria-modal="true"
   >
-    <div class="min-h-screen px-4 text-center">
+    <div class="min-h-screen px-4 py-8 text-center">
       <div
-        class="relative inline-block w-full max-w-xl mt-12 mb-8 text-left align-middle lg:mt-48 transition-all transform"
+        class="relative inline-block w-full max-w-3xl mt-12 mb-8 text-left align-middle lg:mt-24 transition-all transform"
       >
-        <div class="hidden">
-          <button
-            type="button"
-            id="closeSearch"
-            class="cursor-pointer text-base-400 hover:text-base-600"
-            aria-label="Close search"
-          >
-            ×
-          </button>
-        </div>
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="Search posts..."
-          class="block w-full h-10 px-4 py-2 text-xs leading-tight align-middle bg-white border border-transparent rounded-full transition duration-300 ease-in-out focus:z-10 text-base-500 ring-1 ring-base-200 placeholder-base-400 focus:border-accent-50 focus:ring-accent-500 focus:ring-2 focus:outline-none shadow-sm"
-        />
-        <div
-          id="searchResults"
-          class="w-full mt-2 overflow-hidden overflow-y-auto rounded-lg max-h-100 divide-y divide-base-200 scrollbar-hide"
-        >
+        <div class="rounded-xl bg-accent-950 outline-white/10 shadow-2xl">
+          <div class="flex items-start justify-between gap-4 px-6 pt-6">
+            <div>
+              <p class="text-sm uppercase text-base-400 font-medium">Search</p>
+              <h2 class="text-white text-xl font-medium tracking-tight mt-12">
+                Find what you need
+              </h2>
+              <p class="text-base-300 text-sm">
+                Posts, services, projects, team, careers, and legal pages.
+              </p>
+            </div>
+            <Button
+              iconOnly
+              size="sm"
+              variant="muted"
+              type="button"
+              id="closeSearch"
+              aria-label="Close search"
+            >
+              <Close slot="icon" size="base" />
+            </Button>
+          </div>
+          <div class="p-6 pt-4 space-y-4">
+            <div class="relative">
+              <span
+                class="absolute left-4 top-1/2 -translate-y-1/2 text-accent-400"
+              >
+                <SearchIcon size="sm" />
+              </span>
+              <input
+                type="text"
+                id="searchInput"
+                placeholder="Search by title, role, service, or location..."
+                class="w-full rounded border-white/15 bg-accent-950 px-12 pr-4 py-3 h-12 text-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500 duration-300 transition-all focus:border-transparent focus:outline-none placeholder-base-500"
+              />
+            </div>
+            <div
+              id="searchResults"
+              class="w-full mt-1 overflow-hidden overflow-y-auto rounded-lg max-h-100 divide-y divide-white/5 bg-accent-900 outline outline-white/10 backdrop-blur scrollbar-hide"
+            >
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<script is:inline define:vars={{ posts }}>
+<script is:inline define:vars={{ searchItems }}>
   window.addEventListener("load", () => {
     const searchButton = document.getElementById("searchButton");
     const searchModal = document.getElementById("searchModal");
@@ -73,8 +157,8 @@ const posts = await Promise.all(
     const searchResults = document.getElementById("searchResults");
     const closeSearch = document.getElementById("closeSearch");
 
-    const fuse = new Fuse(posts, {
-      keys: ["title", "description", "pubDate"],
+    const fuse = new Fuse(searchItems, {
+      keys: ["title", "description", "meta", "type"],
       threshold: 0.3,
       includeMatches: true,
     });
@@ -87,6 +171,7 @@ const posts = await Promise.all(
       searchModal.classList.remove("hidden");
       document.body.style.overflow = "hidden";
       setTimeout(() => searchInput.focus(), 100);
+      renderResults([]);
     }
 
     function closeSearchModal(e) {
@@ -103,17 +188,21 @@ const posts = await Promise.all(
 
     function renderResults(results) {
       if (!searchInput.value.trim()) {
-        searchResults.innerHTML = "";
-        searchResults.classList.add("hidden");
+        searchResults.innerHTML = `
+          <div class="p-4 text-sm text-base-300">
+            Start typing to search posts, services, projects, team, careers, and legal content.
+          </div>
+        `;
+        searchResults.classList.remove("hidden");
         return;
       }
 
       if (results.length === 0) {
         searchResults.innerHTML = `
           <div>
-            <h3 class="p-4 duration-300 hover:bg-white/80 backdrop-blur bg-white/90">
-              There's nothing here.
-            </h3>
+            <div class="p-4 text-sm text-base-300">
+              No matches found. Try a different keyword.
+            </div>
           </div>
         `;
         searchResults.classList.remove("hidden");
@@ -123,21 +212,42 @@ const posts = await Promise.all(
       searchResults.innerHTML = results
         .map(
           (result) => `
-          <div class="relative block p-4 duration-300 hover:bg-white/80 backdrop-blur bg-white/90">
-            <a href="/blog/posts/${result.item.slug}" class="absolute inset-0 z-10"></a>
-            <p class="block text-xs text-sm text-base-600">
-              ${new Date(result.item.pubDate).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "2-digit",
-              })}
-            </p>
-            <h3 class="block mt-2 text-sm font-medium text-base-900 ">
+          <div class="relative block p-4 duration-200 hover:bg-accent-950 bg-accent-900 text-white">
+            <a href="${result.item.url}" class="absolute inset-0 z-10"></a>
+            <div class="flex items-center gap-2 text-xs uppercase  text-base-300">
+              <span>${result.item.type}</span>
+              ${
+                result.item.date
+                  ? `<span class="text-base-400">
+                      • ${new Date(result.item.date).toLocaleDateString(
+                        "en-US",
+                        {
+                          year: "numeric",
+                          month: "short",
+                          day: "2-digit",
+                        }
+                      )}
+                    </span>`
+                  : ""
+              }
+            </div>
+            <h3 class="block mt-2 text-lg font-medium  text-white">
               ${result.item.title}
             </h3>
-            <p class="block text-xs text-base-600">
-              ${result.item.description}
-            </p>
+            ${
+              result.item.description
+                ? `<p class="block text-xs text-base-300 mt-2">
+                    ${result.item.description}
+                  </p>`
+                : ""
+            }
+            ${
+              result.item.meta
+                ? `<p class="block text-[11px] text-base-400 mt-1">
+                    ${result.item.meta}
+                  </p>`
+                : ""
+            }
           </div>
         `
         )

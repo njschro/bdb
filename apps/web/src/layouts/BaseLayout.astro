@@ -4,7 +4,9 @@ import "@/styles/global.css";
 import BaseHead from "@/components/fundations/head/BaseHead.astro";
 // Components
 import Footer from "@/components/global/Footer.astro";
-import Navigation from "@/components/global/Navigation.astro";
+import Navigation from "@/components/global/navigation/Navigation.astro";
+// Scripts
+import KeenSliderTestimonials from "@/components/fundations/scripts/KeenSliderTestimonials.astro";
 
 interface Props {
   seo?: {
@@ -19,18 +21,38 @@ interface Props {
   hideFooter?: boolean;
 }
 
-// Hides the navigation, or footer on selected screens by passing props:
-// <BaseLayout hideNavigation={true} hideFooter={true}>
-const { seo, hideNavigation = false, hideFooter = false } = Astro.props;
+// Hides the big logo, navigation, or footer on selected screens by passing props:
+// <BaseLayout hideFooter={true}>
+// Control transparent nav per page with:
+// <BaseLayout navTransparent={true}>
+const {
+  seo,
+  hideNavigation = false,
+  hideFooter = false,
+  navTransparent,
+} = Astro.props as {
+  seo?: any;
+  hideNavigation?: boolean;
+  hideFooter?: boolean;
+  navTransparent?: boolean;
+};
 ---
 
 <html lang="en" class="scroll-smooth">
   <head>
     <BaseHead seo={seo} />
   </head>
-  <body class="flex flex-col bg-white min-h-svh">
-    {!hideNavigation && <Navigation />}
+  <body class="flex flex-col bg-white min-h-dvh">
+    {
+      !hideNavigation &&
+        (navTransparent !== undefined ? (
+          <Navigation transparent={navTransparent} />
+        ) : (
+          <Navigation />
+        ))
+    }
     <main class="grow"><slot /></main>
     {!hideFooter && <Footer />}
+    <KeenSliderTestimonials />
   </body>
 </html>

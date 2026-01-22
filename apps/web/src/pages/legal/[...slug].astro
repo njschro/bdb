@@ -1,35 +1,29 @@
 ---
 import LegalLayout from "@/layouts/LegalLayout.astro";
-// Sanity
 import {
-  sanityFetch,
-  allLegalPagesQuery,
-  legalPageBySlugQuery,
-  transformLegalPage,
-  portableTextToHtml,
-} from "@/lib/sanity";
-import type { SanityLegalPage } from "@/lib/sanity";
+  getLegalStaticPaths,
+  getLegalPageBySlug,
+  USE_SANITY,
+} from "@/lib/data";
+import { render } from "astro:content";
 
 export async function getStaticPaths() {
-  const pages = await sanityFetch<SanityLegalPage[]>(allLegalPagesQuery);
-  return pages.map((page) => ({
-    params: { slug: page.slug },
-  }));
+  return getLegalStaticPaths();
 }
 
 const { slug } = Astro.params;
-const sanityPage = await sanityFetch<SanityLegalPage>(legalPageBySlugQuery, {
-  slug,
-});
+const result = await getLegalPageBySlug(slug!);
+if (!result) return Astro.redirect("/404");
 
-if (!sanityPage) {
-  return Astro.redirect("/404");
+const { page, htmlContent, _entry } = result;
+
+let Content: any = null;
+if (!USE_SANITY && _entry) {
+  const rendered = await render(_entry);
+  Content = rendered.Content;
 }
-
-const page = transformLegalPage(sanityPage);
-const htmlContent = sanityPage.body ? portableTextToHtml(sanityPage.body) : "";
 ---
 
 <LegalLayout frontmatter={page.data}>
-  <Fragment set:html={htmlContent} />
+  {USE_SANITY ? <Fragment set:html={htmlContent} /> : Content && <Content />}
 </LegalLayout>

@@ -5,14 +5,38 @@ import Text from "@/components/fundations/elements/Text.astro";
 import Button from "@/components/fundations/elements/Button.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 ---
+
 <BaseLayout hideNavigation={true} hideFooter={true}>
-  <section>
-    <Wrapper variant="standard">
-      <Text tag="h1" variant="textLG">
+  <section class="min-h-dvh flex items-center justify-center bg-accent-950">
+    <Wrapper
+      variant="standard"
+      class="flex flex-col items-center py-32 text-balance"
+    >
+      <Text
+        tag="h1"
+        variant="displayXL"
+        class="font-bold text-white tracking-tight"
+      >
         404
       </Text>
-      <Button isLink={true} href="/" size="xs" variant="muted">
-        Go back gome
+      <Text
+        tag="h2"
+        variant="displaySM"
+        class="text-accent-500 font-medium mt-4"
+      >
+        Page not found
+      </Text>
+      <Text
+        tag="p"
+        variant="textLG"
+        class="text-base-400 mt-4 max-w-xl text-center"
+      >
+        Sorry, the page you’re looking for doesn’t exist or has been moved. If
+        you think this is an error, please let us know—or head back to the
+        homepage.
+      </Text>
+      <Button isLink={true} href="/" size="xs" variant="muted" class="mt-12">
+        Go back home
       </Button>
     </Wrapper>
   </section>

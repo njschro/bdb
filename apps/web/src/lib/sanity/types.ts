@@ -55,7 +55,7 @@ export interface SanityTeamMember {
   name: string;
   slug: string;
   role?: string;
-  bio?: PortableTextBlock[];
+  bio?: string;
   image: SanityImage;
   socials?: Array<{
     label: string;
@@ -107,6 +107,141 @@ export interface LegalPage {
     pubDate: Date;
   };
   body?: PortableTextBlock[];
+}
+
+// =============================================================================
+// SERVICE TYPES
+// =============================================================================
+
+export interface SanityService {
+  _id: string;
+  title: string;
+  slug: string;
+  description: string;
+  excerpt?: string;
+  image: SanityImage;
+  highlights?: string[];
+  featured?: boolean;
+  body?: PortableTextBlock[] | string;
+}
+
+/**
+ * Service shape expected by UI components
+ */
+export interface Service {
+  slug: string;
+  data: {
+    title: string;
+    description: string;
+    excerpt?: string;
+    image: {
+      url: string;
+      alt: string;
+    };
+    highlights?: string[];
+    featured?: boolean;
+  };
+  body?: string;
+}
+
+// =============================================================================
+// PROJECT TYPES
+// =============================================================================
+
+export interface SanityProject {
+  _id: string;
+  title: string;
+  slug: string;
+  description: string;
+  client?: string;
+  location?: string;
+  year?: string | number;
+  category?: string;
+  services?: string[];
+  cover?: SanityImage;
+  gallery?: SanityImage[];
+  metrics?: Array<{
+    label: string;
+    value: string;
+  }>;
+  featured?: boolean;
+  body?: PortableTextBlock[] | string;
+}
+
+/**
+ * Project shape expected by UI components
+ */
+export interface Project {
+  slug: string;
+  data: {
+    title: string;
+    description: string;
+    client?: string;
+    location?: string;
+    year?: string | number;
+    category?: string;
+    services?: string[];
+    cover?: {
+      url: string;
+      alt: string;
+    };
+    gallery?: Array<{
+      url: string;
+      alt: string;
+    }>;
+    metrics?: Array<{
+      label: string;
+      value: string;
+    }>;
+    featured?: boolean;
+  };
+  body?: string;
+}
+
+// =============================================================================
+// CAREER TYPES
+// =============================================================================
+
+export interface SanityCareer {
+  _id: string;
+  title: string;
+  slug: string;
+  description: string;
+  location?: string;
+  type?: string;
+  department?: string;
+  experience?: string;
+  salary?: string;
+  applyUrl?: string;
+  email?: string;
+  responsibilities?: string[];
+  requirements?: string[];
+  benefits?: string[];
+  active?: boolean;
+  body?: PortableTextBlock[] | string;
+}
+
+/**
+ * Career shape expected by UI components
+ */
+export interface Career {
+  slug: string;
+  data: {
+    title: string;
+    description: string;
+    location?: string;
+    type?: string;
+    department?: string;
+    experience?: string;
+    salary?: string;
+    applyUrl?: string;
+    email?: string;
+    responsibilities?: string[];
+    requirements?: string[];
+    benefits?: string[];
+    active?: boolean;
+  };
+  body?: string;
 }
 
 // =============================================================================

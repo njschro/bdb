@@ -1,6 +1,5 @@
 ---
 import { AstroSeo } from "@astrolib/seo";
-import { sanityFetch, siteSettingsQuery, getImageUrl } from "@/lib/sanity";
 
 interface Props {
   title?: string;
@@ -23,32 +22,27 @@ const {
   noindex = false,
 } = Astro.props;
 
-// Fetch site settings for defaults
-const settings = await sanityFetch<{
-  title: string;
-  description: string;
-  siteUrl: string;
-  ogImage?: { asset: any; alt?: string };
-  twitterHandle?: string;
-}>(siteSettingsQuery);
+// Site defaults - customize these for your site
+const siteDefaults = {
+  title: "Bastion",
+  description: "Construction & Engineering Excellence",
+  siteUrl: import.meta.env.SITE || "https://example.com",
+  twitterHandle: "",
+};
 
 // Use page-specific values or fall back to site defaults
 const title = pageTitle
-  ? `${pageTitle} | ${settings?.title}`
-  : settings?.title || "My Website";
-const description = pageDescription || settings?.description || "";
-const siteUrl = settings?.siteUrl || "https://example.com";
+  ? `${pageTitle} | ${siteDefaults.title}`
+  : siteDefaults.title;
+const description = pageDescription || siteDefaults.description;
+const siteUrl = siteDefaults.siteUrl;
 const canonical = new URL(Astro.url.pathname, siteUrl).toString();
 
-// Image: use page image, or default OG image from settings
-const ogImageUrl =
-  pageImage?.url ||
-  (settings?.ogImage
-    ? getImageUrl(settings.ogImage.asset, { width: 1200, height: 630 })
-    : "");
-const ogImageAlt = pageImage?.alt || settings?.ogImage?.alt || title;
+// Image: use page image if provided
+const ogImageUrl = pageImage?.url || "";
+const ogImageAlt = pageImage?.alt || title;
 
-const twitterHandle = settings?.twitterHandle || "";
+const twitterHandle = siteDefaults.twitterHandle;
 ---
 
 <AstroSeo
@@ -71,7 +65,7 @@ const twitterHandle = settings?.twitterHandle || "";
           },
         ]
       : [],
-    site_name: settings?.title || "My Website",
+    site_name: siteDefaults.title,
     type: type,
     locale: "en_US",
     ...(type === "article" &&

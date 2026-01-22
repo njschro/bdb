@@ -1,0 +1,112 @@
+---
+// Assets
+import Logo from "@/components/assets/Logo.astro";
+import { Image } from "astro:assets";
+import heroImage from "@/images/assets/jobs.png";
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Kicker from "@/components/fundations/elements/Kicker.astro";
+import Button from "@/components/fundations/elements/Button.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Content
+import { getAllCareers } from "@/lib/data";
+const { frontmatter } = Astro.props;
+const allCareers = await getAllCareers();
+const otherCareers = allCareers.filter(
+  (career) => career.data.title !== frontmatter.title
+);
+
+const meta = [
+  frontmatter.department,
+  frontmatter.type,
+  frontmatter.experience,
+  frontmatter.location,
+  frontmatter.salary,
+].filter(Boolean);
+---
+
+<BaseLayout navTransparent={true}>
+  <section class="bg-accent-800">
+    <div class="relative z-10 flex-1 flex flex-col">
+      <Wrapper
+        variant="standard"
+        class="py-12 pt-48 lg:border-x lg:border-white/10"
+      >
+        <div class="max-w-xl text-balance">
+          <Kicker class="text-white"> {frontmatter.department}</Kicker>
+          <Text
+            tag="h1"
+            variant="displayMD"
+            class="font-medium tracking-tight mt-12 text-white"
+          >
+            {frontmatter.title}
+          </Text>
+          <Text tag="p" variant="textLG" class="text-base-200 mt-4">
+            {frontmatter.description}
+          </Text>
+          <Button
+            isLink={true}
+            href={frontmatter.applyUrl}
+            size="xs"
+            variant="muted"
+            class="w-fit mt-12"
+          >
+            Apply now
+          </Button>
+        </div>
+      </Wrapper>
+      <div class="relative z-10 border-t border-white/10">
+        <Wrapper variant="standard" class="py-8 lg:border-x lg:border-white/10">
+          <div
+            class="flex flex-col md:flex-row md:items-center justify-between gap-y-4 gap-x-8"
+          >
+            {
+              meta.map((item) => (
+                <Text tag="p" variant="textBase" class="uppercase text-white ">
+                  {item}
+                </Text>
+              ))
+            }
+          </div>
+        </Wrapper>
+      </div>
+    </div>
+  </section>
+  <section>
+    <Wrapper variant="standard" class="py-12">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-8 gap-x-24">
+        <div class="lg:col-span-">
+          <Wrapper variant="prose">
+            <slot />
+          </Wrapper>
+        </div>
+        <div>
+          <aside class="lg:sticky lg:top-32 p-8 bg-accent-900 w-full rounded">
+            <Logo class="h-8 text-white" />
+
+            <div class="mt-12 lg:mt-62">
+              <Text tag="h2" variant="textXL" class="text-accent-400">
+                Other opportunities
+              </Text>
+              <ul class="space-y-2 mt-8">
+                {
+                  otherCareers.map((career) => (
+                    <li>
+                      <a
+                        href={`/careers/${career.slug}`}
+                        class="text-base-300 transition hover:text-white"
+                      >
+                        {career.data.title}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

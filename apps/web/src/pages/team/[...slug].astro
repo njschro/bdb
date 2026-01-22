@@ -1,38 +1,29 @@
 ---
 import TeamLayout from "@/layouts/TeamLayout.astro";
-// Sanity
 import {
-  sanityFetch,
-  allTeamMembersQuery,
-  teamMemberBySlugQuery,
-  transformTeamMember,
-  portableTextToHtml,
-} from "@/lib/sanity";
-import type { SanityTeamMember } from "@/lib/sanity";
+  getTeamStaticPaths,
+  getTeamMemberBySlug,
+  USE_SANITY,
+} from "@/lib/data";
+import { render } from "astro:content";
 
 export async function getStaticPaths() {
-  const members = await sanityFetch<SanityTeamMember[]>(allTeamMembersQuery);
-  return members.map((member) => ({
-    params: { slug: member.slug },
-  }));
+  return getTeamStaticPaths();
 }
 
 const { slug } = Astro.params;
-const sanityMember = await sanityFetch<SanityTeamMember>(
-  teamMemberBySlugQuery,
-  { slug }
-);
+const result = await getTeamMemberBySlug(slug!);
+if (!result) return Astro.redirect("/404");
 
-if (!sanityMember) {
-  return Astro.redirect("/404");
+const { member, htmlContent, _entry } = result;
+
+let Content: any = null;
+if (!USE_SANITY && _entry) {
+  const rendered = await render(_entry);
+  Content = rendered.Content;
 }
-
-const member = transformTeamMember(sanityMember);
-const htmlContent = sanityMember.body
-  ? portableTextToHtml(sanityMember.body)
-  : "";
 ---
 
 <TeamLayout frontmatter={member.data}>
-  <Fragment set:html={htmlContent} />
+  {USE_SANITY ? <Fragment set:html={htmlContent} /> : Content && <Content />}
 </TeamLayout>

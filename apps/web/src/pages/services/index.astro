@@ -1,0 +1,53 @@
+---
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Kicker from "@/components/fundations/elements/Kicker.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Sections
+import Principles from "@/components/services/Principles.astro";
+import Testimonials from "@/components/customers/Testimonials.astro";
+// Components
+import ServiceCard from "@/components/services/ServiceCard.astro";
+// Content
+import { getAllServices } from "@/lib/data";
+const services = await getAllServices();
+---
+
+<BaseLayout navTransparent={true}>
+  <section class="bg-accent-800">
+    <Wrapper
+      variant="standard"
+      class="py-12 pt-48 lg:border-x lg:border-white/10"
+    >
+      <div class="grid grid-cols-1 lg:grid-cols-3 lg:items-end gap-12">
+        <div class="max-w-4xl text-balance lg:col-span-2">
+          <Kicker class="text-white">serivces</Kicker>
+          <Text
+            tag="h1"
+            variant="displayMD"
+            class="font-medium tracking-tight mt-12 text-white"
+          >
+            Construction services delivered with clarity, discipline, and
+            experience.
+          </Text>
+          <Text tag="p" variant="textLG" class="text-base-200 mt-4">
+            We provide end-to-end construction and renovation services across
+            residential and commercial projects, with a focus on planning,
+            coordination, and build quality.
+          </Text>
+        </div>
+      </div>
+    </Wrapper>
+  </section>
+
+  <section>
+    <Wrapper variant="standard" class="py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-24">
+        {services.map((service) => <ServiceCard service={service} />)}
+      </div>
+    </Wrapper>
+  </section>
+  <Principles />
+  <Testimonials />
+</BaseLayout>

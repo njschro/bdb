@@ -1,0 +1,33 @@
+---
+// Fundations
+import Text from "@/components/fundations/elements/Text.astro";
+import Button from "@/components/fundations/elements/Button.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Components
+import TeamCard from "@/components/team/TeamCard.astro";
+// Content
+import { getAllTeamMembers } from "@/lib/data";
+const allTeam = await getAllTeamMembers();
+---
+
+<section>
+  <Wrapper variant="standard" class="py-24">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-24">
+      <div class="gap-4 flex flex-col h-full bg-accent-500 p-8 justify-between">
+        <div>
+          <Text
+            tag="h2"
+            variant="displaySM"
+            class="font-medium tracking-tight text-white mt-2"
+          >
+            Meet our team
+          </Text>
+        </div>
+        <Button isLink size="xs" variant="muted" href="/team" class="w-fit">
+          All team
+        </Button>
+      </div>
+      {allTeam.slice(0, 2).map((post) => <TeamCard post={post} />)}
+    </div>
+  </Wrapper>
+</section>

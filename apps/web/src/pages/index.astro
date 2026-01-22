@@ -1,8 +1,25 @@
 ---
 // Fundations
 import BaseLayout from "@/layouts/BaseLayout.astro";
+// Sections
 import Hero from "@/components/landing/Hero.astro";
+import Intro from "@/components/landing/Intro.astro";
+import WhatWeDo from "@/components/landing/WhatWeDo.astro";
+import ServicesPreview from "@/components/services/ServicesPreview.astro";
+import Stats from "@/components/landing/Stats.astro";
+import Testimonials from "@/components/customers/Testimonials.astro";
+import ProjectsPreview from "@/components/projects/ProjectsPreview.astro";
+
+
+
 ---
-<BaseLayout>
+
+<BaseLayout navTransparent={true}>
   <Hero />
+  <Intro />
+  <WhatWeDo />
+  <ServicesPreview />
+  <Stats />
+  <Testimonials />
+  <ProjectsPreview />
 </BaseLayout>

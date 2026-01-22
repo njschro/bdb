@@ -1,0 +1,46 @@
+---
+// Assets
+import Logo from "@/components/assets/Logo.astro";
+// Fundations
+import Text from "@/components/fundations/elements/Text.astro";
+import Button from "@/components/fundations/elements/Button.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Components
+import ProjectCard from "@/components/projects/ProjectCard.astro";
+// Content
+import { getAllProjects } from "@/lib/data";
+const projects = await getAllProjects();
+---
+
+<section>
+  <Wrapper variant="standard" class="py-24">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-12">
+      <div
+        class="bg-accent-900 rounded p-8 flex flex-col h-full justify-between"
+      >
+        <div>
+          <Logo class="h-8 w-fit text-white" />
+          <Text
+            tag="h2"
+            variant="displaySM"
+            class="font-medium tracking-tight mt-12 lg:mt-24 text-white"
+          >
+            Recent builds that balance performance, craft, and longevity.
+          </Text>
+          <Text tag="p" variant="textBase" class="text-base-300 mt-4">
+            Explore a selection of projects across sectors—each delivered with
+            precise planning, resilient materials, and reliable execution.
+          </Text>
+        </div>
+        <Button
+          isLink
+          size="xs"
+          variant="muted"
+          href="/projects"
+          class="mt-8 w-fit">See all projects</Button
+        >
+      </div>
+      {projects.slice(0, 2).map((project) => <ProjectCard project={project} />)}
+    </div>
+  </Wrapper>
+</section>

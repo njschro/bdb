@@ -2,60 +2,41 @@
 // Fundations
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Text from "@/components/fundations/elements/Text.astro";
+import Kicker from "@/components/fundations/elements/Kicker.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 // Components
 import BlogEntry from "@/components/blog/BlogCard.astro";
-// Sanity
-import {
-  sanityFetch,
-  allTagsQuery,
-  postsByTagQuery,
-  transformPost,
-} from "@/lib/sanity";
-import type { SanityPost } from "@/lib/sanity";
+// Content
+import { getTagStaticPaths } from "@/lib/data";
 
 export async function getStaticPaths() {
-  const tags = await sanityFetch<string[]>(allTagsQuery);
-
-  const paths = await Promise.all(
-    tags.map(async (tag) => {
-      const sanityPosts = await sanityFetch<SanityPost[]>(postsByTagQuery, {
-        tag,
-      });
-      const posts = sanityPosts.map(transformPost);
-      return {
-        params: { tag },
-        props: { posts },
-      };
-    })
-  );
-
-  return paths;
+  return getTagStaticPaths();
 }
 
 const { tag } = Astro.params;
 const { posts } = Astro.props;
 ---
 
-<BaseLayout pageTitle={tag}>
+<BaseLayout>
   <section>
     <Wrapper variant="standard" class="py-24 lg:pt-48">
-      <Text
-        tag="h1"
-        variant="textBase"
-        class="font-medium capitalize text-base-900"
-      >
-        {tag}</Text
-      >
-
+      <div class="max-w-xl mx-auto text-center text-balance">
+        <Kicker class="text-base-600">Journal</Kicker>
+        <Text
+          tag="h1"
+          variant="displayMD"
+          class="font-medium tracking-tight mt-12 capitalize"
+        >
+          {tag}
+        </Text>
+        <Text tag="p" variant="textLG" class="text-base-600 mt-4">
+          Articles tagged with “{tag}”.
+        </Text>
+      </div>
       <div
-        class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-y-24 gap-4"
+        class="grid grid-cols-1 lg:grid-cols-3 mt-12 lg:mt-24 gap-x-8 gap-y-24"
       >
-        {
-          posts.map((post, index) => (
-            <BlogEntry post={post} index={index + 1} />
-          ))
-        }
+        {posts.map((post) => <BlogEntry post={post} />)}
       </div>
     </Wrapper>
   </section>

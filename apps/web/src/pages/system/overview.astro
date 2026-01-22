@@ -11,10 +11,13 @@ const pageSections = [
         category: " Pages",
         links: [
           { text: "Home", href: "/" },
+          { text: "About", href: "/about" },
           { text: "404", href: "/404" },
         ],
-
-        
+      },
+      {
+        category: " Forms",
+        links: [{ text: "Contact", href: "/contact" }],
       },
       {
         category: "System",
@@ -45,6 +48,34 @@ const pageSections = [
     title: "Content Collections",
     columns: [
       {
+        category: "Projects",
+        links: [
+          { text: "Home", href: "/projects/" },
+          { text: "Details", href: "/projects/westfield-commercial-complex" },
+        ],
+      },
+      {
+        category: "Services",
+        links: [
+          { text: "Home", href: "/services/" },
+          { text: "Details", href: "/services/construction-management" },
+        ],
+      },
+      {
+        category: "Careers",
+        links: [
+          { text: "Home", href: "/careers/" },
+          { text: "Details", href: "/careers/senior-project-manager" },
+        ],
+      },
+      {
+        category: "Team",
+        links: [
+          { text: "Home", href: "/team/" },
+          { text: "Details", href: "/team/clara-navarro" },
+        ],
+      },
+      {
         category: "Blog Pages",
         links: [
           { text: "Home ", href: "/blog/" },
@@ -52,13 +83,6 @@ const pageSections = [
           { text: "Tag Index", href: "/blog/tags" },
           { text: "Tag Category", href: "/blog/tags/photography" },
           { text: "RSS", href: "/rss.xml" },
-        ],
-      },
-      {
-        category: "Team",
-        links: [
-          { text: "Home", href: "/team/" },
-          { text: "Details", href: "/team/jordan-wells" },
         ],
       },
       {
@@ -75,7 +99,7 @@ const pageSections = [
 
 <BaseLayout>
   <section>
-    <Wrapper variant="standard" class="py-12 lg:py-24">
+    <Wrapper variant="standard" class="py-24 lg:pt-48">
       <Text tag="h2" variant="displaySM" class="font-medium text-base-900">
         Overview
       </Text>

@@ -1,0 +1,29 @@
+---
+import ServicesLayout from "@/layouts/ServicesLayout.astro";
+import {
+  getServiceStaticPaths,
+  getServiceBySlug,
+  USE_SANITY,
+} from "@/lib/data";
+import { render } from "astro:content";
+
+export async function getStaticPaths() {
+  return getServiceStaticPaths();
+}
+
+const { slug } = Astro.params;
+const result = await getServiceBySlug(slug!);
+if (!result) return Astro.redirect("/404");
+
+const { service, htmlContent, _entry } = result;
+
+let Content: any = null;
+if (!USE_SANITY && _entry) {
+  const rendered = await render(_entry);
+  Content = rendered.Content;
+}
+---
+
+<ServicesLayout frontmatter={service.data}>
+  {USE_SANITY ? <Fragment set:html={htmlContent} /> : Content && <Content />}
+</ServicesLayout>

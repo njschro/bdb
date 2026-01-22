@@ -1,0 +1,170 @@
+---
+// Fundations
+import Text from "@/components/fundations/elements/Text.astro";
+import Kicker from "@/components/fundations/elements/Kicker.astro";
+import Button from "@/components/fundations/elements/Button.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Icons
+import MapPin from "@/components/fundations/icons/MapPin.astro";
+import Phone from "@/components/fundations/icons/Phone.astro";
+import Envelpe from "@/components/fundations/icons/Envelope.astro";
+const contactDetails = {
+  email: "hello@bastion.com",
+  phone: "+1 (555) 123-4567",
+  address: "123 Market Street, Suite 500\nSan Francisco, CA 94103",
+};
+const contactItems = [
+  {
+    label: "Address",
+    value: contactDetails.address.split("\n"),
+    icon: "location",
+  },
+  {
+    label: "Phone",
+    value: [contactDetails.phone],
+    href: `tel:${contactDetails.phone.replace(/[^\d+]/g, "")}`,
+    icon: "phone",
+  },
+  {
+    label: "Email",
+    value: [contactDetails.email],
+    href: `mailto:${contactDetails.email}`,
+    icon: "mail",
+  },
+];
+---
+
+<section>
+  <Wrapper variant="standard" class="py-24">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div>
+        <Kicker class="text-accent-600">Get in touch</Kicker>
+        <Text
+          tag="h2"
+          variant="displaySM"
+          class="font-medium tracking-tight text-base-900 mt-12 text-balance"
+        >
+          Contact our construction experts today.
+        </Text>
+        <Text tag="p" variant="textLG" class="text-base-600 mt-4">
+          Whether you have a question, need more details about our services, or
+          want to discuss a potential collaboration, we're here to help. Fill
+          out the form and we'll respond as soon as possible.
+        </Text>
+        <div class="mt-12 space-y-8 border-t border-base-200 pt-8">
+          {
+            contactItems.map((item) => (
+              <div class="flex items-start gap-4">
+                <span class="flex size-10 items-center justify-center rounded-full bg-accent-500/10 text-accent-600">
+                  {item.icon === "location" ? (
+                    <MapPin size="sm" class="text-accent-500" />
+                  ) : item.icon === "phone" ? (
+                    <Phone size="sm" class="text-accent-500" />
+                  ) : (
+                    <Envelpe size="sm" class="text-accent-500" />
+                  )}
+                </span>
+                <div class="space-y-1">
+                  <Text
+                    tag="p"
+                    variant="textBase"
+                    class="font-medium  text-base-900"
+                  >
+                    {item.label}
+                  </Text>
+                  <Text
+                    tag="p"
+                    variant="textBase"
+                    class="text-base-700 leading-relaxed"
+                  >
+                    {item.value.map((line, index) => (
+                      <>
+                        {item.href ? (
+                          <a
+                            href={
+                              Array.isArray(item.href)
+                                ? item.href[index] || item.href[0]
+                                : item.href
+                            }
+                            class="transition-colors hover:text-accent-500"
+                          >
+                            {line}
+                          </a>
+                        ) : (
+                          line
+                        )}
+                        {index < item.value.length - 1 ? <br /> : ""}
+                      </>
+                    ))}
+                  </Text>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      <form class="bg-accent-950 rounded p-8">
+        <Text
+          tag="h3"
+          variant="textLG"
+          class="font-medium tracking-tight text-white"
+        >
+          Send us a message
+        </Text>
+        <Text tag="p" variant="textBase" class="text-base-400 mt-1">
+          Share a few details and our team will reach out within one business
+          day.
+        </Text>
+        <div class="space-y-4 mt-12">
+          <div class="space-y-2">
+            <label for="contact-name" class="text-sm text-base-400 block">
+              Name<span
+                aria-hidden="true"
+                class="text-accent-500 pointer-events-none">*</span
+              >
+            </label>
+            <input
+              id="contact-name"
+              type="text"
+              name="name"
+              required
+              autocomplete="name"
+              class="w-full rounded border-white/15 bg-accent-950 px-4 py-3 h-12 text-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500 duration-300 transition-all focus:border-transparent focus:outline-none"
+            />
+          </div>
+          <div class="space-y-2">
+            <label for="contact-email" class="text-sm text-base-400 block">
+              Email<span
+                aria-hidden="true"
+                class="text-accent-500 pointer-events-none">*</span
+              >
+            </label>
+            <input
+              id="contact-email"
+              type="email"
+              name="email"
+              required
+              autocomplete="email"
+              class="w-full rounded border-white/15 bg-accent-950 px-4 py-3 h-12 text-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500 duration-300 transition-all focus:border-transparent focus:outline-none"
+            />
+          </div>
+          <div class="space-y-2">
+            <label for="contact-message" class="text-sm text-base-400 block">
+              Message
+            </label>
+            <textarea
+              id="contact-message"
+              name="message"
+              rows="5"
+              class="w-full rounded border-white/15 bg-accent-950 px-4 py-3 text-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500 duration-300 transition-all focus:border-transparent focus:outline-none"
+            ></textarea>
+          </div>
+        </div>
+
+        <Button size="lg" type="submit" variant="muted" class="w-full mt-8">
+          Submit
+        </Button>
+      </form>
+    </div>
+  </Wrapper>
+</section>

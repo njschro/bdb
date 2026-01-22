@@ -2,27 +2,35 @@
 // Fundations
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Text from "@/components/fundations/elements/Text.astro";
+import Kicker from "@/components/fundations/elements/Kicker.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 // Components
 import TeamCard from "@/components/team/TeamCard.astro";
-// Sanity
-import {
-  sanityFetch,
-  allTeamMembersQuery,
-  transformTeamMember,
-} from "@/lib/sanity";
-import type { SanityTeamMember } from "@/lib/sanity";
-
-const sanityTeam = await sanityFetch<SanityTeamMember[]>(allTeamMembersQuery);
-const allTeam = sanityTeam.map(transformTeamMember);
+// Content
+import { getAllTeamMembers } from "@/lib/data";
+const allTeam = await getAllTeamMembers();
 ---
 
 <BaseLayout>
   <section>
-    <Wrapper variant="standard" class="py-12 lg:py-24">
-      <Text tag="h1" variant="textBase"> Team </Text>
-      <div class="grid grid-cols-1 lg:grid-cols-3 mt-12 gap-8">
-        {allTeam.map((post) => <TeamCard post={post} />)}
+    <Wrapper variant="standard" class="py-24 lg:pt-48">
+      <div class="max-w-xl mx-auto text-center text-balance">
+        <Kicker class="text-base-600">Our team</Kicker>
+        <Text
+          tag="h1"
+          variant="displayMD"
+          class="font-medium tracking-tight mt-12"
+        >
+          Experienced professionals behind every successful build
+        </Text>
+        <Text tag="p" variant="textLG" class="text-base-600 mt-4">
+          Our team brings together project managers, engineers, and skilled
+          trades with a shared focus on planning, safety, and accountable
+          delivery.
+        </Text>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 mt-12 gap-x-8 gap-y-24">
+        {allTeam.map((member) => <TeamCard post={member} />)}
       </div>
     </Wrapper>
   </section>

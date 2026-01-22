@@ -1,0 +1,63 @@
+---
+// Fundations
+import Text from "@/components/fundations/elements/Text.astro";
+import Kicker from "@/components/fundations/elements/Kicker.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+const items = [
+  {
+    title: "Get personalized solutions",
+    description:
+      "Our expert team is here to carefully listen to your unique needs and offer tailored solutions that truly bring your vision to life.",
+  },
+  {
+    title: "Discuss your project",
+    description:
+      "Whether you're starting fresh or refining an existing project, we're ready to help you every step of the way.",
+  },
+  {
+    title: "Quick response time",
+    description:
+      "We value your time and ensure a fast response to your inquiries so you get clear answers quickly.",
+  },
+];
+---
+
+<section>
+  <Wrapper variant="standard" class="py-24">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <Kicker class="text-base-600">How to reach us</Kicker>
+      <Text
+        tag="h2"
+        variant="displayMD"
+        class="font-medium tracking-tight text-balance lg:col-span-2"
+      >
+        Get in touch with us and let's collaborate to bring your vision to life
+        <span class="text-accent-500"> with expert solutions and support!</span>
+      </Text>
+    </div>
+    <div
+      class="grid gap-x-8 gap-y-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-12 lg:mt-24"
+    >
+      {
+        items.map((item) => (
+          <div>
+            <Text
+              tag="h3"
+              variant="textLG"
+              class="font-medium  text-accent-900"
+            >
+              {item.title}
+            </Text>
+            <Text
+              tag="p"
+              variant="textSBase"
+              class="text-base-600 text-pretty mt-2"
+            >
+              {item.description}
+            </Text>
+          </div>
+        ))
+      }
+    </div>
+  </Wrapper>
+</section>

@@ -1,0 +1,145 @@
+---
+// Assets
+import { Image } from "astro:assets";
+// Fundations
+import Text from "@/components/fundations/elements/Text.astro";
+import Button from "@/components/fundations/elements/Button.astro";
+// Icons
+import ArrowLeft from "@/components/fundations/icons/ArrowLeft.astro";
+import ArrowRight from "@/components/fundations/icons/ArrowRight.astro";
+import ArrowUpRight from "@/components/fundations/icons/ArrowUpRight.astro";
+// Content
+const project = Astro.props.project;
+const { title, description, url, category, location, year, image, gallery } = {
+  url: "/projects/" + project.slug,
+  title: project.data.title,
+  description: project.data.description,
+  category: project.data.category,
+  location: project.data.location,
+  year: project.data.year,
+  image: project.data.cover?.url,
+  gallery: project.data.gallery,
+};
+---
+
+<details class="pb-8 border-b border-base-200 group">
+  <summary class="cursor-pointer list-none">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 lg:gap-x-8 items-start">
+      <Text
+        tag="p"
+        variant="textXS"
+        class="uppercase text-base-600 font-medium"
+      >
+        {category}
+      </Text>
+      <div class="lg:col-span-2">
+        <Text tag="h3" variant="textXL" class="font-medium text-accent-900">
+          {title}
+        </Text>
+        <Text
+          tag="p"
+          variant="textBase"
+          class="text-base-600 mt-1 line-clamp-2"
+        >
+          {description}
+        </Text>
+      </div>
+      <a
+        href={url}
+        title={`View project: ${title}`}
+        aria-label={`View project: ${title}`}
+        class="lg:ml-auto text-accent-900 hover:text-accent-500 font-medium text-lg flex items-center gap-2 group"
+      >
+        <span>View project</span>
+        <ArrowUpRight
+          slot="icon"
+          size="sm"
+          class="group-hover:rotate-45 duration-300 transition"
+        />
+      </a>
+    </div>
+  </summary>
+  <div
+    id={`project-slider-container-${Astro.props.project.slug}`}
+    class="mt-12 pt-12 border-t border-base-200"
+  >
+    <Text
+      tag="p"
+      variant="textXS"
+      class="uppercase text-base-600 font-medium flex items-center gap-2"
+    >
+      {location}
+      <span aria-hidden="true" class="pointer-events-none">·</span>
+      {year}
+    </Text>
+    <div
+      class="keen-slider mt-4"
+      id={`project-gallery-slider-${Astro.props.project.slug}`}
+    >
+      {
+        image && (
+          <div class="keen-slider__slide">
+            <Image
+              src={image}
+              alt={title}
+              width={400}
+              height={300}
+              loading="lazy"
+              decoding="async"
+              class="object-cover object-center w-full aspect-4/3 rounded"
+            />
+          </div>
+        )
+      }
+      {
+        gallery &&
+          gallery.map((img) => (
+            <div class="keen-slider__slide">
+              <Image
+                src={img.url}
+                alt={img.alt || title}
+                width={400}
+                height={300}
+                loading="lazy"
+                decoding="async"
+                class="object-cover object-center w-full aspect-4/3 rounded"
+              />
+            </div>
+          ))
+      }
+    </div>
+    <div class="flex items-center justify-between mt-4">
+      <div class="flex justify-center gap-2">
+        <Button
+          iconOnly
+          size="xs"
+          variant="muted"
+          aria-label="Previous image"
+          class="project-slider-prev"
+        >
+          <ArrowLeft size="sm" slot="icon" />
+        </Button>
+        <Button
+          iconOnly
+          size="xs"
+          variant="muted"
+          aria-label="Next image"
+          class="project-slider-next"
+        >
+          <ArrowRight size="sm" slot="icon" />
+        </Button>
+      </div>
+      <Button
+        isLink
+        href={url}
+        size="xs"
+        variant="muted"
+        title={`View project: ${title}`}
+        aria-label={`View project: ${title}`}
+        class="w-fit"
+      >
+        View project
+      </Button>
+    </div>
+  </div>
+</details>

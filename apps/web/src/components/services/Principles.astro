@@ -1,0 +1,81 @@
+---
+// Assets
+import Logo from "@/components/assets/Logo.astro";
+// Fundations
+import Text from "@/components/fundations/elements/Text.astro";
+import Kicker from "@/components/fundations/elements/Kicker.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+
+const principles = [
+  {
+    title: "Plan with clarity",
+    description:
+      "We define scope, timelines, and responsibilities upfront—so decisions stay simple and projects stay on track.",
+  },
+  {
+    title: "Build safely, every day",
+    description:
+      "Safety isn’t paperwork. It’s how we run the site—standards, supervision, and zero shortcuts.",
+  },
+  {
+    title: "Own the outcome",
+    description:
+      "We take accountability from first briefing to handover, solving problems early and communicating openly.",
+  },
+  {
+    title: "Improve the craft",
+    description:
+      "We adopt tools and methods that make builds faster, cleaner, and more precise—without sacrificing quality.",
+  },
+];
+---
+
+<section class="bg-accent-950 relative overflow-hidden">
+  <Wrapper
+    variant="standard"
+    class="py-24 lg:py-48 lg:border-x lg:border-white/10"
+  >
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <div>
+        <Logo class="h-12 text-white" /><Kicker class="text-accent-400 mt-8"
+          >Our principles</Kicker
+        >
+      </div>
+
+      <div class="lg:col-span-2 text-balance">
+        <Text tag="h2" variant="displayLG" class="text-white font-medium">
+          The standards we hold ourselves to across
+          <span class="text-accent-500">planning</span>,
+          <span class="text-accent-500">construction</span>, and
+          <span class="text-accent-500"
+            >final delivery on every project
+          </span>we take on
+        </Text>
+
+        <Text tag="p" variant="textLG" class="text-base-400 mt-4">
+          Practical principles that guide our planning, our sites, and our final
+          delivery—on every project, at every scale.
+        </Text>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-24 mt-12">
+          {
+            principles.map(({ title, description }) => (
+              <div>
+                <Text
+                  tag="h3"
+                  variant="displayXS"
+                  class="font-medium  text-white"
+                >
+                  {title}
+                </Text>
+                <Text tag="p" variant="textSM" class="text-base-400 mt-2">
+                  {description}
+                </Text>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </Wrapper>
+</section>

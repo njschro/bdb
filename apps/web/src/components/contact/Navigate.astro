@@ -1,0 +1,70 @@
+---
+// Fundations
+import Text from "@/components/fundations/elements/Text.astro";
+import Kicker from "@/components/fundations/elements/Kicker.astro";
+import UnderlinedLink from "@/components/fundations/elements/UnderlinedLink.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+const cards = [
+  {
+    title: "Services",
+    description:
+      "We provide tailored solutions to meet your specific needs and goals.",
+    href: "/services",
+    cta: "Explore all services",
+  },
+  {
+    title: "Projects",
+    description: "Explore the diverse projects we have successfully completed.",
+    href: "/projects",
+    cta: "View all projects",
+  },
+  {
+    title: "Join us",
+    description: "Join our growing company and help us build a better future.",
+    href: "/careers",
+    cta: "View all jobs",
+  },
+];
+---
+
+<section class="bg-accent-950">
+  <Wrapper variant="standard" class="py-24 lg:py-48">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <Kicker class="text-base-300">Navigate</Kicker>
+      <Text
+        tag="h2"
+        variant="displayLG"
+        class="text-white font-medium lg:col-span-2"
+      >
+        Discover how we can help bring your ideas to life with
+        <span class="text-accent-500"> our expertise, commitment,</span>
+        <span class="text-accent-500"> and innovative approach!</span>
+      </Text>
+    </div>
+    <div
+      class="grid gap-6 lg:gap-8 md:grid-cols-2 lg:grid-cols-3 mt-12 lg:mt-24"
+    >
+      {
+        cards.map((card) => (
+          <div>
+            <div>
+              <Text tag="h3" variant="textLG" class="font-medium text-base-100">
+                {card.title}
+              </Text>
+              <Text
+                tag="p"
+                variant="textBase"
+                class="text-base-400 mt-2 text-balance"
+              >
+                {card.description}
+              </Text>
+            </div>
+            <UnderlinedLink variant="light" href={card.href} class="mt-12">
+              {card.cta}
+            </UnderlinedLink>
+          </div>
+        ))
+      }
+    </div>
+  </Wrapper>
+</section>

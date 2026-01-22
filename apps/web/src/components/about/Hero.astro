@@ -1,0 +1,57 @@
+---
+// Assets
+import Logo from "@/components/assets/Logo.astro";
+import { Image } from "astro:assets";
+import heroImage from "@/images/assets/team.png";
+// Fundations
+import Text from "@/components/fundations/elements/Text.astro";
+import Kicker from "@/components/fundations/elements/Kicker.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+---
+
+<section class="bg-accent-950">
+  <Wrapper
+    variant="standard"
+    class="py-12 pt-48 lg:border-x lg:border-white/10"
+  >
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-8 gap-x-20">
+      <div class="lg:col-span-2 text-balance">
+        <Kicker class="text-accent-300">Built for you</Kicker>
+        <Text
+          tag="h1"
+          variant="displayLG"
+          class="text-white font-medium tracking-tight mt-12"
+        >
+          Everyday building with purpose and precision
+        </Text>
+        <Text tag="p" variant="textLG" class="text-base-400 max-w-xl mt-4">
+          We deliver high-quality construction through expert planning, skilled
+          craftsmanship, and dependable execution.
+        </Text>
+      </div>
+      <div
+        class="bg-accent-600 p-8 lg:-mb-26 z-10 relative overflow-hidden lg:order-first"
+      >
+        <div class="relative flex flex-col justify-between h-full">
+          <Logo class="h-12 w-fit text-white" />
+          <div class="font-medium tracking-tight text-white mt-12 space-y-8">
+            <Text tag="p" variant="displaySM"> Reliability </Text>
+            <Text tag="p" variant="displayMD"> Accountability </Text>
+            <Text tag="p" variant="displayLG"> Consistency </Text>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Wrapper>
+  <Wrapper variant="paddingless">
+    <Image
+      width={1420}
+      height={1420}
+      src={heroImage}
+      alt="Modern architectural building"
+      decoding="async"
+      loading="lazy"
+      class="size-full object-cover max-h-120"
+    />
+  </Wrapper>
+</section>

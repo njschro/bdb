@@ -1,0 +1,29 @@
+---
+import ProjectsLayout from "@/layouts/ProjectsLayout.astro";
+import {
+  getProjectStaticPaths,
+  getProjectBySlug,
+  USE_SANITY,
+} from "@/lib/data";
+import { render } from "astro:content";
+
+export async function getStaticPaths() {
+  return getProjectStaticPaths();
+}
+
+const { slug } = Astro.params;
+const result = await getProjectBySlug(slug!);
+if (!result) return Astro.redirect("/404");
+
+const { project, htmlContent, _entry } = result;
+
+let Content: any = null;
+if (!USE_SANITY && _entry) {
+  const rendered = await render(_entry);
+  Content = rendered.Content;
+}
+---
+
+<ProjectsLayout frontmatter={project.data}>
+  {USE_SANITY ? <Fragment set:html={htmlContent} /> : Content && <Content />}
+</ProjectsLayout>

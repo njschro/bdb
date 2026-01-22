@@ -1,12 +1,13 @@
 ---
+// Assets
+import { Image } from "astro:assets";
 // Fundations
 import Text from "@/components/fundations/elements/Text.astro";
-const { url, name, image, alt, role } = {
+const { url, name, image, role } = {
   url: "/team/" + Astro.props.post.slug,
   name: Astro.props.post.data.name,
   role: Astro.props.post.data.role,
   image: Astro.props.post.data.image.url,
-  alt: Astro.props.post.data.image.alt || Astro.props.post.data.name,
 };
 ---
 
@@ -17,21 +18,21 @@ const { url, name, image, alt, role } = {
     aria-label={`View profile for ${name}`}
     class="absolute inset-0 z-10"></a>
 
-  <img
+  <Image
     src={image}
-    alt={alt}
-    width="1000"
-    height="100"
+    alt={name}
+    width={800}
+    height={700}
     loading="lazy"
     decoding="async"
-    class="object-cover object-center w-full aspect-square"
+    class="object-cover object-top rounded w-full aspect-4/3"
   />
 
   <div class="mt-4">
-    <Text tag="h3" variant="textBase" class="font-medium text-base-900">
+    <Text tag="h3" variant="textXL" class="font-medium text-accent-900">
       {name}
     </Text>
-    <Text tag="p" variant="textSM" class="text-base-600 mt-1">
+    <Text tag="p" variant="textBase" class="text-base-600 mt-1">
       {role}
     </Text>
   </div>

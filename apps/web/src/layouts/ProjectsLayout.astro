@@ -1,0 +1,220 @@
+---
+// Assets
+import { Image } from "astro:assets";
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Kicker from "@/components/fundations/elements/Kicker.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Components
+import ProjectCardSmall from "@/components/projects/ProjectCardSmall.astro";
+import KeenSliderProjectLayout from "@/components/fundations/scripts/KeenSliderProjectLayout.astro";
+import Button from "@/components/fundations/elements/Button.astro";
+import ArrowLeft from "@/components/fundations/icons/ArrowLeft.astro";
+import ArrowRight from "@/components/fundations/icons/ArrowRight.astro";
+// Content
+import { getAllProjects } from "@/lib/data";
+const { frontmatter } = Astro.props;
+const meta = [frontmatter.category, frontmatter.location, frontmatter.year]
+  .filter(Boolean)
+  .join(" • ");
+const allProjects = await getAllProjects();
+const latestProjects = allProjects
+  .filter((project) => project.data.title !== frontmatter.title)
+  .slice(0, 3);
+---
+
+<BaseLayout navTransparent={true}>
+  <section class="bg-accent-800">
+    <Wrapper
+      variant="standard"
+      class="py-12 pt-48 lg:border-x lg:border-white/10"
+    >
+      <div class="grid grid-cols-1 lg:grid-cols-3 lg:items-end gap-12">
+        <div class="max-w-xl text-balance lg:col-span-2">
+          <Kicker class="text-base-300"> {meta}</Kicker>
+          <Text
+            tag="h1"
+            variant="displayMD"
+            class="text-white font-medium tracking-tight mt-12"
+          >
+            {frontmatter.title}
+          </Text>
+          <Text tag="p" variant="textLG" class="text-white max-w-xl mt-4">
+            {frontmatter.description}
+          </Text>
+        </div>
+        {
+          frontmatter.services && frontmatter.services.length > 0 && (
+            <ul role="list" class="space-y-1 list-none">
+              {frontmatter.services.map((service) => (
+                <li>
+                  <Text tag="p" variant="textBase" class="text-base-400 ">
+                    {service}
+                  </Text>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+    </Wrapper>
+    {
+      frontmatter.cover && (
+        <Wrapper
+          variant="standard"
+          class="py-8 lg:border-x lg:border-white/10 border-t"
+        >
+          <Image
+            width={1400}
+            height={1400}
+            loading="lazy"
+            decoding="async"
+            src={frontmatter.cover.url}
+            alt={frontmatter.cover.alt || frontmatter.title}
+            class="object-cover object-center w-full max-h-120"
+          />
+        </Wrapper>
+      )
+    }
+  </section>
+  {
+    frontmatter.metrics && frontmatter.metrics.length > 0 && (
+      <section>
+        <Wrapper variant="standard" class="py-24">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            {frontmatter.metrics.map((metric) => (
+              <div>
+                <Text
+                  tag="p"
+                  variant="displayLG"
+                  class="text-accent-900 italic font-medium "
+                >
+                  {metric.value}
+                </Text>
+                <Text tag="p" variant="textLG" class="text-base-600 mt-2">
+                  {metric.label}
+                </Text>
+              </div>
+            ))}
+          </div>
+        </Wrapper>
+      </section>
+    )
+  }
+  <section>
+    <Wrapper variant="standard" class="py-12">
+      <div>
+        {
+          (frontmatter.gallery || frontmatter.cover) && (
+            <div
+              id="project-slider-container-gallery"
+              class="grid gird-cols-1 lg:grid-cols-4 gap-8 "
+            >
+              <div class=" order-last lg:order-first p-8 bg-base-50 rounded">
+                <Text
+                  tag="h3"
+                  variant="displaySM"
+                  class="font-medium text-accent-900"
+                >
+                  Gallery
+                </Text>
+                <div class="flex gap-2 mt-4">
+                  <Button
+                    iconOnly
+                    size="xs"
+                    variant="muted"
+                    aria-label="Previous image"
+                    class="project-slider-prev"
+                  >
+                    <ArrowLeft size="sm" slot="icon" />
+                  </Button>
+                  <Button
+                    iconOnly
+                    size="xs"
+                    variant="muted"
+                    aria-label="Next image"
+                    class="project-slider-next"
+                  >
+                    <ArrowRight size="sm" slot="icon" />
+                  </Button>
+                </div>
+              </div>
+              <div
+                class="keen-slider lg:col-span-3"
+                id="project-gallery-slider"
+              >
+                {frontmatter.cover && (
+                  <div class="keen-slider__slide">
+                    <Image
+                      src={frontmatter.cover.url}
+                      alt={frontmatter.cover.alt || frontmatter.title}
+                      width={800}
+                      height={600}
+                      loading="lazy"
+                      decoding="async"
+                      class="object-cover object-center w-full  rounded aspect-square"
+                    />
+                  </div>
+                )}
+                {frontmatter.gallery &&
+                  frontmatter.gallery.map((img) => (
+                    <div class="keen-slider__slide ">
+                      <Image
+                        src={img.url}
+                        alt={img.alt || frontmatter.title}
+                        width={800}
+                        height={600}
+                        loading="lazy"
+                        decoding="async"
+                        class="object-cover object-center w-full  rounded aspect-square"
+                      />
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )
+        }
+      </div>
+    </Wrapper>
+  </section>
+  <Wrapper variant="standard" class="py-12">
+    <Wrapper variant="narrow" class="mx-auto">
+      <Wrapper variant="prose">
+        <slot />
+      </Wrapper>
+    </Wrapper>
+  </Wrapper>
+  {
+    latestProjects.length > 0 && (
+      <section>
+        <Wrapper variant="standard" class="py-24">
+          <div class="flex flex-col md:flex-row gap-4 md:items-center justify-between">
+            <Text
+              tag="h2"
+              variant="displaySM"
+              class="font-medium  tracking-tight   text-accent-900"
+            >
+              Latest projects
+            </Text>
+            <Button
+              isLink
+              size="xs"
+              variant="muted"
+              href="/projects"
+              class="w-fit"
+            >
+              See all projects
+            </Button>
+          </div>
+          <div class="flex flex-col mt-12 lg:mt-24 space-y-8">
+            {latestProjects.map((project) => (
+              <ProjectCardSmall project={project} />
+            ))}
+          </div>
+        </Wrapper>
+      </section>
+    )
+  }
+</BaseLayout>
+<KeenSliderProjectLayout />

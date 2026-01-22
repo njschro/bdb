@@ -2,37 +2,41 @@
 // Fundations
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Text from "@/components/fundations/elements/Text.astro";
+import Kicker from "@/components/fundations/elements/Kicker.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
-// Sanity
-import { sanityFetch, allTagsQuery } from "@/lib/sanity";
-
-const tags = await sanityFetch<string[]>(allTagsQuery);
-const pageTitle = "Tag Index";
+// Content
+import { getAllTags } from "@/lib/data";
+const tags = await getAllTags();
 ---
 
-<BaseLayout pageTitle={pageTitle}>
+<BaseLayout>
   <section>
     <Wrapper variant="standard" class="py-24 lg:pt-48">
-      <Text tag="h1" variant="textBase" class="font-medium text-base-900">
-        Tag directory</Text
-      >
-
-      <ol role="list" class="flex flex-col mt-8 gap-1">
+      <div class="max-w-xl mx-auto text-center text-balance">
+        <Kicker class="text-base-600">Journal</Kicker>
+        <Text
+          tag="h1"
+          variant="displayMD"
+          class="font-medium tracking-tight mt-12"
+        >
+          Browse by tag
+        </Text>
+        <Text tag="p" variant="textLG" class="text-base-600 mt-4">
+          Explore articles by topic. Click a tag to see all related posts.
+        </Text>
+      </div>
+      <div class="flex flex-wrap gap-4 mt-12 lg:mt-24 justify-center">
         {
           tags.map((tag, index) => (
-            <li>
-              <Text
-                tag="a"
-                variant="textSM"
-                class="capitalize  text-base-500 hover:text-base-900 border-black/20 duration-300"
-                href={`/blog/tags/${tag}`}
-              >
-                {tag}
-              </Text>
-            </li>
+            <a
+              class="capitalize flex text-base-600 hover:text-accent-500 transition-colors"
+              href={`/blog/tags/${tag}`}
+            >
+              {tag}
+            </a>
           ))
         }
-      </ol>
+      </div>
     </Wrapper>
   </section>
 </BaseLayout>

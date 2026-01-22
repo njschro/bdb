@@ -1,0 +1,82 @@
+---
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Kicker from "@/components/fundations/elements/Kicker.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Icons
+import Check from "@/components/fundations/icons/Check.astro";
+// Components
+import CareerCard from "@/components/careers/CareerCard.astro";
+// Content
+import { getAllCareers } from "@/lib/data";
+const allCareers = await getAllCareers();
+const benefits = [
+  {
+    title: "Career Growth",
+    description:
+      "We invest in your future with comprehensive training programs, dedicated mentorship, and structured advancement opportunities that help you reach your full potential.",
+  },
+  {
+    title: "Supportive Team",
+    description:
+      "Work alongside passionate professionals in an environment that values collaboration, innovation, and mutual respect, creating a workplace where everyone can thrive.",
+  },
+  {
+    title: "Strong Benefits",
+    description:
+      "Enjoy competitive compensation, excellent health coverage, flexible work arrangements, and generous paid time off that supports your well-being and work-life harmony.",
+  },
+];
+---
+
+<BaseLayout navTransparent={true}>
+  <section class="bg-accent-800">
+    <Wrapper
+      variant="standard"
+      class="py-12 pt-48 lg:border-x lg:border-white/10"
+    >
+      <div class="max-w-4xl text-balance lg:col-span-2">
+        <Kicker class="text-base-300">Careers</Kicker>
+        <Text
+          tag="h1"
+          variant="displayMD"
+          class="font-medium tracking-tight mt-12 text-white"
+        >
+          Build a career defined by accountability, skill, and real-world impact
+        </Text>
+        <Text tag="p" variant="textLG" class="text-base-400 mt-4">
+          Join a team that values disciplined execution, safety on every site,
+          and craftsmanship that stands up to scrutiny.
+        </Text>
+      </div>
+    </Wrapper>
+  </section>
+  <section>
+    <Wrapper variant="standard" class="py-24">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {
+          benefits.map((benefit) => (
+            <div class="p-8 rounded bg-base-50 ">
+              <div class="flex items-center gap-2 text-accent-900">
+                <div class="size-8 bg-accent-500 text-white flex items-center justify-center rounded-full">
+                  <Check size="sm" />
+                </div>
+                <Text tag="h3" variant="textXL" class="font-medium">
+                  {benefit.title}
+                </Text>
+              </div>
+              <Text tag="p" variant="textBase" class="text-base-600 mt-4">
+                {benefit.description}
+              </Text>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="flex flex-col mt-12 lg:mt-24 space-y-8">
+        {allCareers.map((career) => <CareerCard career={career} />)}
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

@@ -4,6 +4,9 @@ import {
   UsersIcon,
   DocumentTextIcon,
   CogIcon,
+  WrenchIcon,
+  ProjectsIcon,
+  CaseIcon,
 } from "@sanity/icons";
 
 // Singleton document IDs
@@ -26,6 +29,27 @@ export const structure = (S: StructureBuilder) =>
         .icon(UsersIcon)
         .schemaType("teamMember")
         .child(S.documentTypeList("teamMember").title("Team Members")),
+
+      // Services
+      S.listItem()
+        .title("Services")
+        .icon(WrenchIcon)
+        .schemaType("service")
+        .child(S.documentTypeList("service").title("Services")),
+
+      // Projects
+      S.listItem()
+        .title("Projects")
+        .icon(ProjectsIcon)
+        .schemaType("project")
+        .child(S.documentTypeList("project").title("Projects")),
+
+      // Careers
+      S.listItem()
+        .title("Careers")
+        .icon(CaseIcon)
+        .schemaType("career")
+        .child(S.documentTypeList("career").title("Career Listings")),
 
       // Legal Pages
       S.listItem()

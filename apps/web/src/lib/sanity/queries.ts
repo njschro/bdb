@@ -117,6 +117,131 @@ export const legalPageBySlugQuery = groq`
 `;
 
 // =============================================================================
+// SERVICES
+// =============================================================================
+
+const serviceFields = groq`
+  _id,
+  title,
+  "slug": slug.current,
+  description,
+  excerpt,
+  image {
+    asset->,
+    alt
+  },
+  highlights,
+  featured
+`;
+
+// All services
+export const allServicesQuery = groq`
+  *[_type == "service"] | order(featured desc, title asc) {
+    ${serviceFields},
+    "body": pt::text(body)
+  }
+`;
+
+// Single service by slug
+export const serviceBySlugQuery = groq`
+  *[_type == "service" && slug.current == $slug][0] {
+    ${serviceFields},
+    body
+  }
+`;
+
+// =============================================================================
+// PROJECTS
+// =============================================================================
+
+const projectFields = groq`
+  _id,
+  title,
+  "slug": slug.current,
+  description,
+  client,
+  location,
+  year,
+  category,
+  services,
+  cover {
+    asset->,
+    alt
+  },
+  gallery[] {
+    asset->,
+    alt
+  },
+  metrics[] {
+    label,
+    value
+  },
+  featured
+`;
+
+// All projects
+export const allProjectsQuery = groq`
+  *[_type == "project"] | order(featured desc, year desc, title asc) {
+    ${projectFields},
+    "body": pt::text(body)
+  }
+`;
+
+// Single project by slug
+export const projectBySlugQuery = groq`
+  *[_type == "project" && slug.current == $slug][0] {
+    ${projectFields},
+    body
+  }
+`;
+
+// =============================================================================
+// CAREERS
+// =============================================================================
+
+const careerFields = groq`
+  _id,
+  title,
+  "slug": slug.current,
+  description,
+  location,
+  type,
+  department,
+  experience,
+  salary,
+  applyUrl,
+  email,
+  responsibilities,
+  requirements,
+  benefits,
+  active
+`;
+
+// All careers (active only by default)
+export const allCareersQuery = groq`
+  *[_type == "career" && active == true] | order(title asc) {
+    ${careerFields},
+    "body": pt::text(body)
+  }
+`;
+
+// All careers including inactive
+export const allCareersIncludingInactiveQuery = groq`
+  *[_type == "career"] | order(active desc, title asc) {
+    ${careerFields},
+    "body": pt::text(body)
+  }
+`;
+
+// Single career by slug
+export const careerBySlugQuery = groq`
+  *[_type == "career" && slug.current == $slug][0] {
+    ${careerFields},
+    body
+  }
+`;
+
+// =============================================================================
 // SITE SETTINGS
 // =============================================================================
 
