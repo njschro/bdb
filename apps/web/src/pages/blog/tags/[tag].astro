@@ -1,0 +1,62 @@
+---
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Components
+import BlogEntry from "@/components/blog/BlogCard.astro";
+// Sanity
+import {
+  sanityFetch,
+  allTagsQuery,
+  postsByTagQuery,
+  transformPost,
+} from "@/lib/sanity";
+import type { SanityPost } from "@/lib/sanity";
+
+export async function getStaticPaths() {
+  const tags = await sanityFetch<string[]>(allTagsQuery);
+
+  const paths = await Promise.all(
+    tags.map(async (tag) => {
+      const sanityPosts = await sanityFetch<SanityPost[]>(postsByTagQuery, {
+        tag,
+      });
+      const posts = sanityPosts.map(transformPost);
+      return {
+        params: { tag },
+        props: { posts },
+      };
+    })
+  );
+
+  return paths;
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<BaseLayout pageTitle={tag}>
+  <section>
+    <Wrapper variant="standard" class="py-24 lg:pt-48">
+      <Text
+        tag="h1"
+        variant="textBase"
+        class="font-medium capitalize text-base-900"
+      >
+        {tag}</Text
+      >
+
+      <div
+        class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-y-24 gap-4"
+      >
+        {
+          posts.map((post, index) => (
+            <BlogEntry post={post} index={index + 1} />
+          ))
+        }
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

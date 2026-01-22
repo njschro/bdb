@@ -1,0 +1,45 @@
+---
+// Fundations
+import BlogLayout from "@/layouts/BlogLayout.astro";
+// Sanity
+import {
+  sanityFetch,
+  allPostsQuery,
+  postBySlugQuery,
+  transformPost,
+  portableTextToHtml,
+  portableTextToPlainText,
+} from "@/lib/sanity";
+import type { SanityPost } from "@/lib/sanity";
+import type { PortableTextBlock } from "@portabletext/types";
+import readingTime from "reading-time";
+
+export async function getStaticPaths() {
+  const posts = await sanityFetch<SanityPost[]>(allPostsQuery);
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const sanityPost = await sanityFetch<
+  SanityPost & { body: PortableTextBlock[] }
+>(postBySlugQuery, { slug });
+
+if (!sanityPost) {
+  return Astro.redirect("/404");
+}
+
+const post = transformPost({
+  ...sanityPost,
+  body: portableTextToPlainText(sanityPost.body),
+});
+const htmlContent = portableTextToHtml(sanityPost.body);
+
+// Calculate reading time from plain text body
+const stats = readingTime(portableTextToPlainText(sanityPost.body));
+---
+
+<BlogLayout frontmatter={post.data} readingTime={stats.text}>
+  <Fragment set:html={htmlContent} />
+</BlogLayout>

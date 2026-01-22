@@ -1,0 +1,16 @@
+---
+// Fundations
+import Text from "@/components/fundations/elements/Text.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+---
+
+<footer>
+  <Wrapper variant="standard" class="py-12">
+    <div class="flex items-center justify-between py-2">
+      <Text tag="p" variant="textBase">Footer</Text>
+      <Text tag="p" variant="textXS">
+        © {new Date().getFullYear()} Lexington Themes. All rights reserved.
+      </Text>
+    </div>
+  </Wrapper>
+</footer>

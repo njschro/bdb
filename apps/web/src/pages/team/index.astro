@@ -1,0 +1,29 @@
+---
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Components
+import TeamCard from "@/components/team/TeamCard.astro";
+// Sanity
+import {
+  sanityFetch,
+  allTeamMembersQuery,
+  transformTeamMember,
+} from "@/lib/sanity";
+import type { SanityTeamMember } from "@/lib/sanity";
+
+const sanityTeam = await sanityFetch<SanityTeamMember[]>(allTeamMembersQuery);
+const allTeam = sanityTeam.map(transformTeamMember);
+---
+
+<BaseLayout>
+  <section>
+    <Wrapper variant="standard" class="py-12 lg:py-24">
+      <Text tag="h1" variant="textBase"> Team </Text>
+      <div class="grid grid-cols-1 lg:grid-cols-3 mt-12 gap-8">
+        {allTeam.map((post) => <TeamCard post={post} />)}
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

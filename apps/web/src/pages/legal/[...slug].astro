@@ -1,0 +1,35 @@
+---
+import LegalLayout from "@/layouts/LegalLayout.astro";
+// Sanity
+import {
+  sanityFetch,
+  allLegalPagesQuery,
+  legalPageBySlugQuery,
+  transformLegalPage,
+  portableTextToHtml,
+} from "@/lib/sanity";
+import type { SanityLegalPage } from "@/lib/sanity";
+
+export async function getStaticPaths() {
+  const pages = await sanityFetch<SanityLegalPage[]>(allLegalPagesQuery);
+  return pages.map((page) => ({
+    params: { slug: page.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const sanityPage = await sanityFetch<SanityLegalPage>(legalPageBySlugQuery, {
+  slug,
+});
+
+if (!sanityPage) {
+  return Astro.redirect("/404");
+}
+
+const page = transformLegalPage(sanityPage);
+const htmlContent = sanityPage.body ? portableTextToHtml(sanityPage.body) : "";
+---
+
+<LegalLayout frontmatter={page.data}>
+  <Fragment set:html={htmlContent} />
+</LegalLayout>

@@ -1,0 +1,38 @@
+---
+import TeamLayout from "@/layouts/TeamLayout.astro";
+// Sanity
+import {
+  sanityFetch,
+  allTeamMembersQuery,
+  teamMemberBySlugQuery,
+  transformTeamMember,
+  portableTextToHtml,
+} from "@/lib/sanity";
+import type { SanityTeamMember } from "@/lib/sanity";
+
+export async function getStaticPaths() {
+  const members = await sanityFetch<SanityTeamMember[]>(allTeamMembersQuery);
+  return members.map((member) => ({
+    params: { slug: member.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const sanityMember = await sanityFetch<SanityTeamMember>(
+  teamMemberBySlugQuery,
+  { slug }
+);
+
+if (!sanityMember) {
+  return Astro.redirect("/404");
+}
+
+const member = transformTeamMember(sanityMember);
+const htmlContent = sanityMember.body
+  ? portableTextToHtml(sanityMember.body)
+  : "";
+---
+
+<TeamLayout frontmatter={member.data}>
+  <Fragment set:html={htmlContent} />
+</TeamLayout>

@@ -1,0 +1,38 @@
+---
+// Fundations
+import Text from "@/components/fundations/elements/Text.astro";
+const { url, name, image, alt, role } = {
+  url: "/team/" + Astro.props.post.slug,
+  name: Astro.props.post.data.name,
+  role: Astro.props.post.data.role,
+  image: Astro.props.post.data.image.url,
+  alt: Astro.props.post.data.image.alt || Astro.props.post.data.name,
+};
+---
+
+<div class="relative">
+  <a
+    href={url}
+    title={`View profile for ${name}`}
+    aria-label={`View profile for ${name}`}
+    class="absolute inset-0 z-10"></a>
+
+  <img
+    src={image}
+    alt={alt}
+    width="1000"
+    height="100"
+    loading="lazy"
+    decoding="async"
+    class="object-cover object-center w-full aspect-square"
+  />
+
+  <div class="mt-4">
+    <Text tag="h3" variant="textBase" class="font-medium text-base-900">
+      {name}
+    </Text>
+    <Text tag="p" variant="textSM" class="text-base-600 mt-1">
+      {role}
+    </Text>
+  </div>
+</div>
