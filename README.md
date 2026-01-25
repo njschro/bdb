@@ -1,14 +1,12 @@
-# Bastion — Construction & Engineering Theme
+# Bastion 
+![Theme preview](https://lexingtonthemes.com/OpenGraph/bastion/twitter.png)
 
-![Theme preview](https://lexingtonthemes.com/OpenGraph/theme-name/twitter.png)
-
-A professional Astro theme for construction, engineering, and project management companies. Features dual data source support — use simple markdown files or connect to Sanity CMS for a visual editing experience.
 
 ## Links
 
-- **Theme specs:** https://lexingtonthemes.com/templates/theme-name
+- **Theme specs:** https://lexingtonthemes.com/templates/bastion
 - **Documentation:** https://lexingtonthemes.com/documentation
-- **Changelog:** https://lexingtonthemes.com/changelog/theme-name
+- **Changelog:** https://lexingtonthemes.com/changelog/bastion
 - **Support:** https://lexingtonthemes.com/legal/support/
 - **Get the bundle:** https://lexingtonthemes.com
 
