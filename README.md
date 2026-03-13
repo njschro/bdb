@@ -132,16 +132,19 @@ Want to use the existing sample content? Run the migration script:
    - Name it "Migration" with **Editor** permissions
    - Copy the token
 
-2. Run the migration:
+2. Run the full seed (recommended):
 
 ```bash
-cd scripts
-SANITY_TOKEN=your-token-here npx tsx migrate-to-sanity.ts
+pnpm run seed:all
 ```
 
-The script automatically reads `SANITY_PROJECT_ID` from `apps/web/.env`.
+With a write token:
 
-This uploads all content from `apps/web/src/content/` to your Sanity project, including images.
+```bash
+SANITY_WRITE_TOKEN=your-token-here pnpm run seed:all
+```
+
+The script reads `SANITY_PROJECT_ID` from `apps/web/.env`. **Running `seed:all` clears existing documents of each content type, then creates exactly one document per collection** (one post, one team member, one legal page, one service, one project, one career), so Sanity Studio ends up with one entry per type. All content is read from `apps/web/src/content/`, including images.
 
 ### Step 6: Start Development
 
@@ -397,6 +400,7 @@ Run `pnpm install` in the project root to reinstall dependencies.
 | `pnpm dev:studio` | Start CMS only                                 |
 | `pnpm build`      | Build both for production                      |
 | `pnpm migrate`    | Migrate Content Collections to Sanity          |
+| `pnpm run seed:all` | Full seed: delete all docs by type, then create one per collection from `apps/web/src/content/` |
 | `pnpm clean`      | Remove node_modules/.env/dist before packaging |
 
 ---

@@ -10,7 +10,7 @@
  * from Sanity or Content Collections directly.
  */
 
-import { getCollection, getEntry, render } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 
 // Static type imports (always available, zero runtime cost when USE_SANITY = false)
 import type {
@@ -54,7 +54,7 @@ export async function getAllPosts(): Promise<Post[]> {
   );
 
   return posts.map((post) => ({
-    slug: post.slug,
+    slug: post.id,
     data: {
       title: post.data.title,
       description: post.data.description,
@@ -96,14 +96,12 @@ export async function getPostBySlug(slug: string): Promise<{
   const entry = await getEntry("posts", slug);
   if (!entry) return null;
 
-  const { Content, remarkPluginFrontmatter } = await render(entry);
-
   // For Content Collections, we need to render the markdown to HTML
   // The Content component can't cross module boundaries, so we'll return
   // the entry itself and let the page handle rendering
   return {
     post: {
-      slug: entry.slug,
+      slug: entry.id,
       data: {
         title: entry.data.title,
         description: entry.data.description,
@@ -141,7 +139,7 @@ export async function getPostsByTag(tag: string): Promise<Post[]> {
   );
 
   return filtered.map((post) => ({
-    slug: post.slug,
+    slug: post.id,
     data: {
       title: post.data.title,
       description: post.data.description,
@@ -192,7 +190,7 @@ export async function getAllTeamMembers(): Promise<TeamMember[]> {
   team.sort((a, b) => a.data.name.localeCompare(b.data.name));
 
   return team.map((member) => ({
-    slug: member.slug,
+    slug: member.id,
     data: {
       name: member.data.name,
       role: member.data.role,
@@ -240,7 +238,7 @@ export async function getTeamMemberBySlug(slug: string): Promise<{
 
   return {
     member: {
-      slug: entry.slug,
+      slug: entry.id,
       data: {
         name: entry.data.name,
         role: entry.data.role,
@@ -275,7 +273,7 @@ export async function getAllLegalPages(): Promise<LegalPage[]> {
   const legal = await getCollection("legal");
 
   return legal.map((page) => ({
-    slug: page.slug,
+    slug: page.id,
     data: {
       page: page.data.page,
       pubDate: new Date(page.data.pubDate),
@@ -317,7 +315,7 @@ export async function getLegalPageBySlug(slug: string): Promise<{
 
   return {
     page: {
-      slug: entry.slug,
+      slug: entry.id,
       data: {
         page: entry.data.page,
         pubDate: new Date(entry.data.pubDate),
@@ -351,7 +349,7 @@ export async function getAllServices(): Promise<Service[]> {
   });
 
   return services.map((service) => ({
-    slug: service.slug,
+    slug: service.id,
     data: {
       title: service.data.title,
       description: service.data.description,
@@ -401,7 +399,7 @@ export async function getServiceBySlug(slug: string): Promise<{
 
   return {
     service: {
-      slug: entry.slug,
+      slug: entry.id,
       data: {
         title: entry.data.title,
         description: entry.data.description,
@@ -445,7 +443,7 @@ export async function getAllProjects(): Promise<Project[]> {
   });
 
   return projects.map((project) => ({
-    slug: project.slug,
+    slug: project.id,
     data: {
       title: project.data.title,
       description: project.data.description,
@@ -505,7 +503,7 @@ export async function getProjectBySlug(slug: string): Promise<{
 
   return {
     project: {
-      slug: entry.slug,
+      slug: entry.id,
       data: {
         title: entry.data.title,
         description: entry.data.description,
@@ -555,7 +553,7 @@ export async function getAllCareers(): Promise<Career[]> {
   activeCareers.sort((a, b) => a.data.title.localeCompare(b.data.title));
 
   return activeCareers.map((career) => ({
-    slug: career.slug,
+    slug: career.id,
     data: {
       title: career.data.title,
       description: career.data.description,
@@ -609,7 +607,7 @@ export async function getCareerBySlug(slug: string): Promise<{
 
   return {
     career: {
-      slug: entry.slug,
+      slug: entry.id,
       data: {
         title: entry.data.title,
         description: entry.data.description,

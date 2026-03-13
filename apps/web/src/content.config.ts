@@ -1,5 +1,13 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
+import { z } from "astro/zod";
+import { glob } from "astro/loaders";
+
 const team = defineCollection({
+  loader: glob({
+    pattern: "**/*.md",
+    base: "./src/content/team",
+    generateId: ({ entry }) => entry.replace(/\.md$/, ""),
+  }),
   schema: ({ image }) =>
     z.object({
       name: z.string(),
@@ -19,7 +27,13 @@ const team = defineCollection({
         .optional(),
     }),
 });
+
 const posts = defineCollection({
+  loader: glob({
+    pattern: "**/*.md",
+    base: "./src/content/posts",
+    generateId: ({ entry }) => entry.replace(/\.md$/, ""),
+  }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
@@ -32,7 +46,13 @@ const posts = defineCollection({
       tags: z.array(z.string()),
     }),
 });
+
 const legal = defineCollection({
+  loader: glob({
+    pattern: "**/*.md",
+    base: "./src/content/legal",
+    generateId: ({ entry }) => entry.replace(/\.md$/, ""),
+  }),
   schema: z.object({
     page: z.string(),
     pubDate: z.date(),
@@ -40,6 +60,11 @@ const legal = defineCollection({
 });
 
 const services = defineCollection({
+  loader: glob({
+    pattern: "**/*.md",
+    base: "./src/content/services",
+    generateId: ({ entry }) => entry.replace(/\.md$/, ""),
+  }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
@@ -53,7 +78,13 @@ const services = defineCollection({
       featured: z.boolean().optional(),
     }),
 });
+
 const projects = defineCollection({
+  loader: glob({
+    pattern: "**/*.md",
+    base: "./src/content/projects",
+    generateId: ({ entry }) => entry.replace(/\.md$/, ""),
+  }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
@@ -88,24 +119,31 @@ const projects = defineCollection({
       featured: z.boolean().optional(),
     }),
 });
+
 const careers = defineCollection({
+  loader: glob({
+    pattern: "**/*.md",
+    base: "./src/content/careers",
+    generateId: ({ entry }) => entry.replace(/\.md$/, ""),
+  }),
   schema: () =>
     z.object({
       title: z.string(),
       description: z.string(),
       location: z.string().optional(),
-      type: z.string().optional(), 
+      type: z.string().optional(),
       department: z.string().optional(),
-      experience: z.string().optional(), 
-      salary: z.string().optional(), 
+      experience: z.string().optional(),
+      salary: z.string().optional(),
       applyUrl: z.string().optional(),
-      email: z.string().email().optional(),
+      email: z.email().optional(),
       responsibilities: z.array(z.string()).optional(),
       requirements: z.array(z.string()).optional(),
       benefits: z.array(z.string()).optional(),
       active: z.boolean().optional(),
     }),
 });
+
 export const collections = {
   team,
   legal,

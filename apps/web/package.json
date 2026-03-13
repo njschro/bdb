@@ -11,8 +11,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/rss": "^4.0.14",
-    "@astrojs/sitemap": "^3.6.1",
+    "@astrojs/rss": "^4.0.17",
+    "@astrojs/sitemap": "^3.7.1",
     "@astrolib/seo": "^1.0.0-beta.8",
     "@portabletext/to-html": "^2.0.13",
     "@portabletext/types": "^2.0.13",
@@ -20,7 +20,7 @@
     "@sanity/image-url": "^1.1.0",
     "@tailwindcss/forms": "^0.5.11",
     "@tailwindcss/typography": "^0.5.19",
-    "astro": "^5.16.9",
+    "astro": "^6.0.4",
     "groq": "^3.71.0",
     "reading-time": "^1.5.0",
     "sharp": "^0.34.5",

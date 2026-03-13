@@ -92,17 +92,33 @@ const stats = {
  */
 const generateKey = () => Math.random().toString(36).substr(2, 9);
 
+const BATCH_SIZE = 25;
+
 /**
- * Delete all existing documents of a given type
+ * Delete documents in batches (e.g. 25 per transaction) for reliability
+ */
+async function deleteByIds(ids: string[], label: string) {
+  for (let i = 0; i < ids.length; i += BATCH_SIZE) {
+    const batch = ids.slice(i, i + BATCH_SIZE);
+    try {
+      const transaction = client.transaction();
+      batch.forEach((id: string) => transaction.delete(id));
+      await transaction.commit();
+      stats.deleted.count += batch.length;
+    } catch (error) {
+      console.error(`  Failed to delete batch (${label}):`, error);
+    }
+  }
+}
+
+/**
+ * Delete all existing documents of a given type (batched)
  */
 async function deleteAllOfType(type: string) {
   try {
     const docs = await client.fetch(`*[_type == "${type}"]._id`);
     if (docs.length > 0) {
-      const transaction = client.transaction();
-      docs.forEach((id: string) => transaction.delete(id));
-      await transaction.commit();
-      stats.deleted.count += docs.length;
+      await deleteByIds(docs, type);
       console.log(`  Deleted ${docs.length} existing ${type} documents`);
     }
   } catch (error) {
@@ -132,6 +148,29 @@ function readMarkdownFiles(dir: string) {
     const slug = path.basename(file, ".md");
     return { slug, frontmatter: data, body };
   });
+}
+
+/**
+ * Collect document ids that will be created from content dirs (for id-based cleanup)
+ */
+function getDocumentIdsToCreate(): string[] {
+  const ids: string[] = [];
+  const dirs: { dir: string; prefix: string }[] = [
+    { dir: path.join(CONTENT_PATH, "posts"), prefix: "post-" },
+    { dir: path.join(CONTENT_PATH, "team"), prefix: "team-" },
+    { dir: path.join(CONTENT_PATH, "legal"), prefix: "legal-" },
+    { dir: path.join(CONTENT_PATH, "services"), prefix: "service-" },
+    { dir: path.join(CONTENT_PATH, "projects"), prefix: "project-" },
+    { dir: path.join(CONTENT_PATH, "careers"), prefix: "career-" },
+  ];
+  for (const { dir: d, prefix } of dirs) {
+    if (!fs.existsSync(d)) continue;
+    const files = fs.readdirSync(d).filter((f) => f.endsWith(".md"));
+    files.forEach((file) => {
+      ids.push(prefix + path.basename(file, ".md"));
+    });
+  }
+  return ids;
 }
 
 /**
@@ -352,9 +391,6 @@ async function migratePosts() {
     return;
   }
 
-  // Delete existing posts first
-  await deleteAllOfType("post");
-
   for (const post of posts) {
     const { slug, frontmatter, body } = post;
     console.log(`  - ${frontmatter.title || slug}`);
@@ -418,9 +454,6 @@ async function migrateTeam() {
     console.log("  No team members found, skipping...");
     return;
   }
-
-  // Delete existing team members first
-  await deleteAllOfType("teamMember");
 
   for (const member of members) {
     const { slug, frontmatter, body } = member;
@@ -494,9 +527,6 @@ async function migrateLegal() {
     return;
   }
 
-  // Delete existing legal pages first
-  await deleteAllOfType("legalPage");
-
   for (const page of pages) {
     const { slug, frontmatter, body } = page;
     console.log(`  - ${frontmatter.page || slug}`);
@@ -545,9 +575,6 @@ async function migrateServices() {
     console.log("  No services found, skipping...");
     return;
   }
-
-  // Delete existing services first
-  await deleteAllOfType("service");
 
   for (const service of services) {
     const { slug, frontmatter, body } = service;
@@ -608,9 +635,6 @@ async function migrateProjects() {
     console.log("  No projects found, skipping...");
     return;
   }
-
-  // Delete existing projects first
-  await deleteAllOfType("project");
 
   for (const project of projects) {
     const { slug, frontmatter, body } = project;
@@ -715,9 +739,6 @@ async function migrateCareers() {
     return;
   }
 
-  // Delete existing careers first
-  await deleteAllOfType("career");
-
   for (const career of careers) {
     const { slug, frontmatter, body } = career;
     console.log(`  - ${frontmatter.title || slug}`);
@@ -791,7 +812,28 @@ async function migrate() {
   console.log(`\nCollections found: ${collections.join(", ")}`);
 
   try {
-    // Migrate all collections
+    // 1. Delete all existing documents by type (batched)
+    console.log("\n🗑️  Deleting existing documents by type...");
+    await deleteAllOfType("post");
+    await deleteAllOfType("teamMember");
+    await deleteAllOfType("legalPage");
+    await deleteAllOfType("service");
+    await deleteAllOfType("project");
+    await deleteAllOfType("career");
+
+    // 2. Id-based cleanup: delete exact ids that will be created (avoids "immutable _type" on create)
+    const idsToCreate = getDocumentIdsToCreate();
+    if (idsToCreate.length > 0) {
+      console.log(`\n🗑️  Deleting ${idsToCreate.length} document ids that will be recreated...`);
+      await deleteByIds(idsToCreate, "id-cleanup");
+    }
+
+    // 3. Short delay so Sanity can apply mutations (avoids replication lag)
+    console.log("\n⏳ Waiting 2.5s for Sanity to apply mutations...");
+    await new Promise((r) => setTimeout(r, 2500));
+
+    // 4. Migrate all collections (creates one document per content file)
+    console.log("\n📥 Creating documents...");
     await migratePosts();
     await migrateTeam();
     await migrateLegal();
@@ -812,12 +854,12 @@ async function migrate() {
       "projects",
       "careers",
     ] as const;
-    let totalSuccess = 0;
+    let _totalSuccess = 0;
     let totalFailed = 0;
 
     for (const collection of collectionNames) {
       const { success, failed } = stats[collection];
-      totalSuccess += success;
+      _totalSuccess += success;
       totalFailed += failed;
       const icon = failed > 0 ? "⚠" : "✓";
       console.log(
