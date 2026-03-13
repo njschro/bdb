@@ -37,7 +37,7 @@ if (fs.existsSync(webEnvPath)) {
 // Sanity client configuration
 const projectId = process.env.SANITY_PROJECT_ID;
 const dataset = process.env.SANITY_DATASET || "production";
-const token = process.env.SANITY_WRITE_TOKEN;
+const token = process.env.SANITY_WRITE_TOKEN || process.env.SANITY_TOKEN;
 
 if (!projectId) {
   console.error("\n❌ Error: SANITY_PROJECT_ID is missing.");
