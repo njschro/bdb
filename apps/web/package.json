@@ -13,7 +13,7 @@
   "dependencies": {
     "@astrojs/rss": "^4.0.17",
     "@astrojs/sitemap": "^3.7.1",
-    "@astrolib/seo": "^1.0.0-beta.8",
+    "@lexingtonthemes/seo": "^0.1.0",
     "@portabletext/to-html": "^2.0.13",
     "@portabletext/types": "^2.0.13",
     "@sanity/client": "^6.24.1",
