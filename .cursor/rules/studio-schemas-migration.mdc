@@ -1,0 +1,14 @@
+---
+description: Sanity Studio schemas and root migration script — coordinate with web transforms and seed.
+globs:
+  - apps/studio/schemas/**/*.ts
+  - scripts/**/*.ts
+  - apps/studio/structure.ts
+---
+
+# Studio schemas & migration
+
+- **Schema entry:** Types are registered in `apps/studio/schemas/index.ts` and used by `sanity.config.ts`. Plugins in this repo: **`structureTool`** (with `./structure`) and **`visionTool`** — do not document other plugins unless they appear in `sanity.config.ts`.
+- **Document types:** `post`, `teamMember`, `legalPage`, `service`, `project`, `career`, and singleton-style **`siteSettings`** (`siteSettings.ts`). Slug + Portable Text + image fields must stay aligned with **`apps/web/src/lib/sanity/queries.ts`** and **`transforms.ts`**.
+- **Migration:** `scripts/migrate-to-sanity.ts` reads markdown from `apps/web/src/content/` and uses `apps/web/.env` for `SANITY_PROJECT_ID` / dataset; requires a write token (`SANITY_WRITE_TOKEN` or `SANITY_TOKEN`). Changing schema field names or `_type` values without updating this script can break seeds.
+- **After schema edits:** Update web **`types.ts`**, **`queries.ts`**, **`transforms.ts`**, and collection **`content.config.ts`** / sample markdown as needed so both data modes stay equivalent.

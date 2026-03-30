@@ -1,0 +1,13 @@
+---
+description: Lexington Bastion monorepo — pnpm workspaces, web vs studio, minimal diffs, import conventions.
+alwaysApply: true
+---
+
+# Lexington Themes — Bastion monorepo
+
+- **Publisher:** [Lexington Themes](https://lexingtonthemes.com/). This repo is the **Bastion** Astro + Sanity starter (`lexington-sanity-starter` in root `package.json`).
+- **Workspace:** Use `pnpm` from the repo root. Target packages with filters: `@lexington/web` (`apps/web`), `@lexington/studio` (`apps/studio`). Prefer root scripts: `pnpm dev:web`, `pnpm dev:studio`, `pnpm build:web`, `pnpm build:studio`, `pnpm migrate` / `pnpm seed:all`.
+- **Apps:** `apps/web` is the public site; `apps/studio` is Sanity Studio. Do not assume a single-package Astro root.
+- **Imports (web):** `apps/web/tsconfig.json` maps `@/*` → `src/*`. Follow existing style (`@/components/...`, `@/layouts/...`, `@/lib/...`).
+- **Folder spelling:** The UI primitives live under `apps/web/src/components/fundations/` — **do not rename** `fundations`.
+- **Scope:** Keep changes minimal and consistent with existing patterns. Do not add integrations or dependencies that are not already reflected in `package.json` / `astro.config.mjs` / `sanity.config.ts` unless the user explicitly asks.

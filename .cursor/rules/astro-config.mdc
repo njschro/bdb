@@ -1,0 +1,14 @@
+---
+description: Astro config — site URL, Tailwind via Vite, sitemap; no invented integrations.
+globs:
+  - apps/web/astro.config.mjs
+  - apps/web/astro.config.ts
+---
+
+# `astro.config` (Bastion web)
+
+- **Integrations:** This repo’s `apps/web/astro.config.mjs` only includes **`@astrojs/sitemap`**. Tailwind is applied via **`@tailwindcss/vite`** in `vite.plugins`, not `@astrojs/tailwind`.
+- **Site:** `site` is set to `https://yourwebsite.com` — change for production SEO and sitemap URLs.
+- **Markdown / Shiki:** `markdown.drafts`, `markdown.shikiConfig`, and top-level `shikiConfig` are defined as in the file. **MDX** is not configured here and **`@astrojs/mdx` is not** in `apps/web/package.json`.
+- **Experimental:** `experimental.svgo` is enabled. Do not add other experimental flags without user request.
+- **Verification:** Before claiming a dependency or integration exists, check **`apps/web/package.json`** and **`astro.config.mjs`** together.

@@ -1,0 +1,14 @@
+---
+description: Sanity client layer — GROQ, transforms, Portable Text, images; keep in sync with data.ts.
+globs:
+  - apps/web/src/lib/sanity/**/*
+  - apps/web/src/lib/data.ts
+---
+
+# Sanity integration (`lib/sanity` + `data.ts`)
+
+- **Toggle:** `USE_SANITY` lives in **`apps/web/src/lib/data.ts`**. All runtime switching goes through that module.
+- **Barrel:** Import from `./sanity` / `@/lib/sanity` patterns only in code that extends the layer; pages should use `data.ts`.
+- **Files:** `client.ts` (and preview client), `fetch.ts` (`sanityFetch`), `queries.ts` (GROQ — `groq` tagged templates), `transforms.ts` (normalize to the same shapes as collections mode), `types.ts`, `image.ts` (`urlFor`, `getImageUrl`), `portableText.ts` (`@portabletext/to-html`).
+- **Consistency:** Any new field in GROQ must be reflected in **transforms** and **types**, and in **`data.ts`** collection-branch mappings. Portable Text HTML goes through **`portableTextToHtml`** for detail views in Sanity mode.
+- **Queries:** `siteSettingsQuery` exists in `queries.ts` but is **not** exposed via `data.ts` today — if wiring it up, add explicit getters in `data.ts` and use them from layouts/navigation rather than ad-hoc fetches.

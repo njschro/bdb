@@ -1,0 +1,14 @@
+---
+description: Astro Content Collections — Zod schemas, glob loaders, image() conventions for Bastion.
+globs:
+  - apps/web/src/content/**/*.md
+  - apps/web/src/content.config.ts
+---
+
+# Content collections (`content.config.ts`)
+
+- **Loader:** Each collection uses `glob` with `base` under `./src/content/<name>` and IDs from filenames (`.md` stripped). New markdown files must match the **Zod** shape for that collection.
+- **Images:** Fields use Astro’s schema `image()` helper inside `z.object({ url: image(), alt: z.string() })` (or arrays of the same). Paths in markdown typically reference project assets (e.g. `/src/images/...`). Do not switch to ad-hoc string URLs that bypass `image()` without updating the schema and consumers.
+- **Required vs optional:** Match `apps/web/src/content.config.ts` exactly — e.g. `posts` requires `tags` (array); `team` requires `name` + `image` only; `legal` has no image field; `projects` requires only `title` and `description` with many optional fields.
+- **Parity:** If you add/remove fields here, update **`apps/web/src/lib/data.ts`** mapping and align **Sanity** schemas + **`apps/web/src/lib/sanity/transforms.ts`** + **`queries.ts`** + **`types.ts`** when the project uses both sources.
+- **Examples:** Use existing files under `apps/web/src/content/**` as templates (e.g. `content/posts/1.md`, `content/team/alvaro-ruiz.md`).
