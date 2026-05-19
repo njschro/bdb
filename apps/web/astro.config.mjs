@@ -3,9 +3,6 @@ import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
-  experimental: {
-    svgo: true,
-  },
   vite: {
     plugins: [tailwindcss()],
   },

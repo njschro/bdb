@@ -14,9 +14,9 @@
   },
   "packageManager": "pnpm@9.15.0",
   "devDependencies": {
-    "@sanity/client": "^6.24.1",
+    "@sanity/client": "^7.22.0",
     "gray-matter": "^4.0.3",
-    "tsx": "^4.21.0",
-    "dotenv": "^16.4.5"
+    "tsx": "^4.22.3",
+    "dotenv": "^17.4.2"
   }
 }
