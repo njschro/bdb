@@ -1,48 +1,27 @@
 ---
 import Logo from "@/components/assets/Logo.astro";
-// Icons
+import MonoLogo from "@/components/assets/MonoLogo.astro"
 import Close from "@/components/fundations/icons/Close.astro";
 import Burger from "@/components/fundations/icons/Burger.astro";
-// Fundations
-import Button from "@/components/fundations/elements/Button.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
-// Components
-import Search from "@/components/global/Search.astro";
 import MobileNavigation from "@/components/global/navigation/MobileNavigation.astro";
-// Content
-import { getAllServices, getAllPosts, getAllProjects } from "@/lib/data";
-// Allow pages/layouts to opt-in to transparent behavior; default is solid
+import Search from "@/components/global/Search.astro";
 const { transparent } = Astro.props as { transparent?: boolean };
 const isTransparent = !!transparent;
-// Fetch content collections for navigation
-const allServices = await getAllServices();
-const services = allServices.sort((a, b) =>
-  a.data.title.localeCompare(b.data.title)
-);
-const allPosts = await getAllPosts();
-const posts = allPosts
-  .slice()
-  .sort(
-    (a, b) =>
-      new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
-  )
-  .slice(0, 2);
-const allProjects = await getAllProjects();
-const projects = allProjects.filter((p) => p.data.featured).slice(0, 1);
+
 const navLinks = [
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Projects", href: "/projects" },
   { label: "Team", href: "/team" },
   { label: "Careers", href: "/careers" },
-  { label: "Blog", href: "/blog" },
+  { label: "News", href: "/news" },
   { label: "Contact", href: "/contact" },
-  { label: "Overview", href: "/system/overview" },
 ];
 ---
 
 <nav
-  class={`fixed w-full top-0 z-50 transition-colors duration-300 border-b border-white/10 ${isTransparent ? "" : "bg-white"}`}
+  class={`fixed w-full top-0 z-50 transition-colors duration-300 border-b border-berg-blue ${isTransparent ? "" : "bg-white"}`}
   data-nav
   data-swap={isTransparent ? "true" : "false"}
 >
@@ -52,19 +31,20 @@ const navLinks = [
         href="/"
         aria-label="Home"
         data-logo
-        class={`focus:outline-none text-2xl font-medium flex items-center gap-2   ${isTransparent ? "text-white" : "text-base-800"}`}
+        class={`focus:outline-none text-2xl font-medium flex items-center gap-2 ${isTransparent ? "text-berg-blue" : "text-base-800"}`}
       >
         <span class="sr-only">Home</span>
-        <Logo class="h-8" />
+        <!-- 1. Render both logos. Initial visibility is handled by isTransparent -->
+        <MonoLogo class={`h-12 ${isTransparent ? "" : "hidden"}`} data-logo-mono />
+        <Logo class={`h-12 ${isTransparent ? "hidden" : ""}`} data-logo-full />
       </a>
-      <div
-        class="hidden lg:flex items-center justify-between gap-4 py-4 px-6 outline outline-white/10 rounded-full bg-white/5 backdrop-blur-sm lg:col-span-2"
-      >
+
+      <div class="hidden lg:flex items-center justify-between gap-4 py-4 px-6 outline outline-white/10 rounded-full bg-white/5 backdrop-blur-sm lg:col-span-2">
         {
           navLinks.map((l) => (
             <a
               href={l.href}
-              class={`text-sm transition ${isTransparent ? "text-white " : "text-base-800"}`}
+              class={`text-md transition ${isTransparent ? "text-berg-blue " : "text-base-800"}`}
               data-primary-link
             >
               {l.label}
@@ -72,18 +52,11 @@ const navLinks = [
           ))
         }
       </div>
+
       <div class="hidden lg:flex gap-2 items-center ml-auto">
         <Search />
-        <Button
-          isLink
-          size="xs"
-          variant="muted"
-          href="https://lexingtonthemes.com/templates/bastion"
-          class="hidden lg:flex"
-        >
-          Buy Bastion
-        </Button>
       </div>
+
       <button
         class={`lg:hidden ml-auto flex relative ${isTransparent ? "text-white" : "text-base-800"}`}
         aria-controls="mobile-menu"
@@ -91,18 +64,10 @@ const navLinks = [
         data-menu-button
       >
         <span class="sr-only">Open main menu</span>
-        <span
-          class="block"
-          style="display: var(--burger-display, block);"
-          data-burger
-        >
+        <span class="block" style="display: var(--burger-display, block);" data-burger>
           <Burger size="xl" slot="icon" />
         </span>
-        <span
-          class="hidden"
-          style="display: var(--close-display, none);"
-          data-close
-        >
+        <span class="hidden" style="display: var(--close-display, none);" data-close>
           <Close size="xl" slot="icon" />
         </span>
       </button>
@@ -110,116 +75,91 @@ const navLinks = [
     <!-- Mobile Menu -->
     <MobileNavigation navLinks={navLinks} />
   </Wrapper>
+
   <script is:inline>
     window.addEventListener("DOMContentLoaded", () => {
-      // Mobile menu toggle logic
       const menuButton = document.querySelector("[data-menu-button]");
-      const burger = menuButton
-        ? menuButton.querySelector("[data-burger]")
-        : null;
-      const close = menuButton
-        ? menuButton.querySelector("[data-close]")
-        : null;
+      const burger = menuButton ? menuButton.querySelector("[data-burger]") : null;
+      const close = menuButton ? menuButton.querySelector("[data-close]") : null;
       const mobileMenu = document.getElementById("mobile-menu");
-      // Icon toggle
-      const updateIcons = () => {
-        if (!menuButton || !burger || !close) return;
-        const expanded = menuButton.getAttribute("aria-expanded") === "true";
-        burger.style.setProperty(
-          "--burger-display",
-          expanded ? "none" : "block"
-        );
-        close.style.setProperty("--close-display", expanded ? "block" : "none");
-      };
-      const openMenu = () => {
-        if (!menuButton || !mobileMenu) return;
-        menuButton.setAttribute("aria-expanded", "true");
-        mobileMenu.classList.remove(
-          "max-h-0",
-          "opacity-0",
-          "-translate-y-2",
-          "pointer-events-none"
-        );
-        mobileMenu.classList.add(
-          "max-h-screen",
-          "opacity-100",
-          "translate-y-0",
-          "pointer-events-auto"
-        );
-        updateIcons();
-      };
-      const closeMenu = () => {
-        if (!menuButton || !mobileMenu) return;
-        menuButton.setAttribute("aria-expanded", "false");
-        mobileMenu.classList.add(
-          "max-h-0",
-          "opacity-0",
-          "-translate-y-2",
-          "pointer-events-none"
-        );
-        mobileMenu.classList.remove(
-          "max-h-screen",
-          "opacity-100",
-          "translate-y-0",
-          "pointer-events-auto"
-        );
-        updateIcons();
-      };
-      const toggleMenu = () => {
-        const expanded = menuButton.getAttribute("aria-expanded") === "true";
-        expanded ? closeMenu() : openMenu();
-      };
-      if (menuButton) menuButton.addEventListener("click", toggleMenu);
-      // Click outside to close
-      document.addEventListener("click", (e) => {
-        const target = e.target;
-        if (!mobileMenu.contains(target) && !menuButton.contains(target)) {
-          const expanded = menuButton.getAttribute("aria-expanded") === "true";
-          if (expanded) closeMenu();
-        }
-      });
-      // Escape to close
-      document.addEventListener("keydown", (e) => {
-        if (
-          e.key === "Escape" &&
-          menuButton.getAttribute("aria-expanded") === "true"
-        ) {
-          closeMenu();
-        }
-      });
-      updateIcons();
-      // Scroll background + link colors
       const navEl = document.querySelector("[data-nav]");
       const logoEl = document.querySelector("[data-logo]");
       const primaryLinks = document.querySelectorAll("[data-primary-link]");
-      // Swap between light and dark text classes
-      // Only enable color swap on the homepage
+
+      // 2. Select the specific logo parts
+      const logoMono = logoEl?.querySelector("[data-logo-mono]");
+      const logoFull = logoEl?.querySelector("[data-logo-full]");
+
+      // Mobile menu toggle logic
+      const updateIcons = () => {
+        if (!menuButton || !burger || !close) return;
+        const expanded = menuButton.getAttribute("aria-expanded") === "true";
+        burger.style.setProperty("--burger-display", expanded ? "none" : "block");
+        close.style.setProperty("--close-display", expanded ? "block" : "none");
+      };
+
+      const toggleMenu = () => {
+        if (!menuButton || !mobileMenu) return;
+        const expanded = menuButton.getAttribute("aria-expanded") === "true";
+        if (expanded) {
+          menuButton.setAttribute("aria-expanded", "false");
+          mobileMenu.classList.add("max-h-0", "opacity-0", "-translate-y-2", "pointer-events-none");
+          mobileMenu.classList.remove("max-h-screen", "opacity-100", "translate-y-0", "pointer-events-auto");
+        } else {
+          menuButton.setAttribute("aria-expanded", "true");
+          mobileMenu.classList.remove("max-h-0", "opacity-0", "-translate-y-2", "pointer-events-none");
+          mobileMenu.classList.add("max-h-screen", "opacity-100", "translate-y-0", "pointer-events-auto");
+        }
+        updateIcons();
+      };
+
+      if (menuButton) menuButton.addEventListener("click", toggleMenu);
+
+      // Scroll Logic
       const enableScrollSwap = navEl && navEl.dataset.swap === "true";
+
       const swapColor = (el, scrolled) => {
         if (!el) return;
         el.classList.remove("text-white", "text-base-800");
-        el.classList.add(scrolled ? "text-base-800" : "text-white");
+        el.classList.add(scrolled ? "text-base-800" : "text-berg-blue");
       };
+
       const handleScroll = () => {
         if (!enableScrollSwap) return;
         const scrolled = window.scrollY > 0;
+
+        // Background toggle
         if (navEl) navEl.classList.toggle("bg-white", scrolled);
-        swapColor(logoEl, scrolled);
+
+        // 3. Logo Swapping Logic
+        if (logoMono && logoFull) {
+          if (scrolled) {
+            logoMono.classList.add("hidden");
+            logoFull.classList.remove("hidden");
+          } else {
+            logoMono.classList.remove("hidden");
+            logoFull.classList.add("hidden");
+          }
+        }
+
+        // Links/Burger color swap
         primaryLinks.forEach((el) => swapColor(el, scrolled));
-        // Mobile icons
         swapColor(burger, scrolled);
         swapColor(close, scrolled);
       };
+
       if (enableScrollSwap) {
         window.addEventListener("scroll", handleScroll);
-        handleScroll(); // Initialize state on load
+        handleScroll(); 
       } else {
-        // Force dark variant on non-home pages
+        // Force white state for non-transparent pages (showing full color logo)
         if (navEl) navEl.classList.add("bg-white");
-        swapColor(logoEl, true);
         primaryLinks.forEach((el) => swapColor(el, true));
         swapColor(burger, true);
         swapColor(close, true);
+        // Ensure Logo is visible and Mono is hidden on non-transparent pages
+        if (logoMono) logoMono.classList.add("hidden");
+        if (logoFull) logoFull.classList.remove("hidden");
       }
     });
   </script>

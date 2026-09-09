@@ -1,0 +1,94 @@
+---
+export interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+
+// Get the current absolute URL to share
+const currentUrl = Astro.url.href;
+const encodedUrl = encodeURIComponent(currentUrl);
+const encodedTitle = encodeURIComponent(title);
+
+const shareLinks = {
+  facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+  x: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
+  linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${encodedTitle}`,
+  nextdoor: `https://nextdoor.com/share/?url=${encodedUrl}`,
+  email: `mailto:?subject=${encodedTitle}&body=Read this article: ${encodedUrl}`,
+};
+---
+
+{/* Changed my-12 to mt-16 to give it space from the tags, and ensured it stays w-full */}
+<div class="w-full py-5">
+  <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+    <span class="text-xs uppercase tracking-wide text-accent-900">
+      Share this article
+    </span>
+    
+    <div class="flex items-center gap-5 text-berg-blue">
+      {/* Facebook */}
+      <a 
+        href={shareLinks.facebook} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        aria-label="Share on Facebook"
+        class="hover:text-berg-red transition-colors duration-200"
+      >
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="-1 -1 26 26">
+          <path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/>
+        </svg>
+      </a>
+
+      {/* Nextdoor */}
+      <a 
+        href={shareLinks.nextdoor} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        aria-label="Share on Nextdoor"
+        class="hover:text-berg-red transition-colors duration-200"
+      >
+        <svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="-1 0 34 34">
+          <path d="M31.99 13.089l-15.99-9.792-5.495 3.365v-3.365h-5.005v6.427l-5.495 3.365 2.615 4.271 2.88-1.755v13.099h21v-13.099l2.875 1.755 2.615-4.271z"/>
+        </svg>
+      </a>
+
+      {/* X (Twitter) */}
+      <a 
+        href={shareLinks.x} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        aria-label="Share on X"
+        class="hover:text-berg-red transition-colors duration-200"
+      >
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z"/>
+        </svg>
+      </a>
+
+      {/* LinkedIn */}
+      <a 
+        href={shareLinks.linkedin} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        aria-label="Share on LinkedIn"
+        class="hover:text-berg-red transition-colors duration-200"
+      >
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.1" viewBox="0 0 24 24">
+          <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+        </svg>
+      </a>
+
+      {/* Email */}
+      <a 
+        href={shareLinks.email}
+        aria-label="Share via Email"
+        class="hover:text-berg-red transition-colors duration-200"
+      >
+        <svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>

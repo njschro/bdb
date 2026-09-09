@@ -1,0 +1,39 @@
+---
+// Assets
+import { Image } from "astro:assets";
+import aicpa from "@/images/certificates/aicpa.svg";
+import cfa from "@/images/certificates/cfa.svg";
+import iia from "@/images/certificates/iia.svg";
+import ima from "@/images/certificates/ima.svg";
+import pmi from "@/images/certificates/pmi.svg";
+
+const logos = [
+  { src: aicpa, alt: "AICPA Certified" },
+  { src: cfa, alt: "CFA Certified" },
+  { src: iia, alt: "IIA Certified" },
+  { src: ima, alt: "IMA Certified" },
+  { src: pmi, alt: "PMI Certified" },
+];
+
+---
+
+<div
+  class="grid grid-cols-2 lg:grid-cols-5  gap-4 items-center justify-between mt-4 "
+>
+  {
+    logos.map((logo) => (
+        <div class="bg-base-50 p-4 flex flex-col items-center justify-center aspect-square">
+            <Image
+              width={80}
+              height={80}
+              src={logo.src}
+              alt={logo.alt}
+              loading="eager"
+              decoding="async"
+              class="object-contain   scale-150"
+            />
+        </div>
+     
+    ))
+  }
+</div>

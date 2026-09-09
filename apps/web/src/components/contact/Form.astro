@@ -8,11 +8,13 @@ import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 import MapPin from "@/components/fundations/icons/MapPin.astro";
 import Phone from "@/components/fundations/icons/Phone.astro";
 import Envelpe from "@/components/fundations/icons/Envelope.astro";
+
 const contactDetails = {
-  email: "hello@bastion.com",
-  phone: "+1 (555) 123-4567",
-  address: "123 Market Street, Suite 500\nSan Francisco, CA 94103",
+  email: "info@bergdbuilding.com",
+  phone: "+1 (419) 969-2374",
+  address: "421 Independence Dr., Suite B\nNapoleon, OH 43545",
 };
+
 const contactItems = [
   {
     label: "Address",
@@ -35,27 +37,26 @@ const contactItems = [
 ---
 
 <section>
-  <Wrapper variant="standard" class="py-24">
+  <Wrapper variant="standard" class="py-24 lg:border-x lg:border-berg-blue">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
       <div>
-        <Kicker class="text-accent-600">Get in touch</Kicker>
+        <Kicker class="text-berg-red">Visit Us</Kicker>
         <Text
           tag="h2"
           variant="displaySM"
-          class="font-medium tracking-tight text-base-900 mt-12 text-balance"
+          class="font-medium tracking-tight text-berg-blue mt-12 text-balance"
         >
-          Contact our construction experts today.
+          We're ready to help you build things to last.
         </Text>
         <Text tag="p" variant="textLG" class="text-base-600 mt-4">
-          Whether you have a question, need more details about our services, or
-          want to discuss a potential collaboration, we're here to help. Fill
-          out the form and we'll respond as soon as possible.
+          Whether you have a question about your project, want more details about our services, or want to discuss a potential collaboration, we're here to help. Fill
+          out the form or give us a call and we'll respond as soon as possible.
         </Text>
         <div class="mt-12 space-y-8 border-t border-base-200 pt-8">
           {
             contactItems.map((item) => (
               <div class="flex items-start gap-4">
-                <span class="flex size-10 items-center justify-center rounded-full bg-accent-500/10 text-accent-600">
+                <span class="flex size-10 items-center justify-center bg-accent-500/10 text-accent-600">
                   {item.icon === "location" ? (
                     <MapPin size="sm" class="text-accent-500" />
                   ) : item.icon === "phone" ? (
@@ -103,65 +104,78 @@ const contactItems = [
           }
         </div>
       </div>
-      <form class="bg-accent-950 rounded p-8">
+      
+      <form action="https://api.web3forms.com/submit" method="POST" class="bg-accent-50 p-8 lg:p-12 lg:border lg:border-berg-blue">
         <Text
           tag="h3"
           variant="textLG"
-          class="font-medium tracking-tight text-white"
+          class="font-medium tracking-tight text-berg-blue"
         >
           Send us a message
         </Text>
-        <Text tag="p" variant="textBase" class="text-base-400 mt-1">
-          Share a few details and our team will reach out within one business
-          day.
+        <Text tag="p" variant="textBase" class="text-base-600 mt-1 mb-8">
+          Share a few details and our team will reach out within one business day.
         </Text>
-        <div class="space-y-4 mt-12">
-          <div class="space-y-2">
-            <label for="contact-name" class="text-sm text-base-400 block">
-              Name<span
-                aria-hidden="true"
-                class="text-accent-500 pointer-events-none">*</span
-              >
-            </label>
+
+        <input type="hidden" name="access_key" value="b1a2499b-0ab1-452a-a384-bed276897bb1">
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
+          <div class="space-y-1">
+            <label for="first-name" class="text-sm text-base-900 block">First Name</label>
             <input
-              id="contact-name"
+              id="first-name"
               type="text"
-              name="name"
+              name="first_name"
               required
-              autocomplete="name"
-              class="w-full rounded border-white/15 bg-accent-950 px-4 py-3 h-12 text-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500 duration-300 transition-all focus:border-transparent focus:outline-none"
+              class="w-full bg-transparent border-0 border-b border-berg-blue px-0 py-2 text-base-900 focus:ring-0 focus:border-b-2 focus:border-berg-blue transition-all"
             />
           </div>
-          <div class="space-y-2">
-            <label for="contact-email" class="text-sm text-base-400 block">
-              Email<span
-                aria-hidden="true"
-                class="text-accent-500 pointer-events-none">*</span
-              >
-            </label>
+          
+          <div class="space-y-1">
+            <label for="last-name" class="text-sm text-base-900 block">Last Name</label>
+            <input
+              id="last-name"
+              type="text"
+              name="last_name"
+              required
+              class="w-full bg-transparent border-0 border-b border-berg-blue px-0 py-2 text-base-900 focus:ring-0 focus:border-b-2 focus:border-berg-blue transition-all"
+            />
+          </div>
+
+          <div class="space-y-1">
+            <label for="contact-email" class="text-sm text-base-900 block">E-mail address</label>
             <input
               id="contact-email"
               type="email"
               name="email"
               required
-              autocomplete="email"
-              class="w-full rounded border-white/15 bg-accent-950 px-4 py-3 h-12 text-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500 duration-300 transition-all focus:border-transparent focus:outline-none"
+              class="w-full bg-transparent border-0 border-b border-berg-blue px-0 py-2 text-base-900 focus:ring-0 focus:border-b-2 focus:border-berg-blue transition-all"
             />
           </div>
-          <div class="space-y-2">
-            <label for="contact-message" class="text-sm text-base-400 block">
-              Message
-            </label>
-            <textarea
-              id="contact-message"
-              name="message"
-              rows="5"
-              class="w-full rounded border-white/15 bg-accent-950 px-4 py-3 text-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500 duration-300 transition-all focus:border-transparent focus:outline-none"
-            ></textarea>
+
+          <div class="space-y-1">
+            <label for="contact-phone" class="text-sm text-base-900 block">Phone (Optional)</label>
+            <input
+              id="contact-phone"
+              type="tel"
+              name="phone"
+              class="w-full bg-transparent border-0 border-b border-berg-blue px-0 py-2 text-base-900 focus:ring-0 focus:border-b-2 focus:border-berg-blue transition-all"
+            />
           </div>
         </div>
 
-        <Button size="lg" type="submit" variant="muted" class="w-full mt-8">
+        <div class="space-y-2 mt-8">
+          <label for="contact-message" class="text-sm text-base-900 block">Your Message</label>
+          <textarea
+            id="contact-message"
+            name="message"
+            rows="5"
+            required
+            class="w-full bg-transparent border border-berg-blue p-4 text-base-900 focus:ring-0 focus:border-2 focus:border-berg-blue transition-all"
+          ></textarea>
+        </div>
+
+        <Button size="lg" type="submit" variant="primary" class="w-full mt-8 bg-berg-blue text-white hover:bg-berg-blue/90">
           Submit
         </Button>
       </form>

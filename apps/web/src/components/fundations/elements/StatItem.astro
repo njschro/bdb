@@ -1,0 +1,58 @@
+---
+// BBBBadge.astro
+interface Props {
+  businessUrl?: string;
+  class?: string;
+}
+
+const { 
+  businessUrl = "https://www.bbb.org/us/oh/napoleon/profile/custom-home-builder/berg-design-build-llc-0422-211021216/#sealclick",
+  class: className = ""
+} = Astro.props;
+---
+
+<a href={businessUrl} target="_blank" rel="noopener noreferrer" class={`bbb-badge-link ${className}`}>
+  <div class="bbb-badge-container">
+    <div class="bbb-logo-container">
+      <img 
+        src="https://seal-toledo.bbb.org/seals/blue-seal-250-52-bbb-211021216.png" 
+        alt="BBB Accredited"
+        class="bbb-seal-img"
+      />
+    </div>
+    <div class="bbb-badge-content">
+      <!-- Empty content area to maintain the same width/shape as Google badge -->
+    </div>
+  </div>
+</a>
+
+<style>
+  .bbb-badge-link {
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  /* Replicating Google badge dimensions exactly */
+  .bbb-badge-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px 14px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    min-width: 140px; /* Ensures it doesn't collapse */
+  }
+
+  .bbb-badge-container:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .bbb-logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1_

@@ -28,10 +28,10 @@ const team = defineCollection({
     }),
 });
 
-const posts = defineCollection({
+const news = defineCollection({
   loader: glob({
     pattern: "**/*.md",
-    base: "./src/content/posts",
+    base: "./src/content/news",
     generateId: ({ entry }) => entry.replace(/\.md$/, ""),
   }),
   schema: ({ image }) =>
@@ -147,7 +147,7 @@ const careers = defineCollection({
 export const collections = {
   team,
   legal,
-  posts,
+  news,
   services,
   projects,
   careers,

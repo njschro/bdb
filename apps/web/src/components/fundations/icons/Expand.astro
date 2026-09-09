@@ -1,0 +1,39 @@
+---
+const { variant, size, class: className, ...rest } = Astro.props;
+const xs = ["size-3"];
+const sm = ["size-4"];
+const base = ["size-5"];
+const md = ["size-6"];
+const lg = ["size-7"];
+const xl = ["size-8"];
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 220 224"
+  fill="currentColor"
+  class:list={[
+    "icon",
+    size === "xs" && xs,
+    size === "sm" && sm,
+    size === "base" && base,
+    size === "md" && md,
+    size === "lg" && lg,
+    size === "xl" && xl,
+    className,
+  ]}
+  {...rest}
+>
+ <g transform="matrix(1,0,0,1,-315.097213,-20.636298)">
+        <g transform="matrix(1,0,0,1,306,0)">
+            <g id="arrow-down-narrow-wide.svg" transform="matrix(9.135252,0,0,9.135252,23.662925,22.548851)">
+                <path d="M11,4L15,4M11,8L18,8M11,12L21,12" style="fill:none;fill-rule:nonzero;stroke:rgb(14,33,102);stroke-width:2px;"/>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,306,0)">
+            <g id="arrow-down-up.svg" transform="matrix(9.341364,0,0,9.341364,21.982131,21.786272)">
+                <path d="M2.744,16.161L6.835,19.647L11.107,16M6.842,19.021L6.842,4" style="fill:none;fill-rule:nonzero;stroke:rgb(237,28,36);stroke-width:2px;stroke-linejoin:miter;"/>
+            </g>
+        </g>
+    </g></svg
+>

@@ -15,33 +15,31 @@ const projects = await getAllProjects();
 ---
 
 <BaseLayout navTransparent={true}>
-  <section class="bg-accent-800">
+  <section class="bg-base-100">
     <Wrapper
       variant="standard"
-      class="py-12 pt-48 lg:border-x lg:border-white/10"
+      class="py-12 pt-48 lg:border-x lg:border-berg-blue"
     >
       <div class="grid grid-cols-1 lg:grid-cols-3 lg:items-end gap-12">
         <div class="max-w-4xl text-balance lg:col-span-2">
-          <Kicker class="text-white">our work</Kicker>
+          <Kicker class="text-berg-red">our work</Kicker>
           <Text
             tag="h1"
             variant="displayMD"
-            class="font-medium tracking-tight mt-12 text-white"
+            class="font-medium tracking-tight mt-12 text-berg-blue"
           >
-            A selection of projects delivered across residential and commercial
+            A selection of projects across residential and commercial
             sectors
           </Text>
-          <Text tag="p" variant="textLG" class="text-base-200 mt-4">
-            Explore completed projects showcasing our approach to planning,
-            execution, and build quality — across a range of scales and
-            requirements.
+          <Text tag="p" variant="textLG" class="text-base-600 mt-4">
+            Explore our current and completed projects that showcase our attention to detail and quality standards.
           </Text>
         </div>
       </div>
     </Wrapper>
   </section>
   <section>
-    <Wrapper variant="standard" class="py-12">
+    <Wrapper variant="standard" class="py-12 lg:border-x lg:border-berg-blue">
       <div class="flex flex-col space-y-8">
         {projects.map((project) => <ProjectCardSmall project={project} />)}
       </div>

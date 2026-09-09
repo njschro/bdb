@@ -1,0 +1,98 @@
+---
+// Foundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Kicker from "@/components/fundations/elements/Kicker.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+
+const attributes = [
+  {
+    title: "Familial Care",
+    description:
+      "We treat every project as if we are building it for our own family. From the first blueprint to the final walkthrough, our team is thorough and builds with love.",
+  },
+  {
+    title: "Unwavering Honesty",
+    description:
+      "Integrity is our absolute foundation. We are straightforward and open about our capabilities, timelines, and promises so you always know exactly where you stand.",
+  },
+  {
+    title: "Unique Execution",
+    description:
+      "Your vision is one-of-a-kind. We build custom spaces and foster relationships tailored entirely to your goals, creating results that will endure for generations to come.",
+  },
+  {
+    title: "Enduring Quality",
+    description:
+      "We build structures to last. Our commitment to excellence is reflected in our premium materials, refined processes, specialized tools, and the highly skilled people doing the work.",
+  },
+  {
+    title: "Flexible Approach",
+    description:
+      "Construction is dynamic, and we work diligently to accommodate all aspects of your vision, applying our best knowledge and adapting seamlessly to project realities.",
+  },
+  {
+    title: "Clear Communication",
+    description:
+      "Time is precious. We communicate with transparency and simplicity, cutting through the noise to focus purely on what matters most to your project's success.",
+  },
+];
+---
+
+<BaseLayout navTransparent={true}>
+  <section class="bg-base-50 lg:border-b lg:border-berg-blue">
+    <Wrapper variant="standard" class="py-24 pt-48 lg:border-x lg:border-berg-blue">
+      <div class="max-w-3xl mx-auto text-center text-balance">
+        <Kicker class="text-berg-red uppercase tracking-widest">Why Us</Kicker>
+        <Text
+          tag="h1"
+          variant="displayMD"
+          class="font-medium tracking-wide mt-8 text-berg-blue"
+        >
+          Built on Integrity. Built to Last.
+        </Text>
+        <Text tag="p" variant="textLG" class="text-base-600 mt-6 leading-relaxed">
+          When you choose us, you are partnering with a team that values your time, respects your vision, and treats your property like our own. Discover the six core pillars that guarantee your project is executed flawlessly.
+        </Text>
+      </div>
+    </Wrapper>
+  </section>
+
+  <section>
+    <Wrapper variant="standard" class="py-24 lg:py-32 lg:border-x lg:border-berg-blue">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16">
+        {
+          attributes.map((attribute) => (
+            <div class="flex flex-col border-t-2 border-berg-blue/10 pt-6">
+              <Text tag="h3" variant="textLG" class="font-medium text-berg-blue">
+                {attribute.title}
+              </Text>
+              <Text tag="p" variant="textBase" class="text-base-600 mt-3 leading-relaxed">
+                {attribute.description}
+              </Text>
+            </div>
+          ))
+        }
+      </div>
+    </Wrapper>
+  </section>
+  
+  <section class="bg-accent-700">
+    <Wrapper variant="standard" class="py-24 lg:border-x lg:border-berg-blue text-center">
+      <div class="max-w-2xl mx-auto">
+        <Text tag="h2" variant="displaySM" class="font-medium text-white mb-6">
+          Ready to build something together?
+        </Text>
+        <Text tag="p" variant="textBase" class="text-accent-100 mb-10">
+          Experience the difference of a construction partner who prioritizes transparent communication and enduring quality.
+        </Text>
+        <a 
+          href="/contact" 
+          class="inline-block bg-berg-blue text-white px-8 py-4 font-medium transition-colors hover:bg-berg-blue/90"
+        >
+          Contact Our Team
+        </a>
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

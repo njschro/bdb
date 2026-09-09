@@ -1,0 +1,43 @@
+---
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Kicker from "@/components/fundations/elements/Kicker.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Components
+import BlogCard from "@/components/news/BlogCard.astro";
+// Content
+import { getAllNews } from "@/lib/data";
+const allNews = await getAllNews();
+---
+
+<BaseLayout navTransparent={true}>
+  <section class="bg-accent-50 lg:border-b lg:border-berg-blue">
+    <Wrapper
+      variant="standard"
+      class="py-12 pt-48 lg:border-x lg:border-berg-blue"
+    >
+      <div class="max-w-xl mx-auto text-center text-balance lg:col-span-2">
+        <Kicker class="text-berg-red">News Articles</Kicker>
+        <Text
+          tag="h1"
+          variant="displayXL"
+          class="font-medium tracking-tight mt-12 text-berg-blue"
+        >
+          Keeping you in the know
+        </Text>
+        <Text tag="p" variant="textLG" class="text-base-400 mt-4">
+          Articles covering new projects, employee updates, events,
+          and participating in our community.
+        </Text>
+      </div>
+    </Wrapper>
+  </section>
+  <section>
+    <Wrapper variant="standard" class="py-24 lg:border-x lg:border-berg-blue">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-24">
+        {allNews.map((article) => <BlogCard article={article} />)}
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

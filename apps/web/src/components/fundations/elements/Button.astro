@@ -11,42 +11,45 @@ const {
 } = Astro.props;
 const defaultClass = [
   "text-white",
-  "bg-base-900",
-  "hover:bg-base-800",
-  "focus:outline-base-800",
+  "bg-base-50/30",
+  "border",
+  "border-base-50",
+  "hover:bg-base-50",
+  "focus:outline-berg-red",
 ];
 const accentClass = [
   "text-white",
-  "bg-accent-500",
+  "bg-berg-blue",
   "hover:bg-accent-600",
   "focus:outline-accent-400",
 ];
 
 const mutedClass = [
   "text-base-900",
-  "bg-base-100",
+  "bg-base-200",
   "hover:bg-base-200",
   "focus:outline-base-300",
 ];
 // Size
 const sizes = {
-  xxs: ["h-7.5", "px-4", "py-2", "text-sm", " rounded-lg"],
-  xs: ["h-8", "px-4", "py-3", "text-sm", " rounded-lg"],
-  sm: ["h-9", "px-4", "py-3", "text-base", "rounded-lg"],
-  base: ["h-10", "px-5", "py-4", "text-base", "rounded-lg"],
-  md: ["h-11", "px-5", "py-4", "text-lg", "rounded-lg"],
-  lg: ["h-12", "px-5", "py-4", "text-xl", "rounded-lg"],
-  xl: ["h-13", "px-5", "py-4", "text-xl", "rounded-xl"],
-};
+  xxs: ["h-7.5", "px-4", "py-2", "text-sm"],
+  xs: ["h-8", "px-4", "py-3", "text-sm"],
+  sm: ["h-9", "px-4", "py-3", "text-base"],
+  base: ["h-10", "px-5", "py-4", "text-base"],
+  md: ["h-11", "px-5", "py-4", "text-lg"],
+  lg: ["h-12", "px-5", "py-4", "text-xl"],
+  xl: ["h-13", "px-5", "py-4", "text-xl"],
+  xxl: ["h-14", "px-6", "py-5", "text-xxl"],
+}
 // Icon size
 const iconSizes = {
-  xxs: ["size-7.5", "py-2", "text-sm", " rounded-lg"],
-  xs: ["size-8", "text-sm", " rounded-lg"],
-  sm: ["size-9", "text-base", "rounded-lg"],
-  base: ["size-10", "text-base", "rounded-lg"],
-  md: ["size-11", "text-lg", "rounded-lg"],
-  lg: ["size-12", "text-xl", "rounded-lg"],
-  xl: ["size-13", "text-xl", "rounded-xl"],
+  xxs: ["size-7.5", "py-2", "text-sm"],
+  xs: ["size-8", "text-sm"],
+  sm: ["size-9", "text-base"],
+  base: ["size-10", "text-base"],
+  md: ["size-11", "text-base"],
+  lg: ["size-12", "text-xl"],
+  xl: ["size-13", "text-xl"],
 };
 // Gaps
 const gapMap = {

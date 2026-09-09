@@ -1,88 +1,102 @@
 ---
-// Assets
-// IF you do not want a video
-// You can use an image instead
-//
-// Remove the video tag and uncomment the image tag below
 import { Image } from "astro:assets";
 import heroImage from "@/images/assets/heroImage.png";
+
 // Fundations
 import Text from "@/components/fundations/elements/Text.astro";
-import Kicker from "@/components/fundations/elements/Kicker.astro";
+import Button from "../fundations/elements/Button.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+import GoogleBadge from "@/components/fundations/elements/GoogleBadge.astro";
+import BBBBadge from "@/components/fundations/elements/BBBBadge.astro";
+import FacebookBadge from "@/components/fundations/elements/FacebookBadge.astro";
+
+// 1. Logic: Explicitly map the badges to their own types
 const stats = [
-  { value: "50+", label: "Project complete" },
-  { value: "100+", label: "Expert teams" },
-  { value: "$3.5M", label: "Project value" },
-  { value: "$3.5M", label: "Project value" },
+  { 
+    type: "bbb" 
+  },
+  { 
+    type: "google", 
+    rating: "5.0", 
+    reviewsCount: "2", 
+    businessUrl: "https://maps.app.goo.gl/bGRS26EsW7Vdb4zEA" 
+  },
+  { 
+    type: "facebook", 
+    rating: "5.0", 
+    reviewsCount: "1", 
+    pageUrl: "https://www.facebook.com/profile.php?id=61570964104530" 
+  },
 ];
 ---
-
-<section class="relative min-h-[80dvh] flex flex-col">
+<section class="relative min-h-[90dvh] flex flex-col">
   <div class="absolute inset-0 z-0">
     <video autoplay muted loop playsinline class="size-full object-cover">
-      <source src="/night.mp4" type="video/mp4" />
+      <source src="/video/BergHeroIntro.mp4" type="video/mp4" />
     </video>
-    <!-- 
-    // IF you do not want a video
-    // You can use an image instead
-    //
-    // Remove the video tag and uncomment the image tag below
-    <Image
-      width={1290}
-      height={920}
-      src={heroImage}
-      alt="Modern architectural building"
-      decoding="async"
-      loading="lazy"
-      class="size-full object-cover"
-    /> 
-    -->
-    <div
-      aria-hidden="true"
-      class="absolute pointer-events-none inset-0 bg-accent-950/60"
-    >
-    </div>
+    <div aria-hidden="true" class="absolute pointer-events-none inset-0 bg-accent-100/60"></div>
+    <div aria-hidden="true" class="absolute pointer-events-none inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-accent-50 to-transparent"></div>
   </div>
+
   <div class="relative z-10 flex-1 flex flex-col">
-    <Wrapper
-      variant="standard"
-      class="flex-1 flex flex-col justify-end py-12 lg:pb-12 pt-24 lg:border-x lg:border-white/10"
-    >
-      <div class="max-w-xl text-balance">
-        <Kicker class="text-white">Built for you</Kicker>
-        <Text
-          tag="h1"
-          variant="displayLG"
-          class="text-white font-medium tracking-tight mt-12"
-        >
-          Everyday building with purpose and precision
+    <Wrapper variant="standard" class="flex-1 flex flex-col justify-end py-12 lg:pb-12 pt-24 lg:border-x lg:border-berg-blue" >
+      <div class="max-w-x2 text-balance">
+        <Text tag="h1" variant="displayLG" class="text-berg-blue tracking-wide mt-12">
+          Built on Integrity. Built to Last.
         </Text>
-        <Text tag="p" variant="textLG" class="text-white max-w-xl mt-4">
-          We deliver high-quality construction through expert planning, skilled
-          craftsmanship, and dependable execution.
+        <Text tag="p" variant="textXL" class="text-base-800 max-w-x2 mt-4">
+          With a 30-year legacy of integrity, quality, and community, we are Northwest Ohio's newly founded company for residential and commercial construction.
         </Text>
       </div>
-    </Wrapper>
-    <div class="relative z-10 border-t border-white/10">
-      <Wrapper variant="standard" class="py-8 lg:border-x lg:border-white/10">
-        <div
-          class="grid grid-cols-2 md:grid-cols-4 gap-y-4 gap-x-8 lg:max-w-3xl lg:ml-auto"
+      <div class="flex flex-row justify-start lg:mr-auto lg:max-w-3x1 gap-4">
+        <Button
+          isLink
+          size="xl"
+          variant="accent"
+          href="/contact"
+          class="w-fit mt-8"
         >
+          Start Your Project
+        </Button>
+        <Button
+          isLink
+          size="xl"
+          variant="accent"
+          href="/contact"
+          class="w-fit mt-8"
+        >
+          Call Us
+        </Button>
+        </div>
+    </Wrapper>
+
+    <div class="relative z-10 border-t border-berg-blue">
+      <Wrapper variant="standard" class="py-8 lg:border-x lg:border-berg-blue">
+        <!-- 
+          Unified Horizontal Row: Aligns 3 equal squares horizontally on mobile, leaving space on desktop for custom grid alignment. This took a while...
+        -->
+        <div class="flex flex-row justify-start gap-6 lg:max-w-3xl lg:ml-auto items-center md:grid md:grid-cols-3 md:gap-x-8">
           {
             stats.map((stat) => (
-              <div>
-                <Text
-                  tag="p"
-                  variant="displayLG"
-                  class="text-white italic font-medium"
-                >
-                  {stat.value}
-                </Text>
-                <Text tag="p" variant="textSM" class="text-base-400 mt-1">
-                  {stat.label}
-                </Text>
-              </div>
+              <>
+                {stat.type === "bbb" && (
+                  <div class="flex justify-center md:justify-start">
+                    <BBBBadge />
+                  </div>
+                )}
+                
+                {stat.type === "google" && (
+                  <div class="flex justify-center md:justify-start">
+                    <GoogleBadge rating={stat.rating} reviewsCount={stat.reviewsCount} businessUrl={stat.businessUrl} />
+                  </div>
+                )}
+
+                {stat.type === "facebook" && (
+                  <div class="flex justify-center md:justify-start">
+                    <FacebookBadge rating={stat.rating} reviewsCount={stat.reviewsCount} pageUrl={stat.pageUrl} />
+                  </div>
+                )}
+              </>
             ))
           }
         </div>

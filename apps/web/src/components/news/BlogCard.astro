@@ -1,0 +1,41 @@
+---
+// Assets
+import { Image } from "astro:assets";
+// Fundations
+import Text from "@/components/fundations/elements/Text.astro";
+import UnderlinedLink from "@/components/fundations/elements/UnderlinedLink.astro";
+// Content
+const { title, description, url, image } = {
+  url: "/news/articles/" + Astro.props.article.slug,
+  title: Astro.props.article.data.title,
+  description: Astro.props.article.data.description,
+  image: Astro.props.article.data.image.url,
+};
+---
+<article>
+  <Image
+    src={image}
+    alt={title}
+    width={800}
+    height={600}
+    loading="lazy"
+    decoding="async"
+    class="object-cover object-center w-full aspect-4/3 rounded"
+  />
+  <div class="mt-4">
+    <Text tag="h2" variant="textXL" class="font-medium text-accent-900"
+      >{title}</Text
+    >
+    <Text tag="p" variant="textBase" class="text-base-600 mt-1"
+      >{description}</Text
+    >
+    <UnderlinedLink
+      href={url}
+      title={`Read more: ${title}`}
+      aria-label={`Read news article: ${title}`}
+      class="mt-4"
+    >
+      Read further
+    </UnderlinedLink>
+  </div>
+</article>

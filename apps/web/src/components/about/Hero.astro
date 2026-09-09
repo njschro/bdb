@@ -2,56 +2,89 @@
 // Assets
 import Logo from "@/components/assets/Logo.astro";
 import { Image } from "astro:assets";
-import heroImage from "@/images/assets/team.png";
+import heroImage from "@/images/team/berg-design-build-team.jpg";
 // Fundations
 import Text from "@/components/fundations/elements/Text.astro";
 import Kicker from "@/components/fundations/elements/Kicker.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+import TwoPillars from "@/components/fundations/icons/TwoPillars.astro";
 ---
 
-<section class="bg-accent-950">
+<section class="bg-base-50">
   <Wrapper
     variant="standard"
-    class="py-12 pt-48 lg:border-x lg:border-white/10"
+    class="py-12 pt-48 lg:border-x lg:border-berg-blue"
   >
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-8 gap-x-20">
       <div class="lg:col-span-2 text-balance">
-        <Kicker class="text-accent-300">Built for you</Kicker>
+        <Kicker class="text-berg-red tracking-wide">Built with love</Kicker>
         <Text
           tag="h1"
           variant="displayLG"
-          class="text-white font-medium tracking-tight mt-12"
+          class="text-berg-blue font-medium tracking-wide mt-12"
         >
-          Everyday building with purpose and precision
+          We think about our legacy every day as we build
         </Text>
-        <Text tag="p" variant="textLG" class="text-base-400 max-w-xl mt-4">
-          We deliver high-quality construction through expert planning, skilled
-          craftsmanship, and dependable execution.
+        <Text tag="p" variant="textLG" class="text-base-500 max-w-xl mt-4">
+          Our name means more than the dollar. If it's something we're putting
+          our name on, then it must be built on integrity and built to last with quality materials. We're always honest with people up front—being respectful of their time and expectations. It's about candor, clarity, and communication. So, doing things the right way shows in the final product. That truth always prevails in the end. We are the same with everyone.
         </Text>
       </div>
       <div
-        class="bg-accent-600 p-8 lg:-mb-26 z-10 relative overflow-hidden lg:order-first"
+        class="bg-base-50 lg:p-8 lg:-mb-26 z-10 relative overflow-hidden lg:order-first lg:border lg:border-berg-blue"
       >
-        <div class="relative flex flex-col justify-between h-full">
-          <Logo class="h-12 w-fit text-white" />
-          <div class="font-medium tracking-tight text-white mt-12 space-y-8">
-            <Text tag="p" variant="displaySM"> Reliability </Text>
-            <Text tag="p" variant="displayMD"> Accountability </Text>
-            <Text tag="p" variant="displayLG"> Consistency </Text>
+        <div
+          class="relative flex flex-col items-center justify-center min-h-[50vh] py-12 px-4 text-center"
+        >
+          <div class="w-full flex justify-center">
+            <TwoPillars class="h-auto w-full lg:w-fit lg:h-21" />
+          </div>
+
+          <div
+            class="font-medium tracking-wide text-berg-red mt-8 md:mt-12 space-y-6 md:space-y-8 max-w-3xl"
+          >
+            <div class="space-y-2">
+              <Text
+                tag="p"
+                variant="displaySM"
+                font="patriciaBoldUppercase"
+                class="text-2xl sm:text-3xl lg:text-3xl mb-1"
+              >
+                Built on Integrity
+              </Text>
+
+              <Text
+                tag="p"
+                variant="displaySM"
+                font="patriciaBoldUppercase"
+                class="text-2xl sm:text-3xl lg:text-3xl"
+              >
+                Built to Last
+              </Text>
+            </div>
+            <Text
+              tag="p"
+              variant="text-base"
+              class="text-base-400 text-balance mx-auto"
+            >
+              We conduct ourselves in accord with our two core pillars in all
+              operations—and it comes naturally because it's who we are.
+            </Text>
           </div>
         </div>
       </div>
     </div>
   </Wrapper>
-  <Wrapper variant="paddingless">
+  <Wrapper variant="paddingless" class="lg:border-x lg:border-berg-blue">
     <Image
       width={1420}
       height={1420}
       src={heroImage}
-      alt="Modern architectural building"
+      alt="The entire Berg Design + Build Team"
       decoding="async"
       loading="lazy"
       class="size-full object-cover max-h-120"
     />
   </Wrapper>
 </section>
+

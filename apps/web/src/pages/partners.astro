@@ -1,0 +1,102 @@
+---
+// Foundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Kicker from "@/components/fundations/elements/Kicker.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+
+const partners = [
+  {
+    name: "Gearhart Plumbing, Heating & Cooling",
+    url: "https://www.gearhartplumbing.com/",
+    logo: "/gearhart.png",
+    // Reduced base padding to p-10 for mobile
+    cardClass: "flex items-center justify-center p-10 md:p-16 lg:p-20 aspect-video rounded-xl transition-transform hover:-translate-y-1 hover:shadow-xl duration-300",
+    // Reduced base max-width for mobile
+    imgClass: "w-full max-w-[150px] md:max-w-[200px] h-auto object-contain",
+    bgColor: "#0066b5", 
+  },
+  {
+    name: "Carter Lumber",
+    url: "https://www.carterlumber.com/",
+    logo: "/carter-lumber.png",
+    cardClass: "flex items-center justify-center p-10 md:p-16 lg:p-20 aspect-video rounded-xl transition-transform hover:-translate-y-1 hover:shadow-xl duration-300",
+    imgClass: "w-full max-w-[150px] md:max-w-[200px] h-auto object-contain",
+    bgColor: "#125952", 
+  },
+  {
+    name: "SRS Distribution",
+    url: "https://www.srsdistribution.com/en/",
+    logo: "/srs-logo.webp",
+    cardClass: "bg-white border border-base-200 flex items-center justify-center p-10 md:p-16 lg:p-20 aspect-video rounded-xl transition-transform hover:-translate-y-1 hover:shadow-xl duration-300",
+    imgClass: "w-full max-w-[90px] md:max-w-[120px] h-auto object-contain",
+    bgColor: null, 
+  },
+];
+---
+
+<BaseLayout navTransparent={true}>
+  <section class="bg-base-50 lg:border-b lg:border-berg-blue">
+    <Wrapper variant="standard" class="py-24 pt-48 lg:border-x lg:border-berg-blue">
+      <div class="max-w-3xl mx-auto text-center text-balance">
+        <Kicker class="text-berg-red uppercase tracking-widest">Our Network</Kicker>
+        <Text
+          tag="h1"
+          variant="displayMD"
+          class="font-medium tracking-wide mt-8 text-berg-blue"
+        >
+          Trusted Partners
+        </Text>
+        <Text tag="p" variant="textLG" class="text-base-600 mt-6 leading-relaxed">
+          Quality construction requires quality materials and expert tradesmen. We are proud to collaborate with industry-leading suppliers and specialists to deliver enduring results on every project.
+        </Text>
+      </div>
+    </Wrapper>
+  </section>
+
+  <section>
+    <Wrapper variant="standard" class="py-24 lg:py-32 lg:border-x lg:border-berg-blue">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+        {
+          partners.map((partner) => (
+            <a 
+              href={partner.url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class={partner.cardClass}
+              style={partner.bgColor ? `background-color: ${partner.bgColor};` : undefined}
+              aria-label={`Visit ${partner.name} website`}
+            >
+              <img 
+                src={partner.logo} 
+                alt={`${partner.name} Logo`} 
+                class={partner.imgClass}
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
+          ))
+        }
+      </div>
+    </Wrapper>
+  </section>
+
+  <section class="bg-accent-700">
+    <Wrapper variant="standard" class="py-24 lg:border-x lg:border-berg-blue text-center">
+      <div class="max-w-2xl mx-auto">
+        <Text tag="h2" variant="displaySM" class="font-medium text-white mb-6">
+          Looking to collaborate?
+        </Text>
+        <Text tag="p" variant="textBase" class="text-accent-100 mb-10">
+          We are always looking to expand our network with reliable, high-quality subcontractors and suppliers. 
+        </Text>
+        <a 
+          href="/contact" 
+          class="inline-block bg-berg-blue text-white px-8 py-4 font-medium transition-colors hover:bg-berg-blue/90 rounded-md"
+        >
+          Get in Touch
+        </a>
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

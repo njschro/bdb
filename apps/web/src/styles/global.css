@@ -1,11 +1,52 @@
+/* apps/web/src/styles/global.css */
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
-@plugin "@tailwindcss/forms";
-@plugin "tailwind-scrollbar-hide";
+
+/* Font definitions */
+@font-face {
+  font-family: 'Patricia Gothic Heavy';
+  src: url('/fonts/PatriciaGothic-Heavy.woff2') format('woff2-variations'),
+       url('/fonts/PatriciaGothic-Heavy.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Patricia Gothic Bold';
+  src: url('/fonts/PatriciaGothic-Bold.woff2') format('woff2-variations'),
+       url('/fonts/PatriciaGothic-Bold.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible Next';
+  src: url('/fonts/AtkinsonHyperlegibleNext-VariableFont_wght.woff2') format('woff2-variations'),
+       url('/fonts/AtkinsonHyperlegibleNext-VariableFont_wght.woff2') format('woff2');
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible Next';
+  src: url('/fonts/AtkinsonHyperlegibleNext-Italic-VariableFont_wght.woff2') format('woff2-variations'),
+       url('/fonts/AtkinsonHyperlegibleNext-Italic-VariableFont_wght.woff2') format('woff2');
+  font-weight: 200 800;
+  font-style: italic;
+  font-display: swap;
+}
+
 @theme {
+/* Custom theme */
   /* Typography */
-  --font-sans: "Inter", sans-serif;
-  /* Accent */
+  --font-heavy: "Patricia Gothic Heavy", sans-serif;
+  --font-bold-gothic: "Patricia Gothic Bold", sans-serif;
+  --font-sans: "Atkinson Hyperlegible Next", ui-sans-serif, system-ui, sans-serif;
+
+  /* Primary Brand Colors (Converted from Hex to OKLCH) */
+  --color-berg-blue: oklch(0.214 0.152 265.38);
+  --color-berg-red: oklch(0.586 0.245 24.48);
+
+  /* Blue Accent */
   --color-accent-50: oklch(0.957 0.017 250.83);
   --color-accent-100: oklch(0.914 0.034 249.56);
   --color-accent-200: oklch(0.816 0.076 247.01);
@@ -17,6 +58,19 @@
   --color-accent-800: oklch(0.283 0.047 242.67);
   --color-accent-900: oklch(0.188 0.031 241.68);
   --color-accent-950: oklch(0.148 0.024 241.32);
+
+  /* Red Accent */
+  --color-red-accent-50: oklch(0.957 0.017 25);
+  --color-red-accent-100: oklch(0.914 0.034 25);
+  --color-red-accent-200: oklch(0.816 0.076 25);
+  --color-red-accent-300: oklch(0.729 0.12 25);
+  --color-red-accent-400: oklch(0.635 0.104 25);
+  --color-red-accent-500: oklch(0.548 0.09 25);
+  --color-red-accent-600: oklch(0.453 0.075 25);
+  --color-red-accent-700: oklch(0.369 0.061 25);
+  --color-red-accent-800: oklch(0.283 0.047 25);
+  --color-red-accent-900: oklch(0.188 0.031 25);
+  --color-red-accent-950: oklch(0.148 0.024 25);
 
   /* Base */
   --color-base-50: oklch(0.985 0 0);
@@ -31,10 +85,31 @@
   --color-base-900: oklch(0.205 0 0);
   --color-base-950: oklch(0.145 0 0);
 }
-:root {
-  font-family: Inter, sans-serif;
-  font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
+
+@layer base {
+
+/* Typography styles */
+h1 {
+  font-family: var(--font-heavy);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
-@supports (font-variation-settings: normal) {
-  :root { font-family: InterVariable, sans-serif; }
+
+h2 {
+  font-family: var(--font-bold-gothic);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* Helper classes */
+.font-patricia-heavy {
+  font-family: 'Patricia Gothic Heavy', serif;
+}
+
+.font-patricia-bold {
+  font-family: 'Patricia Gothic Bold', serif;
+}
+button, .button, a[role="button"] {
+    border-radius: 0px !important;
+  }
 }

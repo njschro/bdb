@@ -14,93 +14,91 @@ import { getCollection, getEntry } from "astro:content";
 
 // Static type imports (always available, zero runtime cost when USE_SANITY = false)
 import type {
-  Post,
+  News, // <-- Changed from Post
   TeamMember,
   LegalPage,
   Service,
   Project,
   Career,
+  Testimonial,
 } from "./sanity/types";
 
 // Re-export types for consumers
-export type { Post, TeamMember, LegalPage, Service, Project, Career };
+export type { News, TeamMember, LegalPage, Service, Project, Career, Testimonial };
 
 /**
  * Toggle this to switch between Sanity CMS and Astro Content Collections
  * - true: Use Sanity CMS as the data source
  * - false: Use Astro Content Collections (markdown files)
  */
-export const USE_SANITY = false;
+export const USE_SANITY = true;
 
 // =============================================================================
-// POSTS
+// NEWS
 // =============================================================================
 
 /**
- * Get all blog posts, sorted by date (newest first)
+ * Get all news articles, sorted by date (newest first)
  */
-export async function getAllPosts(): Promise<Post[]> {
+export async function getAllNews(): Promise<News[]> {
   if (USE_SANITY) {
-    const { sanityFetch, allPostsQuery, transformPost } =
+    const { sanityFetch, allNewsQuery, transformNews } =
       await import("./sanity");
-    const posts = await sanityFetch<any[]>(allPostsQuery);
-    return posts.map(transformPost);
+    const articles = await sanityFetch<any[]>(allNewsQuery);
+    return articles.map(transformNews);
   }
 
-  const posts = await getCollection("posts");
-  posts.sort(
+  const articles = await getCollection("news");
+  articles.sort(
     (a, b) =>
       new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
   );
 
-  return posts.map((post) => ({
-    slug: post.id,
+  return articles.map((article) => ({
+    slug: article.id,
     data: {
-      title: post.data.title,
-      description: post.data.description,
-      pubDate: new Date(post.data.pubDate),
-      tags: post.data.tags || [],
+      title: article.data.title,
+      description: article.data.description,
+      pubDate: new Date(article.data.pubDate),
+      tags: article.data.tags || [],
       image: {
-        url: post.data.image.url,
-        alt: post.data.image.alt || "",
+        url: article.data.image.url,
+        alt: article.data.image.alt || "",
       },
     },
-    body: post.body || "",
+    body: article.body || "",
   }));
 }
 
 /**
- * Get a single post by slug
+ * Get a single news article by slug
  */
-export async function getPostBySlug(slug: string): Promise<{
-  post: Post;
+export async function getNewsBySlug(slug: string): Promise<{
+  article: News;
   htmlContent: string;
   rawBody?: any;
 } | null> {
   if (USE_SANITY) {
-    const { sanityFetch, postBySlugQuery, transformPost, portableTextToHtml } =
+    const { sanityFetch, newsBySlugQuery, transformNews, portableTextToHtml } =
       await import("./sanity");
-    const post = await sanityFetch<any>(postBySlugQuery, { slug });
-    if (!post) return null;
+    const article = await sanityFetch<any>(newsBySlugQuery, { slug });
+    if (!article) return null;
 
-    const transformed = transformPost(post);
-    const html = post.body ? portableTextToHtml(post.body) : "";
+    const transformed = transformNews(article);
+    const html = article.body ? portableTextToHtml(article.body) : "";
 
     return {
-      post: transformed,
+      article: transformed,
       htmlContent: html,
-      rawBody: post.body,
+      rawBody: article.body,
     };
   }
 
-  const entry = await getEntry("posts", slug);
+  const entry = await getEntry("news", slug);
   if (!entry) return null;
 
-  // For Content Collections, we need to render the markdown to HTML
-  // The Content component can't cross module boundaries, so we'll return
-  // the entry itself and let the page handle rendering
   return {
-    post: {
+    article: {
       slug: entry.id,
       data: {
         title: entry.data.title,
@@ -114,48 +112,48 @@ export async function getPostBySlug(slug: string): Promise<{
       },
       body: entry.body || "",
     },
-    // @ts-ignore - Content is a component that we'll pass through
+    // @ts-ignore
     _entry: entry,
-    htmlContent: "", // Not used for Content Collections
+    htmlContent: "",
   } as any;
 }
 
 /**
- * Get posts filtered by tag
+ * Get news articles filtered by tag
  */
-export async function getPostsByTag(tag: string): Promise<Post[]> {
+export async function getNewsByTag(tag: string): Promise<News[]> {
   if (USE_SANITY) {
-    const { sanityFetch, postsByTagQuery, transformPost } =
+    const { sanityFetch, newsByTagQuery, transformNews } =
       await import("./sanity");
-    const posts = await sanityFetch<any[]>(postsByTagQuery, { tag });
-    return posts.map(transformPost);
+    const articles = await sanityFetch<any[]>(newsByTagQuery, { tag });
+    return articles.map(transformNews);
   }
 
-  const allPosts = await getCollection("posts");
-  const filtered = allPosts.filter((post) => post.data.tags?.includes(tag));
+  const allNews = await getCollection("news");
+  const filtered = allNews.filter((article) => article.data.tags?.includes(tag));
   filtered.sort(
     (a, b) =>
       new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
   );
 
-  return filtered.map((post) => ({
-    slug: post.id,
+  return filtered.map((article) => ({
+    slug: article.id,
     data: {
-      title: post.data.title,
-      description: post.data.description,
-      pubDate: new Date(post.data.pubDate),
-      tags: post.data.tags || [],
+      title: article.data.title,
+      description: article.data.description,
+      pubDate: new Date(article.data.pubDate),
+      tags: article.data.tags || [],
       image: {
-        url: post.data.image.url,
-        alt: post.data.image.alt || "",
+        url: article.data.image.url,
+        alt: article.data.image.alt || "",
       },
     },
-    body: post.body || "",
+    body: article.body || "",
   }));
 }
 
 /**
- * Get all unique tags from posts
+ * Get all unique tags from news articles
  */
 export async function getAllTags(): Promise<string[]> {
   if (USE_SANITY) {
@@ -163,10 +161,10 @@ export async function getAllTags(): Promise<string[]> {
     return sanityFetch<string[]>(allTagsQuery);
   }
 
-  const posts = await getCollection("posts");
+  const articles = await getCollection("news");
   const tags = new Set<string>();
-  posts.forEach((post) => {
-    post.data.tags?.forEach((tag) => tags.add(tag));
+  articles.forEach((article) => {
+    article.data.tags?.forEach((tag) => tags.add(tag));
   });
   return Array.from(tags);
 }
@@ -631,20 +629,59 @@ export async function getCareerBySlug(slug: string): Promise<{
 }
 
 // =============================================================================
+// TESTIMONIALS (NEW)
+// =============================================================================
+
+/**
+ * Get all testimonials
+ */
+export async function getAllTestimonials(): Promise<Testimonial[]> {
+  if (USE_SANITY) {
+    // Dynamic import ensures this matches the pattern of the rest of the file
+    const { sanityFetch, allTestimonialsQuery } = await import("./sanity");
+    
+    // We return directly since the query maps the fields correctly.
+    // If you eventually add a transformTestimonial to transforms.ts, you can map it here.
+    const testimonials = await sanityFetch<Testimonial[]>(allTestimonialsQuery);
+    return testimonials;
+  }
+
+  // Fallback if USE_SANITY is false (Astro Collections)
+  try {
+    const testimonials = await getCollection("testimonials");
+    return testimonials.map((t: any) => ({
+      _id: t.id,
+      clientName: t.data.clientName,
+      role: t.data.role,
+      quote: t.data.quote,
+      rating: t.data.rating,
+      metric: t.data.metric,
+      metricLabel: t.data.metricLabel,
+      clientImage: {
+        url: t.data.clientImage?.url,
+        alt: t.data.clientImage?.alt || "",
+      },
+    }));
+  } catch (e) {
+    // Returns empty array if collection doesn't exist yet in local files
+    return [];
+  }
+}
+
+// =============================================================================
 // STATIC PATHS HELPERS
 // =============================================================================
 
 /**
- * Generate static paths for posts
+ * Generate static paths for news
  */
-export async function getPostStaticPaths() {
-  const posts = await getAllPosts();
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: { post },
+export async function getNewsStaticPaths() {
+  const articles = await getAllNews();
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
   }));
 }
-
 /**
  * Generate static paths for team members
  */
@@ -705,12 +742,12 @@ export async function getCareerStaticPaths() {
  */
 export async function getTagStaticPaths() {
   const tags = await getAllTags();
-  const allPosts = await getAllPosts();
+  const allArticles = await getAllNews();
 
   return tags.map((tag) => ({
     params: { tag },
     props: {
-      posts: allPosts.filter((post) => post.data.tags?.includes(tag)),
+      articles: allArticles.filter((article) => article.data.tags?.includes(tag)),
     },
   }));
 }

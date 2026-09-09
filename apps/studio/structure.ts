@@ -7,21 +7,22 @@ import {
   WrenchIcon,
   ProjectsIcon,
   CaseIcon,
+  BlockquoteIcon
 } from "@sanity/icons";
 
 // Singleton document IDs
 const SITE_SETTINGS_ID = "siteSettings";
 
 export const structure = (S: StructureBuilder) =>
-  S.list()
+S.list()
     .title("Content")
     .items([
-      // Posts
+      // News (Formerly Posts)
       S.listItem()
-        .title("Blog Posts")
+        .title("News")
         .icon(DocumentIcon)
-        .schemaType("post")
-        .child(S.documentTypeList("post").title("Blog Posts")),
+        .schemaType("news")
+        .child(S.documentTypeList("news").title("News Articles")),
 
       // Team Members
       S.listItem()
@@ -43,6 +44,13 @@ export const structure = (S: StructureBuilder) =>
         .icon(ProjectsIcon)
         .schemaType("project")
         .child(S.documentTypeList("project").title("Projects")),
+
+      // Testimonials
+      S.listItem()
+        .title("Testimonials")
+        .icon(BlockquoteIcon)
+        .schemaType("testimonial")
+        .child(S.documentTypeList("testimonial").title("Testimonials")),
 
       // Careers
       S.listItem()

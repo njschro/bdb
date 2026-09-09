@@ -15,18 +15,24 @@ const { frontmatter } = Astro.props;
   <section>
     <Wrapper variant="standard" class="py-24 lg:pt-48">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div class="p-8 bg-base-50 rounded">
-          <Kicker class="text-accent-600"> {frontmatter.name}</Kicker>
+        <div class="lg:p-20 bg-base-50">
+          <Kicker class="text-berg-red"> {frontmatter.role}</Kicker>
           <Text
             tag="h1"
             variant="displayMD"
-            class="font-medium tracking-tight mt-12"
+            class="font-medium tracking-tight mt-12 text-berg-blue"
           >
-            {frontmatter.role}
+            {frontmatter.name}
           </Text>
           <Text tag="p" variant="textBase" class="text-base-600 mt-4">
             {frontmatter.bio}
           </Text>
+          
+          <!-- Added prose and max-w-none to format the markdown slot -->
+          <div class="prose prose-base max-w-none mt-12 leading-relaxed text-base-700">
+            <slot />
+          </div>
+          
           <div class="flex items-center gap-6 mt-4 text-base-600">
             {
               frontmatter.socials?.map((social) => (

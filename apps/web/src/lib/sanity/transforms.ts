@@ -1,12 +1,7 @@
-import { getImageUrl } from "./image";
 import type {
-  SanityPost,
-  SanityTeamMember,
   SanityLegalPage,
-  SanityService,
-  SanityProject,
   SanityCareer,
-  Post,
+  News, // <-- Changed from Post
   TeamMember,
   LegalPage,
   Service,
@@ -15,31 +10,31 @@ import type {
 } from "./types";
 
 /**
- * Transform Sanity post to UI-friendly shape
+ * Transform Sanity news article to UI-friendly shape
  * Matches the original Astro content collection structure
  */
-export function transformPost(post: SanityPost): Post {
+export function transformNews(article: any): News { // <-- Changed name and type
   return {
-    slug: post.slug,
+    slug: article.slug,
     data: {
-      title: post.title,
-      description: post.description,
-      pubDate: new Date(post.pubDate),
-      tags: post.tags || [],
+      title: article.title,
+      description: article.description,
+      pubDate: new Date(article.pubDate),
+      tags: article.tags || [],
       image: {
-        url: getImageUrl(post.image?.asset),
-        alt: post.image?.alt || post.title || "",
+        url: article.image?.url || "",
+        alt: article.image?.alt || article.title || "",
       },
     },
     // Body is plain text (from pt::text) for reading time calculation
-    body: typeof post.body === "string" ? post.body : "",
+    body: typeof article.body === "string" ? article.body : "",
   };
 }
 
 /**
  * Transform Sanity team member to UI-friendly shape
  */
-export function transformTeamMember(member: SanityTeamMember): TeamMember {
+export function transformTeamMember(member: any): TeamMember {
   return {
     slug: member.slug,
     data: {
@@ -47,7 +42,7 @@ export function transformTeamMember(member: SanityTeamMember): TeamMember {
       role: member.role,
       bio: member.bio || "",
       image: {
-        url: getImageUrl(member.image?.asset),
+        url: member.image?.url || "",
         alt: member.image?.alt || member.name || "",
       },
       socials: member.socials,
@@ -73,7 +68,7 @@ export function transformLegalPage(page: SanityLegalPage): LegalPage {
 /**
  * Transform Sanity service to UI-friendly shape
  */
-export function transformService(service: SanityService): Service {
+export function transformService(service: any): Service {
   return {
     slug: service.slug,
     data: {
@@ -81,7 +76,7 @@ export function transformService(service: SanityService): Service {
       description: service.description,
       excerpt: service.excerpt,
       image: {
-        url: getImageUrl(service.image?.asset),
+        url: service.image?.url || "",
         alt: service.image?.alt || service.title || "",
       },
       highlights: service.highlights,
@@ -94,25 +89,33 @@ export function transformService(service: SanityService): Service {
 /**
  * Transform Sanity project to UI-friendly shape
  */
-export function transformProject(project: SanityProject): Project {
+export function transformProject(project: any): Project {
   return {
     slug: project.slug,
     data: {
       title: project.title,
       description: project.description,
-      client: project.client,
       location: project.location,
       year: project.year,
+      status: project.status,
       category: project.category,
       services: project.services,
+      service: project.service || "",
+      duration: project.duration || "",
+      summary: project.summary,
+      clientName: project.testimonial?.clientName || project.clientName,
+      clientQuote: project.testimonial?.quote || project.clientQuote,
+      clientRating: project.testimonial?.rating || project.clientRating,
+      clientImage: project.testimonial?.clientImage?.url || project.clientImage?.url || undefined,
+      
       cover: project.cover
         ? {
-            url: getImageUrl(project.cover.asset),
+            url: project.cover.url || "",
             alt: project.cover.alt || project.title || "",
           }
         : undefined,
-      gallery: project.gallery?.map((img) => ({
-        url: getImageUrl(img.asset),
+      gallery: project.gallery?.map((img: any) => ({
+        url: img.url || "",
         alt: img.alt || "",
       })),
       metrics: project.metrics,

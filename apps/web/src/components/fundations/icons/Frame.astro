@@ -1,0 +1,27 @@
+---
+const { variant, size, class: className = "w-full h-full", ...rest } = Astro.props;
+const xs = ["size-3"];
+const sm = ["size-4"];
+const base = ["size-5"];
+const md = ["size-6"];
+const lg = ["size-7"];
+const xl = ["size-8"];
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 13 13"
+  fill="currentColor"
+  class:list={[
+    "icon",
+    size === "xs" && xs,
+    size === "sm" && sm,
+    size === "base" && base,
+    size === "md" && md,
+    size === "lg" && lg,
+    size === "xl" && xl,
+    className,
+  ]}
+  {...rest}
+  ><g><g><path d="M9.855,12.17l-8.883,0c-0.265,0 -0.48,-0.215 -0.48,-0.48l0,-5.969c0,-0.265 0.215,-0.48 0.48,-0.48l8.883,0c0.265,0 0.48,0.215 0.48,0.48l0,5.969c0,0.265 -0.215,0.48 -0.48,0.48Z" style="fill:none;stroke:#0e2166;stroke-width:0.98px;"/><path d="M5.965,11.906l3.881,-6.555m-4.431,6.819l-0,-6.929m-0.551,6.624l-3.82,-6.34" style="fill:none;fill-rule:nonzero;stroke:#0e2166;stroke-width:0.98px;"/></g><path id="arrow-down-right.svg" d="M5.414,10.21l0,-9.718m-4.859,4.859l4.859,-4.859l4.859,4.859" style="fill:none;fill-rule:nonzero;stroke:#0e2166;stroke-width:0.98px;"/><g><path d="M9.079,3.756l-0.765,0.761l3.143,3.128c0.101,0.101 0.239,0.158 0.382,0.158c0.297,0 0.541,-0.243 0.541,-0.538c0,-0.143 -0.057,-0.28 -0.158,-0.38l-3.143,-3.128Z" style="fill:none;fill-rule:nonzero;stroke:#fff;stroke-width:0.61px;"/><path d="M9.079,3.756l-0.765,0.761l3.143,3.128c0.101,0.101 0.239,0.158 0.382,0.158c0.297,0 0.541,-0.243 0.541,-0.538c0,-0.143 -0.057,-0.28 -0.158,-0.38l-3.143,-3.128Z" style="fill:#ed1c24;fill-rule:nonzero;"/><path d="M5.899,4.134l0.425,-0.423c0.144,-0.143 0.225,-0.338 0.225,-0.54l0,-0.448l0.867,-0.863c0.428,-0.426 1.008,-0.667 1.613,-0.671l1.358,-0.009l-0.353,0.313c-0.507,0.447 -1.267,0.623 -1.268,1.298l0,0.611l-0.768,0.764l-0.45,0c-0.204,0 -0.399,0.081 -0.543,0.224l-0.425,0.423l-0.682,-0.679Z" style="fill:none;fill-rule:nonzero;stroke:#fff;stroke-width:0.95px;"/><path d="M5.899,4.134l0.425,-0.423c0.144,-0.143 0.225,-0.338 0.225,-0.54l0,-0.448l0.867,-0.863c0.428,-0.426 1.008,-0.667 1.613,-0.671l1.358,-0.009l-0.353,0.313c-0.507,0.447 -1.267,0.623 -1.268,1.298l0,0.611l-0.768,0.764l-0.45,0c-0.204,0 -0.399,0.081 -0.543,0.224l-0.425,0.423l-0.682,-0.679Z" style="fill:#ed1c24;fill-rule:nonzero;"/></g><path id="tally-1.svg" d="M3.186,3.087l2.227,2.227" style="fill:none;fill-rule:nonzero;stroke:#0e2166;stroke-width:0.98px;"/></g></svg
+>

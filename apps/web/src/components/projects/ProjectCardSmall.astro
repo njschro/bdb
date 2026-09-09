@@ -10,11 +10,12 @@ import ArrowRight from "@/components/fundations/icons/ArrowRight.astro";
 import ArrowUpRight from "@/components/fundations/icons/ArrowUpRight.astro";
 // Content
 const project = Astro.props.project;
-const { title, description, url, category, location, year, image, gallery } = {
+const { title, description, url, category, location, year, image, status, gallery } = {
   url: "/projects/" + project.slug,
   title: project.data.title,
   description: project.data.description,
   category: project.data.category,
+  status: project.data.status,
   location: project.data.location,
   year: project.data.year,
   image: project.data.cover?.url,
@@ -25,13 +26,20 @@ const { title, description, url, category, location, year, image, gallery } = {
 <details class="pb-8 border-b border-base-200 group">
   <summary class="cursor-pointer list-none">
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 lg:gap-x-8 items-start">
-      <Text
-        tag="p"
-        variant="textXS"
-        class="uppercase text-base-600 font-medium"
-      >
-        {category}
-      </Text>
+      {/* FIX: Wrapped Category and Status in a single div to maintain the 4-column grid */}
+      <div>
+        <Text
+          tag="p"
+          variant="textXS"
+          class="uppercase text-base-600 font-medium"
+        >
+          {category}
+        </Text>
+        <Text tag="p" variant="textSM" class="text-base-500 mt-1">
+          Status: {project.data.status || "Complete"}
+        </Text>
+      </div>
+      
       <div class="lg:col-span-2">
         <Text tag="h3" variant="textXL" class="font-medium text-accent-900">
           {title}
@@ -80,7 +88,7 @@ const { title, description, url, category, location, year, image, gallery } = {
         image && (
           <div class="keen-slider__slide">
             <Image
-              src={image}
+              src={image as any}
               alt={title}
               width={400}
               height={300}
@@ -93,7 +101,7 @@ const { title, description, url, category, location, year, image, gallery } = {
       }
       {
         gallery &&
-          gallery.map((img) => (
+          gallery.map((img: any) => (
             <div class="keen-slider__slide">
               <Image
                 src={img.url}

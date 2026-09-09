@@ -45,6 +45,16 @@ export const project = defineType({
       description: "Year or year range (e.g., 2024 or 2023-2024)",
     }),
     defineField({
+      name: "status",
+      title: "Project Status",
+      type: "string",
+      options: {
+        list: ["In progress", "Complete"],
+        layout: "radio",
+      },
+      initialValue: "Complete",
+    }),
+    defineField({
       name: "category",
       title: "Category",
       type: "string",
@@ -128,6 +138,33 @@ export const project = defineType({
       type: "boolean",
       description: "Show this project prominently",
       initialValue: false,
+    }),
+    defineField({
+      name: "service",
+      title: "Service Provided",
+      type: "string",
+      description: "e.g., Full Home Remodel",
+    }),
+    defineField({
+      name: "duration",
+      title: "Duration",
+      type: "string",
+      description: "e.g., 6 Months",
+    }),
+    defineField({
+      name: "summary",
+      title: "Summary",
+      type: "text",
+      rows: 3,
+      validation: (Rule) => Rule.required(),
+    }),
+    // Making projects read associated testimonials: clientName, clientQuote, clientRating, and clientImage.
+    defineField({
+      name: "testimonialRef",
+      title: "Client Testimonial",
+      type: "reference",
+      to: [{ type: "testimonial" }],
+      description: "Select the testimonial associated with this project",
     }),
     defineField({
       name: "body",

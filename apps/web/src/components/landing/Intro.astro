@@ -9,107 +9,109 @@ import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 const contactDetails = [
   {
     label: "Address",
-    value: ["24 Industrial Way", "London, E16 2AB", "United Kingdom"],
+    value: ["421 Independence Dr., Ste B", "Napoleon, OH 43545"],
   },
   {
     label: "Phone",
-    value: ["+44 20 7946 0123"],
-    href: "tel:+442079460123",
+    value: ["+1 419 969 2374"],
+    href: "tel:+14199692374",
   },
   {
     label: "Email",
-    value: ["info@yourcompany.co.uk"],
-    href: "mailto:info@yourcompany.co.uk",
+    value: ["info@bergdbuilding.com"],
+    href: "mailto:info@bergdbuilding.com",
   },
   {
     label: "Office hours",
-    value: ["Monday–Friday, 8:00–17:00"],
+    value: ["Monday–Friday, 8:00–4:00"],
   },
 ];
 ---
 
-<section class="bg-accent-950">
+<section class="bg-accent-50">
   <Wrapper
     variant="standard"
-    class="py-8 lg:py-0 lg:border-x lg:border-white/10"
+    class="py-8 lg:py-0 lg:border-x lg:border-berg-blue"
   >
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-8 gap-x-20">
-      <div class="bg-accent-600 p-8 lg:-mt-26 z-10 relative overflow-hidden">
-        <div class="relative flex flex-col justify-between h-full">
-          <Logo class="h-12 w-fit text-white" />
-          <div>
-            <Text
-              tag="h2"
-              variant="displayMD"
-              class="font-medium tracking-tight text-white mt-12"
-            >
-              Contact
-            </Text>
-            <div class="mt-8 space-y-6">
-              {
-                contactDetails.map((detail) => (
-                  <div>
-                    <Text
-                      tag="span"
-                      variant="textSM"
-                      class="uppercase text-base-100 font-medium block"
-                    >
-                      {detail.label}
-                    </Text>
-                    <Text tag="p" variant="textBase" class="mt-1  text-white">
-                      {detail.value.map((line, index) => (
-                        <>
-                          {detail.href ? (
-                            <a
-                              href={
-                                Array.isArray(detail.href)
-                                  ? detail.href[index] || detail.href[0]
-                                  : detail.href
-                              }
-                              class="hover:underline decoration-2 underline-offset-4"
-                            >
-                              {line}
-                            </a>
-                          ) : (
-                            line
-                          )}
-                          {index < detail.value.length - 1 ? <br /> : ""}
-                        </>
-                      ))}
-                    </Text>
-                  </div>
-                ))
-              }
+      <div class="bg-base-50 p-8 lg:p-12 lg:-mt-26 z-10 relative overflow-hidden lg:border lg:border-berg-blue flex flex-col justify-center items-center">
+  <div class="w-fit flex flex-col">
+    <!-- Logo -->
+    <Logo class="w-50 mb-10" />
+    
+    <!-- Left-aligned Content aligned flush with Logo -->
+    <div>
+      <Text
+        tag="h2"
+        variant="displayMD"
+        class="font-medium tracking-tight text-berg-blue"
+      >
+        Visit Us
+      </Text>
+      <div class="mt-6 space-y-6">
+        {
+          contactDetails.map((detail) => (
+            <div>
+              <Text
+                tag="span"
+                variant="textSM"
+                class="uppercase text-accent-500 font-medium block"
+              >
+                {detail.label}
+              </Text>
+              <Text tag="p" variant="textBase" class="mt-1 text-base-700">
+                {detail.value.map((line, index) => (
+                  <>
+                    {detail.href ? (
+                      <a
+                        href={
+                          Array.isArray(detail.href)
+                            ? detail.href[index] || detail.href[0]
+                            : detail.href
+                        }
+                        class="hover:underline decoration-2 underline-offset-4"
+                      >
+                        {line}
+                      </a>
+                    ) : (
+                      line
+                    )}
+                    {index < detail.value.length - 1 ? <br /> : ""}
+                  </>
+                ))}
+              </Text>
             </div>
-          </div>
-        </div>
+          ))
+        }
       </div>
+    </div>
+  </div>
+</div>
       <div class="lg:col-span-2 py-12 lg:py-24 max-w-xl">
-        <Kicker class="text-accent-300">Get in touch</Kicker>
+        <Kicker class="text-berg-red lg:pl-1 tracking-wide">Built for you</Kicker>
         <Text
           tag="h3"
-          variant="displayMD"
-          class="text-white font-medium tracking-tight mt-12"
+          variant="displayLG"
+          class="text-berg-blue font-medium tracking-normal mt-12"
+          font="patriciaBoldUppercase"
         >
-          Let’s discuss your project.
+          Built by our family for yours.
         </Text>
         <Text
           tag="p"
           variant="textBase"
-          class="text-base-300 mt-4 text-balance"
+          class="text-base-600 mt-4 text-balance"
         >
-          Whether you’re planning a new build, renovation, or commercial
-          project, we’re ready to review your requirements and provide clear,
-          practical next steps.
+          At Berg Design + Build, we hold ourselves to a high quality standard: we build for your family like we build for ours. Lasting structures begin long before concrete is poured and frames are raised. They begin with integrity. Whether designing a custom residential home, executing complex commercial construction, or delivering unique custom renovations, our process is anchored in absolute transparency and unshakeable standards. We maintain our standards through dependable tools, lasting materials, and quality people doing the work. And all these qualities shine in our work and what people say about working with us. 
         </Text>
         <Button
           isLink
           size="base"
-          variant="muted"
+          variant="accent"
           href="/contact"
           class="w-fit mt-8"
         >
-          Send us a message
+          See Our Work
         </Button>
       </div>
     </div>

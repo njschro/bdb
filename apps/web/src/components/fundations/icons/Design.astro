@@ -1,0 +1,27 @@
+---
+const { variant, size, class: className = "w-full h-full", ...rest } = Astro.props;
+const xs = ["size-3"];
+const sm = ["size-4"];
+const base = ["size-5"];
+const md = ["size-6"];
+const lg = ["size-7"];
+const xl = ["size-8"];
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 12 14"
+  fill="currentColor"
+  class:list={[
+    "icon",
+    size === "xs" && xs,
+    size === "sm" && sm,
+    size === "base" && base,
+    size === "md" && md,
+    size === "lg" && lg,
+    size === "xl" && xl,
+    className,
+  ]}
+  {...rest}
+  ><g><g><g><path d="M8.942,2.96l0,7.511c0,0.265 -0.215,0.48 -0.48,0.48l-7.511,0c-0.265,0 -0.48,-0.215 -0.48,-0.48l0,-7.511c0,-0.265 0.215,-0.48 0.48,-0.48l7.511,0c0.265,0 0.48,0.215 0.48,0.48Z" style="fill:none;stroke:#0e2166;stroke-width:0.94px;"/><path d="M0.471,8.127l5.647,0m0,-5.647l0,8.471" style="fill:none;fill-rule:nonzero;stroke:#0e2166;stroke-width:0.94px;"/></g><path id="pen.svg" d="M9.416,1.878c0.168,-0.168 0.263,-0.397 0.263,-0.635c0,-0.493 -0.405,-0.898 -0.898,-0.898c-0.238,0 -0.466,0.095 -0.635,0.263l-4.251,4.252c-0.074,0.074 -0.129,0.165 -0.159,0.264l-0.421,1.386c-0.004,0.015 -0.007,0.03 -0.007,0.046c0,0.087 0.072,0.159 0.159,0.159c0.016,0 0.031,-0.002 0.046,-0.007l1.386,-0.42c0.1,-0.03 0.191,-0.085 0.264,-0.158l4.251,-4.252Z" style="fill:#ed1c24;fill-rule:nonzero;stroke:#fff;stroke-width:0.69px;"/></g></g></svg
+>

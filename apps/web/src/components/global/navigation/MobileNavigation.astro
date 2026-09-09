@@ -17,7 +17,7 @@ const { navLinks } = Astro.props;
   class="lg:hidden absolute inset-x-0 top-full overflow-hidden transition-all duration-300 ease-out max-h-0 opacity-0 -translate-y-2 pointer-events-none"
 >
   <Wrapper variant="standard" class="pt-2">
-    <div class="bg-accent-400 p-8 ring-inset rounded">
+    <div class="bg-base-50 p-8 ring-inset rounded">
       <!-- Navigation Links -->
       <nav class="space-y-3 text-center">
         {
@@ -32,8 +32,7 @@ const { navLinks } = Astro.props;
         }
       </nav>
       <div class="space-y-2 mt-12">
-        <Button size="sm" variant="default" class="w-full">Buy Bastion</Button>
-        <Button size="sm" variant="muted" class="w-full">Contact us</Button>
+        <Button size="sm" variant="default" class="w-full">Contact us</Button>
       </div>
     </div>
   </Wrapper>

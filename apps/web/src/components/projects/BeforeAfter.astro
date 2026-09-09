@@ -1,0 +1,125 @@
+---
+import { Image } from "astro:assets";
+import Text from "@/components/fundations/elements/Text.astro";
+interface Props {
+  beforeImage: {
+    url: string;
+    alt: string;
+  };
+  afterImage: {
+    url: string;
+    alt: string;
+  };
+  beforeLabel?: string;
+  afterLabel?: string;
+}
+const {
+  beforeImage,
+  afterImage,
+  beforeLabel = "Before",
+  afterLabel = "After",
+} = Astro.props;
+---
+
+<div
+  class="relative w-full aspect-[4/3] group select-none overflow-hidden"
+  data-compare-slider
+>
+  <!-- After Image (Background - Right Side) -->
+  <Image
+    src={afterImage.url}
+    alt={afterLabel}
+    width={1200}
+    height={900}
+    class="absolute inset-0 w-full h-full object-cover"
+  />
+  <!-- Before Image (Foreground - Left Side) -->
+  <div
+    class="absolute inset-0 w-full h-full"
+    data-before-wrapper
+    style="clip-path: inset(0 50% 0 0);"
+  >
+    <Image
+      src={beforeImage.url}
+      alt={beforeLabel}
+      width={1200}
+      height={900}
+      class="absolute inset-0 w-full h-full object-cover"
+    />
+  </div>
+  <!-- Slider Handle -->
+  <div
+    class="absolute inset-y-0 left-1/2 w-1 bg-white cursor-ew-resize z-20"
+    data-handle
+    style="left: 50%;"
+  >
+    <div
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-8 bg-white rounded-full shadow-lg flex items-center justify-center text-base-900"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        class="size-4 rotate-90"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
+      </svg>
+    </div>
+  </div>
+  <!-- Labels -->
+  <div
+    class="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full shadow-sm z-10 pointer-events-none"
+  >
+    <Text
+      tag="span"
+      variant="textXS"
+      class="font-medium text-base-900 uppercase tracking-wide"
+      >{beforeLabel}</Text
+    >
+  </div>
+  <div
+    class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full shadow-sm z-10 pointer-events-none"
+  >
+    <Text
+      tag="span"
+      variant="textXS"
+      class="font-medium text-base-900 uppercase tracking-wide"
+      >{afterLabel}</Text
+    >
+  </div>
+  <!-- Range Input -->
+  <input
+    type="range"
+    min="0"
+    max="100"
+    value="50"
+    class="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-30 m-0 p-0 appearance-none"
+    aria-label="Compare before and after images"
+  />
+</div>
+<script>
+  function initSliders() {
+    const sliders = document.querySelectorAll("[data-compare-slider]");
+    sliders.forEach((slider) => {
+      const input = slider.querySelector('input[type="range"]');
+      const beforeWrapper = slider.querySelector("[data-before-wrapper]");
+      const handle = slider.querySelector("[data-handle]");
+      if (!input || !beforeWrapper || !handle) return;
+      input.addEventListener("input", (e) => {
+        const value = (e.target as HTMLInputElement).value;
+        (beforeWrapper as HTMLElement).style.clipPath =
+          `inset(0 ${100 - Number(value)}% 0 0)`;
+        (handle as HTMLElement).style.left = `${value}%`;
+      });
+    });
+  }
+  // Run on load
+  initSliders();
+  // Run on view transitions navigation
+  document.addEventListener("astro:page-load", initSliders);
+</script>

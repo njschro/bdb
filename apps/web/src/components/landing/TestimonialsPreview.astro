@@ -1,0 +1,221 @@
+---
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import { Image } from "astro:assets";
+import Kicker from "@/components/fundations/elements/Kicker.astro";
+import Star from "@/components/fundations/icons/Star.astro";
+import Button from "@/components/fundations/elements/Button.astro";
+
+// NEW: Fetch Sanity Testimonials
+import { getAllTestimonials } from "@/lib/data";
+const sanityTestimonials = await getAllTestimonials();
+
+// Customer Avatars (Fallbacks if Sanity image isn't set)
+import avatar1 from "@/images/customers/julie-eric-norden.jpg";
+import avatar2 from "@/images/customers/jeannette-gabe-brink.jpg";
+import avatar3 from "@/images/customers/kasey-kali-bodenbender.jpg";
+
+// Project Images
+import nordenAfter from "@/images/projects/norden/norden-after1.webp";
+import bodenbender from "@/images/projects/bodenbender/bodenbender-basement.jpg";
+import brink from "@/images/projects/brink/brinks.jpg";
+
+// Base Configuration (Routing & Link Logic)
+const baseTestimonials = [
+  {
+    image: avatar1,
+    name: "Julie & Eric Norden",
+    fallbackRole: "Homeowners",
+    fallbackQuote: "We couldn't be happier with our experience with Berg Design + Build! They transformed our builder-beige, western-themed basement bar into the bourbon speakeasy we had always envisioned...",
+    projectUrl: "/projects/nordens-bourbon-speakeasy-basement",
+  },
+  {
+    image: avatar2,
+    name: "Jeannette & Gabe Brink",
+    fallbackRole: "Homeowners",
+    fallbackQuote: "Thank you, Berg Design + Build! They truly can help with any job, big or small! For years we've dealt with standing water in our backyard after big bouts of rain, which made it very frustrating to enjoy our yard...",
+    testimonialUrl: "/testimonials#jeannette-gabe-brink",
+  },
+  {
+    image: avatar3,
+    name: "Kasey & Kali Bodenbender",
+    fallbackRole: "Homeowners",
+    fallbackQuote: "We cannot recommend Berg Design + Build highly enough! They completely transformed our basement, handling everything from framing to the walls, painting, hanging doors, and electrical work with exceptional craftsmanship...",
+    testimonialUrl: "/testimonials#kasey-kali-bodenbender",
+  },
+];
+
+// NEW: Populate the grid based primarily on Sanity data
+const testimonials = baseTestimonials.map((local) => {
+  // Find the matching testimonial in Sanity
+  const sanityMatch = sanityTestimonials.find(
+    (st) =>
+      st.clientName?.toLowerCase().includes(local.name.toLowerCase()) ||
+      local.name.toLowerCase().includes(st.clientName?.toLowerCase() || "")
+  );
+
+  return {
+    ...local,
+    name: sanityMatch?.clientName || local.name,
+    quote: sanityMatch?.quote || local.fallbackQuote,
+    role: sanityMatch?.role || local.fallbackRole,
+    rating: sanityMatch?.rating ?? 5,
+    image: sanityMatch?.clientImage?.url || local.image,
+  };
+});
+
+type GridItem = 
+  | { type: "image"; src: any; alt: string; url?: string; hasProject?: boolean } 
+  | { type: "testimonial"; data: (typeof testimonials)[number] };
+
+// Exactly 3 Columns to match the 3 Testimonials
+const columns: GridItem[][] = [
+  // Column 1: Speakeasy Pair
+  [
+    { type: "image", src: nordenAfter, alt: "Speakeasy Basement After", url: "/projects/nordens-bourbon-speakeasy-basement", hasProject: true },
+    { type: "testimonial", data: testimonials[0] }, 
+  ],
+  // Column 2: Loft Pair
+  [
+    { type: "image", src: bodenbender, alt: "Loft Conversion", url: "/testimonials#kasey-kali-bodenbender", hasProject: false },
+    { type: "testimonial", data: testimonials[2] }, 
+  ],
+  // Column 3: Garden Pair
+  [
+    { type: "image", src: brink, alt: "Garden Project", url: "/testimonials#jeannette-gabe-brink", hasProject: false },
+    { type: "testimonial", data: testimonials[1] }, 
+  ]
+];
+---
+
+<section class="relative">
+  <div class="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-accent-50 to-transparent pointer-events-none" aria-hidden="true"></div>
+  <Wrapper
+    variant="standard"
+    class="relative z-10 py-12 lg:py-24 lg:border-x lg:border-berg-blue"
+  >
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <Kicker class="text-berg-red lg:pl-2 tracking-wide">What people say about us</Kicker>
+      <div class="lg:col-span-2 text-balance">
+        <Text
+          tag="h1"
+          variant="displayMD"
+          class="font-medium tracking-wide text-balance text-berg-blue"
+        >
+          Honest feedback from wonderful people
+        </Text>
+        <Text tag="p" variant="textLG" class="text-base-600 mt-4">
+          We are fortunate to have worked with amazing people and we look forward to more amazing projects!
+        </Text>
+        <Button
+          isLink
+          size="base"
+          variant="muted"
+          href="/testimonials"
+          class="mt-8 w-fit"
+        >
+          Read all testimonials
+        </Button>
+      </div>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-12 lg:mt-24">
+      {
+        columns.map((column) => (
+          <div class="flex flex-col gap-2">
+            {column.map((item) =>
+              item.type === "image" ? (
+                <div class={`relative group h-96 overflow-hidden w-full ${item.url ? 'cursor-pointer' : ''}`}>
+                  
+                  {item.url && (
+                    <a href={item.url} class="absolute inset-0 z-20">
+                      <span class="sr-only">View {item.alt}</span>
+                    </a>
+                  )}
+
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    class={`w-full h-full object-cover transition-transform duration-500 ${item.url ? 'group-hover:scale-105' : ''}`}
+                  />
+                  
+                  <div 
+                    aria-hidden="true" 
+                    class="absolute inset-x-0 bottom-0 h-18 bg-gradient-to-t from-accent-800/50 to-transparent pointer-events-none z-0"
+                  ></div>
+
+                  {/* The ONLY button rendered per grid pair */}
+                  {item.url && (
+                    <Button
+                      size="base"
+                      variant="default"
+                      class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 w-max pointer-events-none"
+                      tabindex="-1"
+                    >
+                      {item.hasProject ? "View Project" : "View Testimonial"}
+                    </Button>
+                  )}
+                </div>
+              ) : (
+                <div class={`relative group h-96 p-8 bg-base-50 flex flex-col justify-between transition-colors w-full ${(item.data.projectUrl || item.data.testimonialUrl) ? 'cursor-pointer hover:bg-base-100' : ''}`}>
+                  
+                  {(item.data.projectUrl || item.data.testimonialUrl) && (
+                    <a href={item.data.projectUrl || item.data.testimonialUrl} class="absolute inset-0 z-20">
+                      <span class="sr-only">Read more about {item.data.name}'s project</span>
+                    </a>
+                  )}
+
+                  <div>
+                    <div class="flex items-center gap-1 ">
+                        {/* Dynamic Stars */}
+                        {Array.from({ length: 5 }).map((_, index) => (
+                          <Star aria-hidden="true" class={`size-6 ${index < item.data.rating ? "text-berg-red" : "text-base-200"}`} />
+                        ))}
+                      </div>
+                    <Text tag="p" variant="textBase" class="text-base-600 mt-4 line-clamp-6">
+                      {item.data.quote}
+                    </Text>
+                  </div>
+                  <div class="flex items-end justify-between relative z-10 mt-4">
+                    <div class="flex items-center gap-3">
+                      {/* NEW: Conditional logic to handle Sanity URLs vs Local Images safely */}
+                      {typeof item.data.image === "string" ? (
+                        <img
+                          src={item.data.image}
+                          alt={item.data.name}
+                          width="40"
+                          height="40"
+                          class="size-10 rounded-full object-cover"
+                        />
+                      ) : (
+                        <Image
+                          src={item.data.image}
+                          alt={item.data.name}
+                          width={40}
+                          height={40}
+                          class="size-10 rounded-full object-cover"
+                        />
+                      )}
+                      <div>
+                        <Text
+                          tag="p"
+                          variant="textSM"
+                          class="font-bold text-base-900"
+                        >
+                          {item.data.name}
+                        </Text>
+                        <Text tag="p" variant="textXS" class="text-base-400">
+                          {item.data.role}
+                        </Text>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )
+            )}
+          </div>
+        ))
+      }
+    </div>
+  </Wrapper>
+</section>

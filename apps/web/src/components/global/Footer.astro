@@ -30,7 +30,7 @@ const linkSections: LinkSection[] = [
       { label: "About", href: "/about" },
       { label: "Why Us", href: "/why-us" },
       { label: "Partners", href: "/partners" },
-      { label: "Mission", href: "/mission" },
+      { label: "Mission", href: "/mission-vision" },
     ],
   },
   {
@@ -44,7 +44,7 @@ const linkSections: LinkSection[] = [
     title: "Resources",
     links: [
       { label: "Projects", href: "/projects" },
-      { label: "Blog", href: "/blog" },
+      { label: "News", href: "/news" },
       { label: "Careers", href: "/careers" },
       { label: "Team", href: "/team" },
       { label: "Privacy", href: "/legal/privacy" },
@@ -53,10 +53,10 @@ const linkSections: LinkSection[] = [
 ];
 
 const contactDetails = {
-  email: "hello@bastion.com",
-  phone: "+1 (555) 123-4567",
-  address: "123 Market Street, Suite 500\nSan Francisco, CA 94103",
-  hours: ["Mon-Fri: 8:00 AM - 6:00 PM", "Sat-Sun: By appointment"],
+  email: "info@bergdbuilding.com",
+  phone: "+1 (419) 969-2374",
+  address: "421 Independence Dr., Suite B\nNapoleon, OH 43545",
+  hours: ["Mon-Fri: 8:00 AM - 4:00 PM", "Sat-Sun: By appointment"],
 };
 
 const legalLinks: LinkItem[] = [
@@ -66,34 +66,35 @@ const legalLinks: LinkItem[] = [
 ];
 ---
 
-<footer class="relative isolate overflow-hidden bg-accent-950 text-base-100">
+<footer class="relative isolate overflow-hidden bg-accent-950 text-base-800 lg:border-y lg:border-berg-blue">
   <div class="absolute inset-0 z-0 pointer-events-none">
     <video autoplay muted loop playsinline class="size-full object-cover">
-      <source src="/night.mp4" type="video/mp4" />
+      <source src="/video/BergHeroIntro.mp4" type="video/mp4" />
     </video>
-    <div class="absolute inset-0 bg-accent-950/75"></div>
+    <div class="absolute inset-0 bg-base-50/75"></div>
+    <div aria-hidden="true" class="absolute pointer-events-none inset-x-0 top-0 h-1/2 bg-linear-to-b from-white to-transparent"></div>
   </div>
 
   <Wrapper
     variant="standard"
-    class="relative z-10 lg:border-white/15 py-8 border-b lg:border-x"
+    class="relative z-10 lg:border-berg-blue py-8 border-b lg:border-x"
   >
+  
     <div
-      class="flex flex-col gap-8 p-8 lg:flex-row lg:items-end lg:justify-between bg-accent-950 rounded"
+      class="flex flex-col gap-8 p-8 lg:flex-row lg:items-end lg:justify-between lg:border lg:border-berg-blue bg-base-50"
     >
       <div class="max-w-xl text-balance">
-        <Logo class="h-12 text-white" />
+        <Logo class="h-36 text-white" />
 
-        <Text tag="p" variant="textLG" class="text-white font-medium mt-24">
-          Building with precision, dependable delivery, and clear communication
-          from preconstruction through handover.
+        <Text tag="p" variant="textXL" class="text-berg-red font-medium mt-24">
+          Built on Integrity. Built to Last.
         </Text>
       </div>
       <div class="flex flex-wrap gap-2 sm:items-center">
         <Button
           isLink
           size="xs"
-          variant="default"
+          variant="accent"
           href={`mailto:${contactDetails.email}`}
         >
           {contactDetails.email}
@@ -111,7 +112,7 @@ const legalLinks: LinkItem[] = [
   </Wrapper>
   <Wrapper
     variant="standard"
-    class="relative py-8 lg:border-x lg:border-white/15 space-y-12 z-10"
+    class="relative py-8 lg:border-x lg:border-berg-blue space-y-12 z-10"
   >
     <div class="grid gap-x-8 sm:grid-cols-2 lg:grid-cols-4 gap-y-24">
       {
@@ -120,7 +121,7 @@ const legalLinks: LinkItem[] = [
             <Text
               tag="p"
               variant="textXS"
-              class="uppercase font-medium  text-white"
+              class="uppercase font-medium  text-berg-blue"
             >
               {section.title}
             </Text>
@@ -128,7 +129,7 @@ const legalLinks: LinkItem[] = [
               {section.links.map((link) => (
                 <a
                   href={link.href}
-                  class="block text-base-200 transition hover:text-accent-300 w-fit"
+                  class="block text-base-700 transition hover:text-accent-300 w-fit"
                 >
                   {link.label}
                 </a>
@@ -139,14 +140,14 @@ const legalLinks: LinkItem[] = [
       }
 
       <div>
-        <Text tag="p" variant="textXS" class="uppercase font-medium text-white">
+        <Text tag="p" variant="textXS" class="uppercase font-medium text-berg-blue">
           Contact
         </Text>
         <div class="mt-12">
-          <Text tag="p" variant="textSM" class="text-base-200"
+          <Text tag="p" variant="textSM" class="text-base-700"
             >{contactDetails.hours[0]}</Text
           >
-          <Text tag="p" variant="textSM" class="text-base-200"
+          <Text tag="p" variant="textSM" class="text-base-700"
             >{contactDetails.hours[1]}</Text
           >
           <address>
@@ -162,10 +163,10 @@ const legalLinks: LinkItem[] = [
       <div
         class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
       >
-        <Text tag="p" variant="textSM" class="text-base-300">
-          © {new Date().getFullYear()} Bastion. All rights reserved.
+        <Text tag="p" variant="textSM" class="text-base-700">
+          © {new Date().getFullYear()} Berg Design + Build. All rights reserved.
         </Text>
-        <div class="flex flex-wrap gap-4 text-white text-sm">
+        <div class="flex flex-wrap gap-4 text-berg-blue text-sm">
           {
             legalLinks.map((link) => (
               <a href={link.href} class="hover:text-accent-300 transition">

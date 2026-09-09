@@ -1,0 +1,129 @@
+---
+// src/components/fundations/elements/BBBBadge.astro
+const bbbImageUrl = "https://seal-toledo.bbb.org/seals/blue-seal-250-52-bbb-211021216.png";
+---
+
+<a 
+  href="https://www.bbb.org/us/oh/napoleon/profile/custom-home-builder/berg-design-build-llc-0422-211021216" 
+  target="_blank" 
+  rel="nofollow noopener noreferrer" 
+  class="bbb-badge-link w-full sm:w-auto"
+>
+  <div class="bbb-review-badge">
+    <!-- 
+      MOBILE CONTAINER: Only visible on mobile screens. 
+      Splits the singular background asset link into two distinct background viewports so we can render updates from BBB.
+    -->
+    <div class="bbb-mobile-layout">
+      <!-- Top Image Cutout: Frames only the dark blue torch block -->
+      <div class="bbb-cutout-torch" style={`background-image: url(${bbbImageUrl});`}></div>
+      <!-- Bottom Image Cutout: Frames only the "BBB Rating: A" right side text -->
+      <div class="bbb-cutout-rating" style={`background-image: url(${bbbImageUrl});`}></div>
+    </div>
+
+    <!-- DESKTOP CONTAINER: Only visible on desktop viewports. Displays the clean uncropped seal. -->
+    <div class="bbb-desktop-layout">
+      <img 
+        src={bbbImageUrl} 
+        style="border: 0;" 
+        alt="Berg Design + Build LLC BBB Business Review" 
+        loading="lazy"
+      />
+    </div>
+  </div>
+</a>
+
+<style>
+  .bbb-badge-link {
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  /* ---------------------------------------- */
+  /* MOBILE BREAKPOINT STYLE (< 768px)       */
+  /* ---------------------------------------- */
+  .bbb-review-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border: 1px solid #0E2166;
+    padding: 12px;
+    width: 105px;
+    height: 105px;
+    aspect-ratio: 1 / 1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+  }
+  
+  .bbb-review-badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .bbb-mobile-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* 
+    Torch Seal Alignment Box: 
+    Zoom-scales the asset and calculates the position focus to isolate the blue box graphic.
+  */
+  .bbb-cutout-torch {
+    width: 30px;
+    height: 42px;
+    background-repeat: no-repeat;
+    background-size: 215px auto; 
+    background-position: -6px center;
+  }
+
+  /* 
+    Text Rating Alignment Box: 
+    Shifts coordinates far to the right to isolate "BBB Rating: A" right beneath the torch.
+  */
+  .bbb-cutout-rating {
+    width: 80px;
+    height: 34px;
+    background-repeat: no-repeat;
+    background-size: 190px auto;
+    background-position: -106px center;
+  }
+
+  .bbb-desktop-layout {
+    display: none;
+  }
+
+  /* ---------------------------------------- */
+  /* DESKTOP BREAKPOINT OVERRIDE (>= 768px)  */
+  /* ---------------------------------------- */
+  @media (min-width: 768px) {
+    .bbb-review-badge {
+      width: 199px;
+      height: 58px;
+      aspect-ratio: auto;
+      padding: 8px 8px;
+    }
+
+    .bbb-mobile-layout {
+      display: none;
+    }
+
+    .bbb-desktop-layout {
+      display: block;
+      height: 40px;
+    }
+    
+    .bbb-desktop-layout img {
+      height: 100%;
+      width: auto;
+      object-fit: contain;
+    }
+  }
+</style>

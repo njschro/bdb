@@ -4,6 +4,7 @@ export { sanityFetch } from "./fetch";
 
 // Queries
 export * from "./queries";
+export { allTestimonialsQuery } from "./queries";
 
 // Image handling
 export { urlFor, getImageUrl } from "./image";
@@ -16,7 +17,7 @@ export type * from "./types";
 
 // Transforms
 export {
-  transformPost,
+  transformNews,
   transformTeamMember,
   transformLegalPage,
   transformService,

@@ -5,7 +5,7 @@ import Button from "@/components/fundations/elements/Button.astro";
 import Close from "@/components/fundations/icons/Close.astro";
 import SearchIcon from "@/components/fundations/icons/Search.astro";
 import {
-  getAllPosts,
+  getAllNews,
   getAllServices,
   getAllProjects,
   getAllTeamMembers,
@@ -13,8 +13,8 @@ import {
   getAllLegalPages,
 } from "@/lib/data";
 
-const [posts, services, projects, team, careers, legal] = await Promise.all([
-  getAllPosts(),
+const [articles, services, projects, team, careers, legal] = await Promise.all([
+  getAllNews(),
   getAllServices(),
   getAllProjects(),
   getAllTeamMembers(),
@@ -23,13 +23,13 @@ const [posts, services, projects, team, careers, legal] = await Promise.all([
 ]);
 
 const searchItems = [
-  ...posts.map((item) => ({
-    type: "Post",
+  ...articles.map((item) => ({
+    type: "News",
     title: item.data.title,
     description: item.data.description,
     date: item.data.pubDate,
     meta: item.data.tags?.join(", "),
-    url: `/blog/posts/${item.slug}`,
+    url: `/news/articles/${item.slug}`,
   })),
   ...services.map((item) => ({
     type: "Service",
@@ -101,7 +101,7 @@ const searchItems = [
       <div
         class="relative inline-block w-full max-w-3xl mt-12 mb-8 text-left align-middle lg:mt-24 transition-all transform"
       >
-        <div class="rounded-xl bg-accent-950 outline-white/10 shadow-2xl">
+        <div class="bg-accent-700 outline-white/10 shadow-2xl">
           <div class="flex items-start justify-between gap-4 px-6 pt-6">
             <div>
               <p class="text-sm uppercase text-base-400 font-medium">Search</p>
@@ -109,7 +109,7 @@ const searchItems = [
                 Find what you need
               </h2>
               <p class="text-base-300 text-sm">
-                Posts, services, projects, team, careers, and legal pages.
+                News, services, projects, team, careers, and legal pages.
               </p>
             </div>
             <Button
@@ -134,7 +134,7 @@ const searchItems = [
                 type="text"
                 id="searchInput"
                 placeholder="Search by title, role, service, or location..."
-                class="w-full rounded border-white/15 bg-accent-950 px-12 pr-4 py-3 h-12 text-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500 duration-300 transition-all focus:border-transparent focus:outline-none placeholder-base-500"
+                class="w-full border-white/15 bg-accent-950 px-12 pr-4 py-3 h-12 text-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500 duration-300 transition-all focus:border-transparent focus:outline-none placeholder-base-500"
               />
             </div>
             <div
@@ -190,7 +190,7 @@ const searchItems = [
       if (!searchInput.value.trim()) {
         searchResults.innerHTML = `
           <div class="p-4 text-sm text-base-300">
-            Start typing to search posts, services, projects, team, careers, and legal content.
+            Start typing to search news, services, projects, team, careers, and legal content.
           </div>
         `;
         searchResults.classList.remove("hidden");

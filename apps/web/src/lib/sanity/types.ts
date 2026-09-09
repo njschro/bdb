@@ -19,13 +19,13 @@ export interface SanityImage {
 export type ImageUrl = string | ImageMetadata;
 
 // =============================================================================
-// POST TYPES
+// NEWS TYPES
 // =============================================================================
 
 /**
- * Post data as returned from Sanity queries
+ * News data as returned from Sanity queries
  */
-export interface SanityPost {
+export interface SanityNews {
   _id: string;
   title: string;
   slug: string;
@@ -37,9 +37,9 @@ export interface SanityPost {
 }
 
 /**
- * Post shape expected by UI components (mirrors original Astro content collection shape)
+ * News shape expected by UI components (mirrors original Astro content collection shape)
  */
-export interface Post {
+export interface News {
   slug: string;
   data: {
     title: string;
@@ -58,18 +58,22 @@ export interface Post {
 // TEAM MEMBER TYPES
 // =============================================================================
 
-export interface SanityTeamMember {
-  _id: string;
-  name: string;
+export interface TeamMember {
   slug: string;
-  role?: string;
-  bio?: string;
-  image: SanityImage;
-  socials?: Array<{
-    label: string;
-    href: string;
-  }>;
-  body?: PortableTextBlock[];
+  data: {
+    name: string;
+    role?: string;
+    bio?: string;
+    image: {
+      url: string;
+      alt: string;
+    };
+    socials?: Array<{
+      label: string;
+      href: string;
+    }>;
+  };
+  body?: string;
 }
 
 /**
@@ -118,6 +122,23 @@ export interface LegalPage {
 }
 
 // =============================================================================
+// TESTIMONIAL TYPES
+// =============================================================================
+
+export interface Testimonial {
+  _id: string;
+  clientName: string;
+  role?: string;
+  quote: string;
+  rating?: number;
+  metric?: string;
+  metricLabel?: string;
+  clientImage?: {
+    url: string;
+    alt?: string;
+  };
+}
+// =============================================================================
 // SERVICE TYPES
 // =============================================================================
 
@@ -164,6 +185,7 @@ export interface SanityProject {
   client?: string;
   location?: string;
   year?: string | number;
+  status?: string;
   category?: string;
   services?: string[];
   cover?: SanityImage;
@@ -184,11 +206,18 @@ export interface Project {
   data: {
     title: string;
     description: string;
-    client?: string;
+    clientName?: string;
+    clientQuote?: string;
+    clientRating?: number; // <-- Added
+    status?: string;
     location?: string;
     year?: string | number;
     category?: string;
     services?: string[];
+    service?: string;
+    summary: string;
+    duration?: string;
+    clientImage?: string;
     cover?: {
       url: ImageUrl;
       alt: string;

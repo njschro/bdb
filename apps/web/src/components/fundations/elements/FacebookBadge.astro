@@ -1,0 +1,144 @@
+---
+// src/components/fundations/elements/FacebookBadge.astro
+interface Props {
+  rating?: string;
+  reviewsCount?: string;
+  pageUrl?: string;
+}
+
+const { 
+  rating = "5.0", 
+  reviewsCount = "1", 
+  pageUrl = "https://www.facebook.com/p/Berg-Design-Build-61570964104530/" 
+} = Astro.props;
+---
+
+<a href={pageUrl} target="_blank" rel="noopener noreferrer" class="facebook-badge-link w-full sm:w-auto">
+  <div class="facebook-review-badge">
+    <!-- 1. Centered Logo Top -->
+    <div class="facebook-logo-container">
+      <svg class="facebook-f-logo" viewBox="0 0 24 24" width="24" height="24" xmlns="http://w3.org">
+        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="#1877F2"/>
+      </svg>
+    </div>
+    
+    <!-- 2. Centered Content Stack Below -->
+    <div class="badge-content">
+      <div class="rating-row">
+        <span class="rating-number">{rating}</span>
+        <div class="stars-container" aria-label={`Rated ${rating} out of 5 stars`}>
+          <!-- 5 Gold Stars to perfectly match the Google Badge aesthetic -->
+          {[...Array(5)].map(() => (
+            <svg class="star-icon" viewBox="0 0 24 24" width="14" height="14" xmlns="http://w3.org">
+              <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" fill="#FBBC05"/>
+            </svg>
+          ))}
+        </div>
+      </div>
+      <span class="reviews-count">{reviewsCount} {parseInt(reviewsCount) === 1 ? 'Review' : 'Reviews'}</span>
+    </div>
+  </div>
+</a>
+
+<style>
+  .facebook-badge-link {
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  /* Matches the exact square dimensions of your Google component */
+  .facebook-review-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 6px;
+    background: #ffffff;
+    border: 1px solid #0E2166;
+    padding: 12px;
+    width: 104px;
+    height: 104px;
+    aspect-ratio: 1 / 1;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+  }
+  
+  .facebook-review-badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  }
+  
+  .facebook-logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .badge-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  
+  .rating-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  
+  .rating-number {
+    font-size: 14px;
+    font-weight: 700;
+    color: #202124;
+    line-height: 1;
+  }
+  
+  .stars-container {
+    display: flex;
+    gap: 1px;
+  }
+  
+  .reviews-count {
+    font-size: 10px;
+    color: #5f6368;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  /* Desktop Viewport Breakpoint—removes the square layout on larger screens */
+  @media (min-width: 768px) {
+    .facebook-review-badge {
+      flex-direction: row;
+      text-align: left;
+      gap: 18px;
+      padding: 10px 20px;
+      width: auto;
+      height: auto;
+      aspect-ratio: auto;
+    }
+    .facebook-logo-container {
+      border-right: 1px solid #eaeaea;
+      padding-right: 12px;
+      height: 32px;
+    }
+    .badge-content {
+      align-items: flex-start;
+    }
+    .rating-row {
+      flex-direction: row;
+      align-items: center;
+      gap: 6px;
+    }
+    .rating-number {
+      font-size: 16px;
+    }
+    .reviews-count {
+      font-size: 12px;
+    }
+  }
+</style>

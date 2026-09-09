@@ -1,0 +1,74 @@
+---
+// Foundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Kicker from "@/components/fundations/elements/Kicker.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+---
+
+<BaseLayout navTransparent={true}>
+  <section class="bg-base-50 lg:border-b lg:border-berg-blue">
+    <Wrapper variant="standard" class="py-24 pt-48 lg:border-x lg:border-berg-blue">
+      <div class="max-w-3xl mx-auto text-center text-balance">
+        <Kicker class="text-berg-red uppercase tracking-widest">Our Purpose</Kicker>
+        <Text
+          tag="h1"
+          variant="displayMD"
+          class="font-medium tracking-wide mt-8 text-berg-blue"
+        >
+          Mission & Vision
+        </Text>
+        <Text tag="p" variant="textLG" class="text-base-600 mt-6 leading-relaxed">
+          We are driven by a commitment to exceptional craftsmanship and enduring partnerships. Discover the guiding principles that shape every project we undertake.
+        </Text>
+      </div>
+    </Wrapper>
+  </section>
+
+  <section>
+    <Wrapper variant="standard" class="py-24 lg:py-32 lg:border-x lg:border-berg-blue">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24">
+        
+        <!-- Mission -->
+        <div class="flex flex-col border-t-2 border-berg-blue/10 pt-8">
+          <Text tag="h2" variant="displaySM" class="font-medium text-berg-blue mb-6">
+            Our Mission
+          </Text>
+          <Text tag="p" variant="textLG" class="text-base-600 leading-relaxed font-medium">
+            Berg Design + Build is built on experience, strong relationships, and proven leadership. Our focus is on quality, integrity, and customer satisfaction.
+          </Text>
+        </div>
+
+        <!-- Vision -->
+        <div class="flex flex-col border-t-2 border-berg-blue/10 pt-8">
+          <Text tag="h2" variant="displaySM" class="font-medium text-berg-blue mb-6">
+            Our Vision
+          </Text>
+          <Text tag="p" variant="textLG" class="text-base-600 leading-relaxed font-medium">
+            Berg Design + Build aspires to be the premier general contractor and home builder of northwest Ohio known for integrity and building structures that last. 
+          </Text>
+        </div>
+
+      </div>
+    </Wrapper>
+  </section>
+
+  <section class="bg-accent-700">
+    <Wrapper variant="standard" class="py-24 lg:border-x lg:border-berg-blue text-center">
+      <div class="max-w-2xl mx-auto">
+        <Text tag="h2" variant="displaySM" class="font-medium text-white mb-6">
+          Ready to work with proven leaders?
+        </Text>
+        <Text tag="p" variant="textBase" class="text-accent-100 mb-10">
+          Let's bring our mission of quality and integrity to your next construction project.
+        </Text>
+        <a 
+          href="/contact" 
+          class="inline-block bg-berg-blue text-white px-8 py-4 font-medium transition-colors hover:bg-berg-blue/90"
+        >
+          Contact Us Today
+        </a>
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

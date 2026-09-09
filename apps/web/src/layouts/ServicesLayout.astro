@@ -19,21 +19,28 @@ const latestServices = allServices
 ---
 
 <BaseLayout navTransparent={true}>
-  <section class="bg-accent-800">
+  <section class="bg-base-50">
     <Wrapper
       variant="standard"
       class="py-12 pt-48 lg:border-x lg:border-white/10"
     >
-      <div class="max-w-xl text-balance lg:col-span-2">
-        <Kicker class="text-base-300">{frontmatter.title}</Kicker>
+      <div class="max-w-x2 text-balance lg:col-span-2">
+        <Kicker class="text-berg-red">Services</Kicker>
         <Text
           tag="h1"
+          variant="displayXL"
+          class="text-berg-blue font-medium tracking-tight mt-12"
+        >
+          {frontmatter.title}
+        </Text>
+        <Text
+          tag="h3"
           variant="displayMD"
-          class="text-white font-medium tracking-tight mt-12"
+          class="text-base-600 font-medium tracking-tight mt-12"
         >
           {frontmatter.excerpt}
         </Text>
-        <Text tag="p" variant="textbas" class="text-base-300 max-w-xl mt-4">
+        <Text tag="p" variant="textbas" class="text-base-600 max-w-x2 mt-4">
           {frontmatter.description}
         </Text>
       </div>
@@ -42,7 +49,7 @@ const latestServices = allServices
         {
           frontmatter.highlights?.map((highlight, index) => (
             <li>
-              <Text tag="p" variant="textSM" class="text-base-300">
+              <Text tag="p" variant="textMD" class="text-base-600">
                 {index + 1}. {highlight}
               </Text>
             </li>
@@ -84,18 +91,9 @@ const latestServices = allServices
             >
               Latest services
             </Text>
-            <Button
-              isLink
-              size="xs"
-              variant="muted"
-              href="/services"
-              class="w-fit"
-            >
-              See all projects
-            </Button>
           </div>
 
-          <div class="grid grid-cols-1 lg:grid-cols-2 mt-12 lg:mt-24 gap-x-8 gap-y-24">
+          <div class="grid grid-cols-1 lg:grid-cols-4 mt-12 lg:mt-24 gap-x-8 gap-y-24">
             {latestServices.map((service) => (
               <ServiceCard service={service} />
             ))}

@@ -1,88 +1,255 @@
 ---
-// Fundations
+// src/components/sections/Expertise.astro
+
+// Foundations
 import Text from "@/components/fundations/elements/Text.astro";
 import Kicker from "@/components/fundations/elements/Kicker.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+
+// Icon Module Imports
+import Dream from "@/components/fundations/icons/Dream.astro";
+import Consult from "@/components/fundations/icons/Consult.astro";
+import Design from "@/components/fundations/icons/Design.astro";
+import Budget from "@/components/fundations/icons/Budget.astro";
+import Select from "@/components/fundations/icons/Select.astro";
+import Permit from "@/components/fundations/icons/Permit.astro";
+import Groundbreak from "@/components/fundations/icons/Groundbreak.astro";
+import Foundation from "@/components/fundations/icons/Foundation.astro";
+import Frame from "@/components/fundations/icons/Frame.astro";
+import PlumbElectrify from "@/components/fundations/icons/PlumbElectrify.astro";
+import InsulateDrywall from "@/components/fundations/icons/InsulateDrywall.astro";
+import DesignInterior from "@/components/fundations/icons/DesignInterior.astro";
+import Walkthrough from "@/components/fundations/icons/Walkthrough.astro";
+import Welcome from "@/components/fundations/icons/Welcome.astro";
+
+// Custom Expand/Collapse Icons
+import Expand from "@/components/fundations/icons/Expand.astro";
+import Collapse from "@/components/fundations/icons/Collapse.astro";
+
 const stats = [
+  { step: "1", title: "DREAM", description: "Every great home begins with an idea.", icon: Dream },
+  { step: "2", title: "CONSULT", description: "Listening and learning to bring your vision to life.", icon: Consult },
+  { step: "3", title: "DESIGN", description: "Turning aspirations into detailed plans.", icon: Design },
+  { step: "4", title: "BUDGET & PROPOSE", description: "Pricing with transparency and thoughtful planning.", icon: Budget },
+  { step: "5", title: "SELECT", description: "Personalizing your home with carefully chosen details.", icon: Select },
+  { step: "6", title: "PERMIT", description: "Handling the paperwork so you don't have to.", icon: Permit },
+  { step: "7", title: "BREAK GROUND", description: "Breaking ground on your future.", icon: Groundbreak },
+  { step: "8", title: "LAY FOUNDATION", description: "Building a strong foundation for what's to come.", icon: Foundation },
+  { step: "9", title: "FRAME", description: "Where your dream begins to take shape.", icon: Frame },
+  { step: "10", title: "PLUMB & ELECTRIFY", description: "Powering it up with plumbing, electrical, and HVAC", icon: PlumbElectrify },
+  { step: "11", title: "INSULATE & DRYWALL", description: "Bringing together comfort and structure.", icon: InsulateDrywall },
+  { step: "12", title: "DESIGN INTERIORS", description: "Detailing so it's uniquely yours.", icon: DesignInterior },
+  { step: "13", title: "INSPECT & WALKTHROUGH", description: "Walking through together to ensure every detail is perfect.", icon: Walkthrough },
+  { step: "14", title: "WELCOME", description: "Wishing you a home sweet home.", icon: Welcome },
+];
+
+const phases = [
   {
-    value: "10+",
-    title: "Years in Operation",
-    description: "Consistent delivery across complex builds",
+    title: "DISCOVERY & DESIGN",
+    description: "Conceptualizing your vision by getting to know you.",
+    indices: [0, 1, 2],
   },
   {
-    value: "500+",
-    title: "Projects Delivered",
-    description: "Residential, commercial, and mixed-use",
+    title: "PERMITTING & PLANNING",
+    description: "Securing approvals and preparing documentation.",
+    indices: [3, 4, 5],
   },
   {
-    value: "100+",
-    title: "On-Site Specialists",
-    description: "Project managers, engineers, and trades",
+    title: "SETTING THE STAGE",
+    description: "Setting the firm foundation for the build.",
+    indices: [6, 7, 8],
   },
   {
-    value: "95%",
-    title: "Repeat & Referral Work",
-    description: "Clients who choose to work with us again",
+    title: "SHAPING YOUR VISION",
+    description: "Building the form around the vision you can touch.",
+    indices: [9, 10, 11],
   },
   {
-    value: "0",
-    title: "Major Safety Incidents",
-    description: "Maintained through strict on-site standards",
-  },
-  {
-    value: "100%",
-    title: "Projects Managed In-House",
-    description: "From planning and supervision to final delivery",
+    title: "COMPLETION",
+    description: "Final inspections and warm welcome home.",
+    indices: [12, 13],
   },
 ];
 ---
 
-<section>
-  <Wrapper variant="standard" class="py-24">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {
-        stats.map(({ value, title, description }) => (
-          <div class="bg-base-50 rounded p-8">
-            <Text
-              tag="p"
-              variant="displayXL"
-              class="text-accent-900 italic font-medium"
-            >
-              {value}
-            </Text>
-            <Text
-              tag="p"
-              variant="textLG"
-              class="text-accent-900 font-medium  mt-1"
-            >
-              {title}
-            </Text>
-            <Text tag="p" variant="textSM" class="text-base-600">
-              {description}
-            </Text>
-          </div>
-        ))
-      }
-    </div>
-    <div class="max-w-4xl text-balance mt-12">
-      <Kicker class="text-base-600">Measured performance</Kicker>
+<section class="bg-white">
+  <Wrapper variant="standard" class="pt-24 lg:px-0 lg:border-x lg:border-berg-blue">
+        <div class="text-balance grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <Kicker class="text-berg-red uppercase tracking-widest text-xs font-semibold lg:bg-base-50 pt-4 pl-12">
+        Our Proven Process
+      </Kicker>
+      <div class="lg:col-span-2 lg:text-balance">
       <Text
         tag="h2"
         variant="displayLG"
-        class="text-accent-900 font-medium mt-12"
+        font="patriciaBold"
+        class="text-berg-blue text-2xl md:text-4xl sm:text-2x1"
       >
-        A track record built on disciplined planning, on-site control,
-        <span class="text-accent-500">
-          and projects delivered to clear standards
-        </span>
+        <span class="text-gray-400">Our process is built on disciplined planning, transparent communication, </span>
+         and delivered to endure
       </Text>
-      <Text tag="p" variant="textLG" class="text-base-600 mt-4">
+      <Text tag="p" variant="textLG" class="text-gray-600 mt-6 leading-relaxed">
         We approach every build with the same priorities: defined scope,
-        accountable leadership, and execution that holds up long after handover.
-        <br />
-        <br />
-        That consistency is what keeps clients coming back.
+        accountable leadership, and quality that endures for generations.
       </Text>
+      </div>
+    </div>
+    <div class="flex flex-col mt-24">
+      {
+        phases.map((phase, index) => (
+          <details class="group lg:p-12 last:pb-0 lg:border-t lg:border-berg-blue" open={index === 0}>
+            <!-- Section Header -->
+            <summary class="list-none cursor-pointer flex items-start justify-between mb-4 select-none">
+              <div class="flex flex-col gap-1">
+                <Text
+                  tag="h3"
+                  variant="displaySM"
+                  font="patriciaBold"
+                  class="text-slate-900 group-open:text-berg-red transition-colors font-extrabold text-xl lg:text-2xl tracking-wide uppercase"
+                >
+                  {phase.title}
+                </Text>
+                <Text tag="p" variant="textMD" class="text-gray-500 font-normal text-sm lg:text-base">
+                  {phase.description}
+                </Text>
+              </div>
+
+              <div class="flex items-center justify-center text-slate-900 group-open:text-berg-red transition-colors pt-1">
+                <Expand class="w-6 h-6 group-open:hidden" />
+                <Collapse class="w-6 h-6 group-not-open:hidden" />
+              </div>
+            </summary>
+
+            <!-- DESKTOP VIEW -->
+            <div class="hidden lg:block relative mt-8 ml-4">
+              
+              <!-- Top Left Inlet Stub (Starts at 20% to match gradient) -->
+              <div class="absolute -top-6 left-0 w-16 h-6 bg-gray-200/20 z-10"></div>
+
+              <!-- Main Ribbon Frame Structure (Vertical Gradient 20% to 100%) -->
+              <div class="relative bg-gradient-to-b from-gray-200/20 to-gray-200">
+                
+                <!-- 1. TOP GRAY RIBBON BAR -->
+                <div class="flex items-center">
+                  <div class="flex-1 grid grid-cols-3">
+                    {phase.indices.map((index) => {
+                      const stat = stats[index];
+                      return (
+                        <div class="flex items-center gap-5 h-14 relative">
+                          <!-- White Backdrop Box for Number (Exactly w-16 to match stub and align icon) -->
+                          <div class="bg-white text-slate-900 font-black text-2xl w-16 h-full flex items-center justify-center shrink-0 border-b border-berg-red">
+                            {stat.step}
+                          </div>
+                          <!-- Step Title -->
+                          <span class="text-slate-900 font-extrabold uppercase tracking-wide text-lg font-sans">
+                            {stat.title}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <!-- Top Right Corner Fill -->
+                  <div class="w-16 h-14 bg-gray-200 shrink-0"></div>
+                </div>
+
+                <!-- 2. MIDDLE CONTENT AREA -->
+                <div class="flex items-stretch">
+                  <div class="flex-1 bg-white relative">
+                    
+                    <!-- Steps Content Grid -->
+                    <div class="grid grid-cols-3 py-6 relative z-10">
+                      {phase.indices.map((index) => {
+                        const stat = stats[index];
+                        const Icon = stat.icon;
+                        return (
+                          <div class="relative flex items-center min-h-[100px]">
+
+
+                            <!-- Icon (Aligned directly under the w-16 number box) -->
+                            <div class="w-16 shrink-0 flex items-center justify-center">
+                              <Icon class="w-16 h-16 text-slate-900" />
+                            </div>
+                            <!-- Thin Full-Height Vertical Red Line (1px) -->
+                            <div class="absolute left-16 -top-6 bottom-0 w-[1px] bg-berg-red z-20"></div>
+                            <!-- Content Block: Thick Red Accent Line + Text -->
+                            <div class="flex items-center gap-4 flex-1 pr-6">
+                              <div class="w-1.5 h-10 bg-berg-red shrink-0 rounded-xs"></div>
+                              <p class="text-md text-slate-800 leading-relaxed font-medium">
+                                {stat.description}
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    <!-- Thin Red Contour Line along Bottom Edge (1px) -->
+                    <div class="absolute bottom-0 left-0 right-0 h-[1px] bg-berg-red z-20"></div>
+                  </div>
+
+                  <!-- Right Pipe Wraparound -->
+                  <div class="w-16 bg-gray-200 shrink-0"></div>
+                </div>
+
+                <!-- 3. BOTTOM GRAY RIBBON BAR -->
+                <div class="h-14 bg-gray-200 w-full"></div>
+
+                <!-- Bottom Left Outlet Stub (Drops h-12 into pb-12 padding to connect to next phase) -->
+                <div class="absolute -bottom-12 left-0 w-16 h-12 bg-gray-200 z-30 group-last:hidden">
+                  <!-- Red Cap Line on Bottom Edge -->
+                  <div class="absolute bottom-0 left-0 right-0 h-1 bg-berg-red"></div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- MOBILE VIEW -->
+            <div class="lg:hidden flex flex-col gap-8 mt-6">
+              <!-- Top Small Gray Tab -->
+              <div class="w-20 h-5 bg-gray-200"></div>
+
+              {phase.indices.map((index, subIndex) => {
+                const stat = stats[index];
+                const Icon = stat.icon;
+                const isLast = subIndex === phase.indices.length - 1;
+
+                return (
+                  <div class="flex flex-col gap-3">
+                    <!-- Step Header: Number + Title (Left), Icon (Right) -->
+                    <div class="flex items-center justify-between pr-2">
+                      <div class="flex items-center gap-4">
+                        <div class="bg-white text-slate-900 font-black text-3xl font-sans min-w-[2.5rem] flex items-center justify-center">
+                          {stat.step}
+                        </div>
+                        <span class="text-lg font-extrabold text-slate-900 font-sans uppercase tracking-wide">
+                          {stat.title}
+                        </span>
+                      </div>
+                      <div class="w-16 h-16 shrink-0 flex items-center justify-center">
+                        <Icon class="w-full h-full text-slate-900" />
+                      </div>
+                    </div>
+
+                    <!-- Step Body: Vertical Gray Block with Red Right Border -->
+                    <div class="flex items-stretch gap-4 min-h-[90px]">
+                      <div class="w-20 bg-gray-200 shrink-0 relative">
+                        <div class="absolute top-0 right-0 bottom-0 w-1.5 bg-berg-red"></div>
+                        {isLast && (
+                          <div class="absolute bottom-0 left-0 right-0 h-2 bg-berg-red"></div>
+                        )}
+                      </div>
+                      
+                      <p class="text-sm font-medium text-slate-800 leading-snug my-auto pr-2">
+                        {stat.description}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </details>
+        ))
+      }
     </div>
   </Wrapper>
 </section>

@@ -4,8 +4,8 @@ import groq from "groq";
 // POSTS
 // =============================================================================
 
-// Shared post fields projection
-const postFields = groq`
+// Shared news fields projection
+const newsFields = groq`
   _id,
   title,
   "slug": slug.current,
@@ -13,44 +13,44 @@ const postFields = groq`
   pubDate,
   tags,
   image {
-    asset->,
+    "url": asset->url,
     alt
   }
 `;
 
-// All posts (for listing)
-export const allPostsQuery = groq`
-  *[_type == "post"] | order(pubDate desc) {
-    ${postFields},
+// All news (for listing)
+export const allNewsQuery = groq`
+  *[_type == "news"] | order(pubDate desc) {
+    ${newsFields},
     "body": pt::text(body)
   }
 `;
 
-// Single post by slug
-export const postBySlugQuery = groq`
-  *[_type == "post" && slug.current == $slug][0] {
-    ${postFields},
+// Single news by slug
+export const newsBySlugQuery = groq`
+  *[_type == "news" && slug.current == $slug][0] {
+    ${newsFields},
     body
   }
 `;
 
 // Posts by tag
-export const postsByTagQuery = groq`
-  *[_type == "post" && $tag in tags] | order(pubDate desc) {
-    ${postFields},
+export const newsByTagQuery = groq`
+  *[_type == "news" && $tag in tags] | order(pubDate desc) {
+    ${newsFields},
     "body": pt::text(body)
   }
 `;
 
 // All unique tags
 export const allTagsQuery = groq`
-  array::unique(*[_type == "post" && defined(tags)].tags[])
+  array::unique(*[_type == "news" && defined(tags)].tags[])
 `;
 
-// Related posts (by tags, excluding current)
-export const relatedPostsQuery = groq`
-  *[_type == "post" && slug.current != $slug && count((tags)[@ in $tags]) > 0] | order(pubDate desc) [0...3] {
-    ${postFields},
+// Related news (by tags, excluding current)
+export const relatedNewsQuery = groq`
+  *[_type == "news" && slug.current != $slug && count((tags)[@ in $tags]) > 0] | order(pubDate desc) [0...3] {
+    ${newsFields},
     "body": pt::text(body)
   }
 `;
@@ -65,8 +65,9 @@ const teamMemberFields = groq`
   "slug": slug.current,
   role,
   bio,
+  body,
   image {
-    asset->,
+    "url": asset->url,
     alt
   },
   socials[] {
@@ -127,7 +128,7 @@ const serviceFields = groq`
   description,
   excerpt,
   image {
-    asset->,
+    "url": asset->url,
     alt
   },
   highlights,
@@ -159,24 +160,37 @@ const projectFields = groq`
   title,
   "slug": slug.current,
   description,
-  client,
   location,
   year,
+  status,
   category,
   services,
+  service,
+  duration,
+  summary,
   cover {
-    asset->,
+    "url": asset->url,
     alt
   },
   gallery[] {
-    asset->,
+    "url": asset->url,
     alt
   },
   metrics[] {
     label,
     value
   },
-  featured
+  featured,
+  "testimonial": testimonialRef->{
+    clientName,
+    role,
+    quote,
+    rating,
+    clientImage {
+      "url": asset->url,
+      alt
+    }
+  }
 `;
 
 // All projects
@@ -192,6 +206,26 @@ export const projectBySlugQuery = groq`
   *[_type == "project" && slug.current == $slug][0] {
     ${projectFields},
     body
+  }
+`;
+// =============================================================================
+// TESTIMONIALS
+// =============================================================================
+
+// All testimonials
+export const allTestimonialsQuery = groq`
+  *[_type == "testimonial"] {
+    _id,
+    clientName,
+    role,
+    quote,
+    rating,
+    metric,
+    metricLabel,
+    clientImage {
+      "url": asset->url,
+      alt
+    }
   }
 `;
 
@@ -251,7 +285,7 @@ export const siteSettingsQuery = groq`
     description,
     siteUrl,
     ogImage {
-      asset->,
+      "url": asset->url,
       alt
     },
     twitterHandle,
