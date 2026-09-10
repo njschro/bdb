@@ -5,7 +5,7 @@ import Text from "@/components/fundations/elements/Text.astro";
 import Kicker from "@/components/fundations/elements/Kicker.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 // Components
-import BlogEntry from "@/components/blog/BlogCard.astro";
+import BlogEntry from "@/components/news/BlogCard.astro";
 // Content
 import { getTagStaticPaths } from "@/lib/data";
 
@@ -14,7 +14,8 @@ export async function getStaticPaths() {
 }
 
 const { tag } = Astro.params;
-const { posts } = Astro.props;
+// Changed from posts to articles
+const { articles } = Astro.props; 
 ---
 
 <BaseLayout>
@@ -36,7 +37,8 @@ const { posts } = Astro.props;
       <div
         class="grid grid-cols-1 lg:grid-cols-3 mt-12 lg:mt-24 gap-x-8 gap-y-24"
       >
-        {posts.map((post) => <BlogEntry post={post} />)}
+        {/* Updated to map over articles */}
+        {articles.map((article) => <BlogEntry post={article} />)}
       </div>
     </Wrapper>
   </section>
