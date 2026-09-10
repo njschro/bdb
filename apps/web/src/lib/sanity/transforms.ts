@@ -1,3 +1,4 @@
+import { getImageUrl } from "./image";
 import type {
   SanityLegalPage,
   SanityCareer,
@@ -42,7 +43,8 @@ export function transformTeamMember(member: any): TeamMember {
       role: member.role,
       bio: member.bio || "",
       image: {
-        url: member.image?.url || "",
+        // Using your built-in function to handle the sizing safely
+        url: member.image?.asset ? getImageUrl(member.image, { width: 800, height: 700 }) : (member.image?.url || ""),
         alt: member.image?.alt || member.name || "",
       },
       socials: member.socials,

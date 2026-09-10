@@ -26,8 +26,9 @@ const {
 const siteDefaults = {
   title: "Berg Design + Build",
   description: "General Contracting, Home Building, and Renovation built on integrity and built to last.",
-  siteUrl: import.meta.env.SITE || "https://example.com",
+  siteUrl: import.meta.env.SITE || "http://localhost:4321",
   twitterHandle: "",
+  defaultImage: "/social-preview.jpg", // <-- Added default image
 };
 
 // Use page-specific values or fall back to site defaults
@@ -38,9 +39,9 @@ const description = pageDescription || siteDefaults.description;
 const siteUrl = siteDefaults.siteUrl;
 const canonical = new URL(Astro.url.pathname, siteUrl).toString();
 
-// Image: use page image if provided
-const ogImageUrl = pageImage?.url || "";
-const ogImageAlt = pageImage?.alt || title;
+// Image: use page image if provided, otherwise build an absolute URL for the default
+const ogImageUrl = pageImage?.url || new URL(siteDefaults.defaultImage, siteUrl).toString();
+const ogImageAlt = pageImage?.alt || siteDefaults.title;
 
 const twitterHandle = siteDefaults.twitterHandle;
 ---

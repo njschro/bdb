@@ -1,6 +1,6 @@
 ---
 // Assets
-import { Image } from "astro:assets";
+
 // Fundations
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Text from "@/components/fundations/elements/Text.astro";
@@ -43,14 +43,14 @@ const { frontmatter } = Astro.props;
             }
           </div>
         </div>
-        <Image
+        <img
           alt={frontmatter.image.alt}
           src={frontmatter.image.url}
           width={1400}
           height={1400}
           loading="lazy"
           decoding="async"
-          class="object-cover object-center aspect-9/12"
+          class="object-cover object-top aspect-9/12"
         />
       </div>
     </Wrapper>

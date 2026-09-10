@@ -67,8 +67,8 @@ const teamMemberFields = groq`
   bio,
   body,
   image {
-    "url": asset->url,
-    alt
+    ...,
+    "url": asset->url
   },
   socials[] {
     label,

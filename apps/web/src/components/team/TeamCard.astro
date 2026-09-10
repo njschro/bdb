@@ -1,6 +1,6 @@
 ---
 // Assets
-import { Image } from "astro:assets";
+
 // Fundations
 import Text from "@/components/fundations/elements/Text.astro";
 const { url, name, image, role } = {
@@ -18,15 +18,17 @@ const { url, name, image, role } = {
     aria-label={`View profile for ${name}`}
     class="absolute inset-0 z-10"></a>
 
-  <Image
+{image && (
+  <img
     src={image}
     alt={name}
     width={800}
     height={700}
     loading="lazy"
     decoding="async"
-    class="object-cover object-top w-full aspect-4/3"
+    class="object-cover w-full rounded"
   />
+)}
 
   <div class="mt-4">
     <Text tag="h3" variant="textXL" class="font-medium text-accent-900">
