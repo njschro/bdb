@@ -38,7 +38,7 @@ const { articles } = Astro.props;
         class="grid grid-cols-1 lg:grid-cols-3 mt-12 lg:mt-24 gap-x-8 gap-y-24"
       >
         {/* Updated to map over articles */}
-        {articles.map((article) => <BlogEntry post={article} />)}
+        {articles.map((article) => <BlogEntry article={article} />)}
       </div>
     </Wrapper>
   </section>
