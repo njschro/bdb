@@ -32,12 +32,12 @@ shikiConfig: {
     skipInline: false,
     drafts: true,
   },
-  site: "https://yourwebsite.com",
+  site: "http://localhost:4321",
   integrations: [
     sanity({
       projectId: 'rsubygyt', // Replace with yours
       dataset: 'production',
-      useCdn: true, // Must be false for real-time drafts
+      useCdn: false, // Must be false for real-time drafts
       stega: {
         studioUrl: 'http://localhost:3333', // URL of your local Sanity Studio
       },
