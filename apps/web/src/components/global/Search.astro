@@ -82,7 +82,7 @@ const searchItems = [
 <div class="relative">
   <Button
     size="xs"
-    variant="muted"
+    variant="trans"
     iconOnly={true}
     type="button"
     id="searchButton"
@@ -93,7 +93,7 @@ const searchItems = [
 
   <div
     id="searchModal"
-    class="fixed inset-0 z-50 hidden overflow-y-auto bg-black/30 backdrop-blur-sm"
+    class="fixed inset-0 z-50 hidden overflow-y-auto bg-base-100/30 backdrop-blur-sm"
     role="dialog"
     aria-modal="true"
   >
@@ -101,14 +101,14 @@ const searchItems = [
       <div
         class="relative inline-block w-full max-w-3xl mt-12 mb-8 text-left align-middle lg:mt-24 transition-all transform"
       >
-        <div class="bg-accent-700 outline-white/10 shadow-2xl">
+        <div class="bg-base-100 outline-berg-blue shadow-2xl">
           <div class="flex items-start justify-between gap-4 px-6 pt-6">
             <div>
-              <p class="text-sm uppercase text-base-400 font-medium">Search</p>
-              <h2 class="text-white text-xl font-medium tracking-tight mt-12">
+              <p class="text-sm uppercase text-berg-red font-medium">Search</p>
+              <h2 class="text-berg-blue text-xl font-medium tracking-tight mt-12">
                 Find what you need
               </h2>
-              <p class="text-base-300 text-sm">
+              <p class="text-base-600 text-sm">
                 News, services, projects, team, careers, and legal pages.
               </p>
             </div>
@@ -134,12 +134,12 @@ const searchItems = [
                 type="text"
                 id="searchInput"
                 placeholder="Search by title, role, service, or location..."
-                class="w-full border-white/15 bg-accent-950 px-12 pr-4 py-3 h-12 text-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500 duration-300 transition-all focus:border-transparent focus:outline-none placeholder-base-500"
+                class="w-full border-berg-blue bg-base-50 px-12 pr-4 py-3 h-12 text-base-600 focus:border-accent-500 focus:ring-2 focus:ring-accent-500 duration-300 transition-all focus:border-transparent focus:outline-none placeholder-base-500"
               />
             </div>
             <div
               id="searchResults"
-              class="w-full mt-1 overflow-hidden overflow-y-auto rounded-lg max-h-100 divide-y divide-white/5 bg-accent-900 outline outline-white/10 backdrop-blur scrollbar-hide"
+              class="w-full mt-1 overflow-hidden overflow-y-auto rounded-lg max-h-100 divide-y divide-white/5 bg-accent-50 outline outline-white/10 backdrop-blur scrollbar-hide"
             >
             </div>
           </div>
@@ -190,7 +190,7 @@ const searchItems = [
       if (!searchInput.value.trim()) {
         searchResults.innerHTML = `
           <div class="p-4 text-sm text-base-300">
-            Start typing to search news, services, projects, team, careers, and legal content.
+            Start typing above to search news, services, projects, team, careers, and legal content.
           </div>
         `;
         searchResults.classList.remove("hidden");
@@ -200,7 +200,7 @@ const searchItems = [
       if (results.length === 0) {
         searchResults.innerHTML = `
           <div>
-            <div class="p-4 text-sm text-base-300">
+            <div class="p-4 text-sm text-base-400">
               No matches found. Try a different keyword.
             </div>
           </div>
@@ -212,13 +212,13 @@ const searchItems = [
       searchResults.innerHTML = results
         .map(
           (result) => `
-          <div class="relative block p-4 duration-200 hover:bg-accent-950 bg-accent-900 text-white">
+          <div class="relative block p-4 duration-200 hover:bg-accent-200 bg-accent-100 text-base-600">
             <a href="${result.item.url}" class="absolute inset-0 z-10"></a>
-            <div class="flex items-center gap-2 text-xs uppercase  text-base-300">
+            <div class="flex items-center gap-2 text-xs uppercase  text-berg-red">
               <span>${result.item.type}</span>
               ${
                 result.item.date
-                  ? `<span class="text-base-400">
+                  ? `<span class="text-base-600">
                       • ${new Date(result.item.date).toLocaleDateString(
                         "en-US",
                         {
@@ -231,19 +231,19 @@ const searchItems = [
                   : ""
               }
             </div>
-            <h3 class="block mt-2 text-lg font-medium  text-white">
+            <h3 class="block mt-2 text-lg font-medium  text-base-700">
               ${result.item.title}
             </h3>
             ${
               result.item.description
-                ? `<p class="block text-xs text-base-300 mt-2">
+                ? `<p class="block text-xs text-base-600 mt-2">
                     ${result.item.description}
                   </p>`
                 : ""
             }
             ${
               result.item.meta
-                ? `<p class="block text-[11px] text-base-400 mt-1">
+                ? `<p class="block text-[11px] text-berg-blue mt-1">
                     ${result.item.meta}
                   </p>`
                 : ""

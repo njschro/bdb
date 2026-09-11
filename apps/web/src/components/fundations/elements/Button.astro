@@ -30,6 +30,13 @@ const mutedClass = [
   "hover:bg-base-200",
   "focus:outline-base-300",
 ];
+
+const transClass = [
+  "text-base-900",
+  "bg-base-50/0",
+  "hover:bg-base-100/30",
+  "focus:outline-berg-red",
+];
 // Size
 const sizes = {
   xxs: ["h-7.5", "px-4", "py-2", "text-sm"],
@@ -63,6 +70,7 @@ const variantClass = {
   default: defaultClass,
   accent: accentClass,
   muted: mutedClass,
+  trans: transClass,
   none: [],
 };
 const sizeClass = iconOnly ? iconSizes[size] : sizes[size] || [];
@@ -79,6 +87,7 @@ const baseClass = [
   "transition-colors",
   "focus:outline",
   "focus:outline-offset-2",
+  "cursor-pointer",
 ];
 ---
 
